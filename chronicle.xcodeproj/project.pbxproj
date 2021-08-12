@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA46D45426C4F850008CE3C0 /* ChronicleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */; };
 		EA802F2926BA4C0400C494F8 /* chronicleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA802F2826BA4C0400C494F8 /* chronicleApp.swift */; };
 		EA802F2B26BA4C0400C494F8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA802F2A26BA4C0400C494F8 /* ContentView.swift */; };
 		EA802F2D26BA4C0500C494F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA802F2C26BA4C0500C494F8 /* Assets.xcassets */; };
@@ -20,7 +21,19 @@
 		EA82495926C4F33800F9CD7C /* EnrollmentUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82495826C4F33800F9CD7C /* EnrollmentUtils.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		EA46D44C26C4F745008CE3C0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA802F1D26BA4C0400C494F8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EA802F2426BA4C0400C494F8;
+			remoteInfo = chronicle;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		EA46D44826C4F745008CE3C0 /* chronicleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chronicleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChronicleTests.swift; path = chronicleTests/ChronicleTests.swift; sourceTree = "<group>"; };
 		EA802F2526BA4C0400C494F8 /* chronicle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chronicle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA802F2826BA4C0400C494F8 /* chronicleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chronicleApp.swift; sourceTree = "<group>"; };
 		EA802F2A26BA4C0400C494F8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -36,6 +49,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		EA46D44526C4F745008CE3C0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EA802F2226BA4C0400C494F8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -46,10 +66,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EA46D44926C4F745008CE3C0 /* chronicleTests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = chronicleTests;
+			sourceTree = "<group>";
+		};
 		EA802F1C26BA4C0400C494F8 = {
 			isa = PBXGroup;
 			children = (
+				EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */,
 				EA802F2726BA4C0400C494F8 /* chronicle */,
+				EA46D44926C4F745008CE3C0 /* chronicleTests */,
 				EA802F2626BA4C0400C494F8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				EA802F2526BA4C0400C494F8 /* chronicle.app */,
+				EA46D44826C4F745008CE3C0 /* chronicleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -115,6 +145,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		EA46D44726C4F745008CE3C0 /* chronicleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA46D44E26C4F745008CE3C0 /* Build configuration list for PBXNativeTarget "chronicleTests" */;
+			buildPhases = (
+				EA46D44426C4F745008CE3C0 /* Sources */,
+				EA46D44526C4F745008CE3C0 /* Frameworks */,
+				EA46D44626C4F745008CE3C0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EA46D44D26C4F745008CE3C0 /* PBXTargetDependency */,
+			);
+			name = chronicleTests;
+			productName = chronicleTests;
+			productReference = EA46D44826C4F745008CE3C0 /* chronicleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		EA802F2426BA4C0400C494F8 /* chronicle */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EA802F3326BA4C0500C494F8 /* Build configuration list for PBXNativeTarget "chronicle" */;
@@ -142,6 +190,11 @@
 				LastSwiftUpdateCheck = 1300;
 				LastUpgradeCheck = 1300;
 				TargetAttributes = {
+					EA46D44726C4F745008CE3C0 = {
+						CreatedOnToolsVersion = 13.0;
+						LastSwiftMigration = 1300;
+						TestTargetID = EA802F2426BA4C0400C494F8;
+					};
 					EA802F2426BA4C0400C494F8 = {
 						CreatedOnToolsVersion = 13.0;
 					};
@@ -161,11 +214,19 @@
 			projectRoot = "";
 			targets = (
 				EA802F2426BA4C0400C494F8 /* chronicle */,
+				EA46D44726C4F745008CE3C0 /* chronicleTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		EA46D44626C4F745008CE3C0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EA802F2326BA4C0400C494F8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -178,6 +239,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		EA46D44426C4F745008CE3C0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA46D45426C4F850008CE3C0 /* ChronicleTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EA802F2126BA4C0400C494F8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -196,7 +265,66 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		EA46D44D26C4F745008CE3C0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EA802F2426BA4C0400C494F8 /* chronicle */;
+			targetProxy = EA46D44C26C4F745008CE3C0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		EA46D44F26C4F745008CE3C0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 28UYMG34TU;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.openlattice.chronicleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/chronicle.app/chronicle";
+			};
+			name = Debug;
+		};
+		EA46D45026C4F745008CE3C0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 28UYMG34TU;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.openlattice.chronicleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/chronicle.app/chronicle";
+			};
+			name = Release;
+		};
 		EA802F3126BA4C0500C494F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -376,6 +504,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		EA46D44E26C4F745008CE3C0 /* Build configuration list for PBXNativeTarget "chronicleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA46D44F26C4F745008CE3C0 /* Debug */,
+				EA46D45026C4F745008CE3C0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		EA802F2026BA4C0400C494F8 /* Build configuration list for PBXProject "chronicle" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
