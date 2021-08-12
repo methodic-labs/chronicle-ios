@@ -12,9 +12,8 @@
 		EA802F2B26BA4C0400C494F8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA802F2A26BA4C0400C494F8 /* ContentView.swift */; };
 		EA802F2D26BA4C0500C494F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA802F2C26BA4C0500C494F8 /* Assets.xcassets */; };
 		EA802F3026BA4C0500C494F8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA802F2F26BA4C0500C494F8 /* Preview Assets.xcassets */; };
-		EA82494D26C4F27500F9CD7C /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82494C26C4F27500F9CD7C /* Device.swift */; };
+		EA82494D26C4F27500F9CD7C /* IOSDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82494C26C4F27500F9CD7C /* IOSDevice.swift */; };
 		EA82494F26C4F28E00F9CD7C /* Enrollment.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82494E26C4F28E00F9CD7C /* Enrollment.swift */; };
-		EA82495126C4F2B200F9CD7C /* EnrollmentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82495026C4F2B200F9CD7C /* EnrollmentError.swift */; };
 		EA82495326C4F2D500F9CD7C /* EnrollmentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82495226C4F2D500F9CD7C /* EnrollmentViewModel.swift */; };
 		EA82495526C4F2F900F9CD7C /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82495426C4F2F900F9CD7C /* ApiClient.swift */; };
 		EA82495726C4F31A00F9CD7C /* ApiUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82495626C4F31A00F9CD7C /* ApiUtils.swift */; };
@@ -39,9 +38,8 @@
 		EA802F2A26BA4C0400C494F8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		EA802F2C26BA4C0500C494F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EA802F2F26BA4C0500C494F8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		EA82494C26C4F27500F9CD7C /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		EA82494C26C4F27500F9CD7C /* IOSDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSDevice.swift; sourceTree = "<group>"; };
 		EA82494E26C4F28E00F9CD7C /* Enrollment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enrollment.swift; sourceTree = "<group>"; };
-		EA82495026C4F2B200F9CD7C /* EnrollmentError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentError.swift; sourceTree = "<group>"; };
 		EA82495226C4F2D500F9CD7C /* EnrollmentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentViewModel.swift; sourceTree = "<group>"; };
 		EA82495426C4F2F900F9CD7C /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 		EA82495626C4F31A00F9CD7C /* ApiUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiUtils.swift; sourceTree = "<group>"; };
@@ -117,9 +115,8 @@
 		EA82494726C4F12500F9CD7C /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				EA82494C26C4F27500F9CD7C /* Device.swift */,
+				EA82494C26C4F27500F9CD7C /* IOSDevice.swift */,
 				EA82494E26C4F28E00F9CD7C /* Enrollment.swift */,
-				EA82495026C4F2B200F9CD7C /* EnrollmentError.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -252,12 +249,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA82495526C4F2F900F9CD7C /* ApiClient.swift in Sources */,
-				EA82494D26C4F27500F9CD7C /* Device.swift in Sources */,
+				EA82494D26C4F27500F9CD7C /* IOSDevice.swift in Sources */,
 				EA802F2B26BA4C0400C494F8 /* ContentView.swift in Sources */,
 				EA82495326C4F2D500F9CD7C /* EnrollmentViewModel.swift in Sources */,
 				EA82495726C4F31A00F9CD7C /* ApiUtils.swift in Sources */,
 				EA802F2926BA4C0400C494F8 /* chronicleApp.swift in Sources */,
-				EA82495126C4F2B200F9CD7C /* EnrollmentError.swift in Sources */,
 				EA82494F26C4F28E00F9CD7C /* Enrollment.swift in Sources */,
 				EA82495926C4F33800F9CD7C /* EnrollmentUtils.swift in Sources */,
 			);
