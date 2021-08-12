@@ -16,6 +16,12 @@ struct ContentView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
+            Text("Chronicle")
+                .font(.title)
+                .fontWeight(.heavy)
+                .foregroundColor(Color(red: 109/255, green: 73/255, blue: 254/255, opacity: 1.0))
+                .lineLimit(nil)
+            Divider().padding(.bottom)
             Text("Do you have an organization ID?")
                 .padding(.bottom)
 
