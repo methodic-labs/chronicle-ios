@@ -21,8 +21,8 @@ class EnrollmentViewModel: ObservableObject {
     @Published var participantId: String = ""
     @Published var studyId: String = ""
     @Published var organizationId :String = ""
-
-
+    
+    
     func validateInput() {
         invalidStudyId = UUID.init(uuidString: studyId) == nil
         invalidParticipantId = participantId.isEmpty
@@ -31,10 +31,10 @@ class EnrollmentViewModel: ObservableObject {
     
     /** Invoked when the user clicks on "Enroll" button in the UI
      
-        sample usage:
-        Task {
-            await model.enroll()
-        }
+     sample usage:
+     Task {
+        await model.enroll()
+     }
      */
     func enroll() async {
         

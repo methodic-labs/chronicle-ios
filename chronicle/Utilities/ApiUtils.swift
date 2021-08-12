@@ -33,7 +33,7 @@ struct ApiUtils {
         }
         
         var components = URLComponents()
-
+        
         components.scheme = ChronicleApi.scheme
         components.host = ChronicleApi.host
         components.path = "\(ChronicleApi.v2Base)/\(enrollment.organizationId)/\(enrollment.studyId)/\(enrollment.participantId)/\(deviceId)\(ChronicleApi.enrollPath)"
@@ -45,7 +45,7 @@ struct ApiUtils {
     
     // returns an optional URLComponent for legacy enrollment
     static func makeEnrollDeviceComponentsWithoutOrg(enrollment: Enrollment, deviceId: String) -> URLComponents? {
- 
+        
         guard EnrollmentUtils.validateEnrollmentDetails(enrollment: enrollment, withOrgId: false) else {
             return nil
         }
