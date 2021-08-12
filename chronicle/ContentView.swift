@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @ObservedObject var enrollmentViewModel = EnrollmentViewModel()
+    
     @State var hasOrgId: Bool = true
     
     let filled = "circle.inset.filled"
@@ -48,10 +50,10 @@ struct ContentView: View {
             .foregroundColor(Color(red: 109/255, green: 73/255, blue: 254/255, opacity: 1.0))
 
             if hasOrgId == true {
-                InputFieldView(label: "Enter your Organization ID")
+                InputFieldView(label: "Enter your Organization ID", inputId: $enrollmentViewModel.organizationId)
             }
-            InputFieldView(label: "Enter your Study ID")
-            InputFieldView(label: "Enter your Participant ID")
+            InputFieldView(label: "Enter your Study ID", inputId: $enrollmentViewModel.studyId)
+            InputFieldView(label: "Enter your Participant ID", inputId: $enrollmentViewModel.participantId)
             
             HStack {
                 Spacer()
@@ -72,14 +74,13 @@ struct ContentView: View {
 
 struct InputFieldView: View {
     let label: String
-    @State private var studyId: String = ""
+    @Binding var inputId: String
     
     var body: some View {
-        TextField(label, text: $studyId)
+        TextField(label, text: $inputId)
             .padding([.top, .bottom])
             .disableAutocorrection(true)
     }
-    
 }
 
 
