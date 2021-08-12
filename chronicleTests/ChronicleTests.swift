@@ -16,7 +16,6 @@ class ChronicleTests: XCTestCase {
         let participantId = "1001"
         
         func testEnrollmentUrlWithOrg() {
-            
             let enrollment = Enrollment(participantId: participantId, studyId: studyId, organizationId: organizationId)
             let urlComponents = ApiUtils.makeEnrollDeviceComponentsWithOrg(enrollment: enrollment, deviceId: deviceId)
             
