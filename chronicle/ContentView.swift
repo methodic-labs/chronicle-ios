@@ -57,7 +57,11 @@ struct ContentView: View {
             
             HStack {
                 Spacer()
-                Button(action: {}, label: {
+                Button(action: {
+                    Task {
+                        await enrollmentViewModel.enroll()
+                    }
+                }, label: {
                     Text("Enroll Device")
                         .foregroundColor(.white)
                         .padding(10)
