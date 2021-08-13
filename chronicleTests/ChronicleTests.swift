@@ -61,4 +61,13 @@ class ChronicleTests: XCTestCase {
         
         XCTAssertNil(urlComponents, "\(invalidOrgId) should result in nil")
     }
+    
+    func testUserDefaultsAssignment() {
+
+        EnrollmentUtils.setUserDefaults(organizationId: organizationId, studyId: studyId, participantId: participantId)
+        let defaults = UserDefaults.standard
+        XCTAssertEqual(defaults.string(forKey: "organizationId"), organizationId)
+        XCTAssertEqual(defaults.string(forKey: "studyId"), studyId)
+        XCTAssertEqual(defaults.string(forKey: "participantId"), participantId)
+    }
 }
