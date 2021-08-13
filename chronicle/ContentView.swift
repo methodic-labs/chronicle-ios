@@ -10,11 +10,6 @@ import SwiftUI
 struct ContentView: View {
     
     @ObservedObject var enrollmentViewModel = EnrollmentViewModel()
-    
-    @State var hasOrgId: Bool = true
-    
-    let filled = "circle.inset.filled"
-    let empty = "circle"
 
     var body: some View {
         ScrollView {
@@ -28,35 +23,13 @@ struct ContentView: View {
                 Divider().padding(.bottom)
                 Text("Do you have an organization ID?")
                     .padding(.bottom)
+                RadioButtonGroup(hasOrgId: $enrollmentViewModel.withOrgId)
 
-                LazyVGrid(columns: [GridItem(.fixed(30)), GridItem()]) {
-                    LazyVGrid(columns: [GridItem()], alignment: .leading) {
-                        Button(action: {
-                            hasOrgId = true
-                        }, label: {
-                            Image(systemName: hasOrgId ? filled : empty)
-                        })
-                        Spacer()
-                        Button(action: {
-                            hasOrgId = false
-                        }, label: {
-                            Image(systemName: !hasOrgId ? filled : empty)
-                        })
-                    }
-                    LazyVGrid(columns: [GridItem()], alignment: .leading) {
-                        Text("Yes")
-                        Spacer()
-                        Text("No")
-                    }
-                }
-                .foregroundColor(Color(red: 109/255, green: 73/255, blue: 254/255, opacity: 1.0))
-
-                if hasOrgId == true {
+                if enrollmentViewModel.withOrgId == true {
                     InputFieldView(label: "Enter your Organization ID", inputId: $enrollmentViewModel.organizationId, invalidInput: $enrollmentViewModel.invalidOrganizationId)
                 }
                 InputFieldView(label: "Enter your Study ID", inputId: $enrollmentViewModel.studyId, invalidInput: $enrollmentViewModel.invalidStudyId)
                 InputFieldView(label: "Enter your Participant ID", inputId: $enrollmentViewModel.participantId, invalidInput: $enrollmentViewModel.invalidParticipantId)
-                
                 HStack {
                     Spacer()
                     Button(action: {
@@ -76,6 +49,37 @@ struct ContentView: View {
             .padding(.horizontal)
             .textFieldStyle(.roundedBorder)
         }
+    }
+}
+
+struct RadioButtonGroup: View {
+    @Binding var hasOrgId: Bool
+    
+    let filled = "circle.inset.filled"
+    let empty = "circle"
+    
+    var body: some View {
+        LazyVGrid(columns: [GridItem(.fixed(30)), GridItem()]) {
+            LazyVGrid(columns: [GridItem()], alignment: .leading) {
+                Button(action: {
+                    hasOrgId = true
+                }, label: {
+                    Image(systemName: hasOrgId ? filled : empty)
+                })
+                Spacer()
+                Button(action: {
+                    hasOrgId = false
+                }, label: {
+                    Image(systemName: !hasOrgId ? filled : empty)
+                })
+            }
+            LazyVGrid(columns: [GridItem()], alignment: .leading) {
+                Text("Yes")
+                Spacer()
+                Text("No")
+            }
+        }
+        .foregroundColor(Color(red: 109/255, green: 73/255, blue: 254/255, opacity: 1.0))
     }
 }
 
