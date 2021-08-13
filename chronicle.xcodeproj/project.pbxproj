@@ -14,6 +14,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EA63651F26C5F941005D6DFC /* chronicle.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = chronicle.entitlements; sourceTree = "<group>"; };
 		EA802F2526BA4C0400C494F8 /* chronicle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chronicle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA802F2826BA4C0400C494F8 /* chronicleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chronicleApp.swift; sourceTree = "<group>"; };
 		EA802F2A26BA4C0400C494F8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -51,6 +52,7 @@
 		EA802F2726BA4C0400C494F8 /* chronicle */ = {
 			isa = PBXGroup;
 			children = (
+				EA63651F26C5F941005D6DFC /* chronicle.entitlements */,
 				EA802F2826BA4C0400C494F8 /* chronicleApp.swift */,
 				EA802F2A26BA4C0400C494F8 /* ContentView.swift */,
 				EA802F2C26BA4C0500C494F8 /* Assets.xcassets */,
@@ -266,6 +268,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = chronicle/chronicle.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"chronicle/Preview Content\"";
@@ -283,7 +286,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.openlattice.chronicle;
+				PRODUCT_BUNDLE_IDENTIFIER = com.openlattice.chronicle.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -296,6 +299,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = chronicle/chronicle.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"chronicle/Preview Content\"";
@@ -313,7 +317,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.openlattice.chronicle;
+				PRODUCT_BUNDLE_IDENTIFIER = com.openlattice.chronicle.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
