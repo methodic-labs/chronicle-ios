@@ -52,6 +52,8 @@ class EnrollmentViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.showEnrollmentError = false
                 self.enrolling = false
+
+                EnrollmentUtils.setUserDefaults(organizationId: self.organizationId, studyId: self.studyId, participantId: self.participantId)
             }
         } onError: { error in
             DispatchQueue.main.async {
