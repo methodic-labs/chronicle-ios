@@ -32,17 +32,24 @@ struct ContentView: View {
                 InputFieldView(label: "Enter your Participant ID", inputId: $enrollmentViewModel.participantId, invalidInput: $enrollmentViewModel.invalidParticipantId)
                 HStack {
                     Spacer()
-                    Button(action: {
-                        Task {
-                            await enrollmentViewModel.enroll()
-                        }
-                    }, label: {
-                        Text("Enroll Device")
-                            .foregroundColor(.white)
-                            .padding(10)
-                    })
-                    .background(Color(red: 109/255, green: 73/255, blue: 254/255, opacity: 1.0))
-                    .cornerRadius(8)
+                    if enrollmentViewModel.enrolling == true {
+                        ProgressView().padding(10)
+                    }
+                    else {
+                        Button(action: {
+                            Task {
+                                await enrollmentViewModel.enroll()
+                            }
+                        }, label: {
+                            Text("Enroll Device")
+                                .foregroundColor(.white)
+                                .padding(10)
+                        })
+                        .background(Color(red: 109/255, green: 73/255, blue: 254/255, opacity: 1.0))
+                        .cornerRadius(8)
+                        .disabled(enrollmentViewModel.enrolling == true)
+                    }
+                }
                 }
                 Spacer()
             }
