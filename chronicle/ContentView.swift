@@ -83,7 +83,7 @@ struct InputFieldView: View {
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 8).strokeBorder(lineWidth: 0.3).foregroundColor(Color(invalidInput ? .red : .gray)).frame(minWidth: 200, maxWidth: 500, minHeight: 40, maxHeight: 40)
+            RoundedRectangle(cornerRadius: 8).strokeBorder(lineWidth: 0.3).foregroundColor(Color(invalidInput ? .red : .gray)).frame(minHeight: 40, maxHeight: 40)
             TextField(label, text: $inputId)
                 .padding(.leading)
                 .textFieldStyle(.plain)
