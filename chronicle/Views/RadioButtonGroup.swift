@@ -14,24 +14,24 @@ struct RadioButtonGroup: View {
     let empty = "circle"
     
     var body: some View {
-        LazyVGrid(columns: [GridItem(.fixed(30)), GridItem()]) {
-            LazyVGrid(columns: [GridItem()], alignment: .leading) {
-                Button(action: {
+        VStack {
+            HStack {
+                Button {
                     hasOrgId = true
-                }, label: {
-                    Image(systemName: hasOrgId ? filled : empty)
-                })
-                Spacer()
-                Button(action: {
-                    hasOrgId = false
-                }, label: {
-                    Image(systemName: !hasOrgId ? filled : empty)
-                })
+                 } label: {
+                     Image(systemName: hasOrgId ? filled : empty)
+                 }
+                 Text("Yes")
+                 Spacer()
             }
-            LazyVGrid(columns: [GridItem()], alignment: .leading) {
-                Text("Yes")
-                Spacer()
-                Text("No")
+            HStack {
+                Button {
+                    hasOrgId = false
+                 } label: {
+                     Image(systemName: !hasOrgId ? filled : empty)
+                 }
+                 Text("No")
+                 Spacer()
             }
         }
         .foregroundColor(Color(red: 109/255, green: 73/255, blue: 254/255, opacity: 1.0))
