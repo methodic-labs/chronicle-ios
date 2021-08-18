@@ -34,6 +34,6 @@ struct RadioButtonGroup: View {
                  Spacer()
             }
         }
-        .foregroundColor(Color(red: 109/255, green: 73/255, blue: 254/255, opacity: 1.0))
+        .foregroundColor(Color.primaryPurple)
     }
 }

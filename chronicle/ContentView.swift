@@ -40,7 +40,7 @@ struct ContentView: View {
                                     .foregroundColor(.white)
                                     .padding(10)
                             })
-                            .background(Color(red: 109/255, green: 73/255, blue: 254/255, opacity: 1.0))
+                                .background(Color.primaryPurple)
                             .cornerRadius(8)
                             .disabled(enrollmentViewModel.enrolling == true)
                         }
