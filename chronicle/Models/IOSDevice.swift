@@ -15,12 +15,14 @@ struct IOSDevice :Codable {
     var deviceId: String?
     var name: String
     var systemName: String
+    var localizedModel: String
     
-    /// enrollDevice endpoint exptects @class property in object when deserializing
-    var className: String = String(describing: IOSDevice.self)
+    /// fully qualified java class name required when deserializing object
+    var className = "com.openlattice.chronicle.sources.IOSDevice"
     
-    init(model: String, version: String, deviceId: String?, name: String, systemName: String) {
+    init(model: String, localizedModel: String, version: String, deviceId: String?, name: String, systemName: String) {
         self.model = model
+        self.localizedModel = localizedModel
         self.version = version
         self.deviceId = deviceId
         self.name = name
@@ -33,6 +35,7 @@ struct IOSDevice :Codable {
         case name
         case systemName
         case deviceId
-        case className = "@class"
+        case localizedModel
+        case className = "@class" /// required by Jackson deserializer
     }
 }
