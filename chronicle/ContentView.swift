@@ -53,15 +53,14 @@ struct ContentView: View {
                     }
                     .padding(.horizontal)
                     .textFieldStyle(.roundedBorder)
-                    }
                 }
-        }
-        else {
-            ScrollView {
-                EnrollmentSuccessMessage()
+            }
+            else {
+                ScrollView {
+                    EnrollmentSuccessMessage()
+                }
             }
         }
-    }
 }
 
 
