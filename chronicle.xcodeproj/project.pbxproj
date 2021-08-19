@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E9DBE8926CF248E0042D122 /* EnrollmentForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9DBE8826CF248E0042D122 /* EnrollmentForm.swift */; };
 		B9BBFDBF26C648C100B770E4 /* EnrolledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDBE26C648C100B770E4 /* EnrolledView.swift */; };
 		B9BBFDC226CD6B1100B770E4 /* AppHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDC126CD6B1100B770E4 /* AppHeader.swift */; };
 		B9BBFDC426CD6D0200B770E4 /* InputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDC326CD6D0200B770E4 /* InputFieldView.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2E9DBE8826CF248E0042D122 /* EnrollmentForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentForm.swift; sourceTree = "<group>"; };
 		B9BBFDBE26C648C100B770E4 /* EnrolledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrolledView.swift; sourceTree = "<group>"; };
 		B9BBFDC126CD6B1100B770E4 /* AppHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHeader.swift; sourceTree = "<group>"; };
 		B9BBFDC326CD6D0200B770E4 /* InputFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldView.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				B9BBFDC526CD6D9800B770E4 /* RadioButtonGroup.swift */,
 				B9BBFDC726CD6EC800B770E4 /* EnrollmentSuccessMessage.swift */,
 				B9BBFDCB26CD707D00B770E4 /* EnrollmentFailureMessage.swift */,
+				2E9DBE8826CF248E0042D122 /* EnrollmentForm.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				EA82495726C4F31A00F9CD7C /* ApiUtils.swift in Sources */,
 				EA802F2926BA4C0400C494F8 /* chronicleApp.swift in Sources */,
 				EA63652326C6D6EF005D6DFC /* UserSettingsKeys.swift in Sources */,
+				2E9DBE8926CF248E0042D122 /* EnrollmentForm.swift in Sources */,
 				EA82494F26C4F28E00F9CD7C /* Enrollment.swift in Sources */,
 				B9BBFDC426CD6D0200B770E4 /* InputFieldView.swift in Sources */,
 				EA82495926C4F33800F9CD7C /* EnrollmentUtils.swift in Sources */,
