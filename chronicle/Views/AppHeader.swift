@@ -18,7 +18,6 @@ struct AppHeader: View {
                 .padding(.top)
             Divider().padding(.bottom)
         }
-        .padding(.horizontal)
     }
 }
 
