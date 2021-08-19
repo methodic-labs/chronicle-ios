@@ -10,7 +10,7 @@ import Foundation
 /// handles all API requests
 struct ApiClient {
     /// Enrolls a device
-    static func enrollDevice(enrollment: Enrollment, withOrgId: Bool, onSuccess: @escaping () -> Void, onError: @escaping (String) -> Void) async {
+    static func enrollDevice(enrollment: Enrollment, withOrgId: Bool, onSuccess: @escaping (String) -> Void, onError: @escaping (String) -> Void) async {
         
         // device data
         let deviceInformation = await EnrollmentUtils.getDeviceInformation()
@@ -49,15 +49,9 @@ struct ApiClient {
                 onError("server error")
                 return
             }
-            
-            // response should be a valid UUID
-            if let mimeType = response.mimeType,
-               mimeType == "text/plain",
-               let data = data,
-               let dataString = String(data: data, encoding: .utf8),
-               let ekid = UUID.init(uuidString: dataString) {
-                print("Device EKID: \(ekid)")
-                onSuccess()
+
+            if let data = data, let dataString = String(data: data, encoding: .utf8 ), UUID.init(uuidString: dataString) != nil {
+                onSuccess(deviceId)
             }
         }
         task.resume()

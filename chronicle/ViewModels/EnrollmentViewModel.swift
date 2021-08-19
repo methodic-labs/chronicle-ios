@@ -9,6 +9,8 @@ import Foundation
 
 /// Grants view access to the Enrollment model.  Keeps track of input values and errors
 class EnrollmentViewModel: ObservableObject {
+    /// store key value pairs in user's default database
+    let settings = UserDefaults.standard
     
     @Published var invalidParticipantId = false
     @Published var invalidStudyId = false
@@ -48,12 +50,19 @@ class EnrollmentViewModel: ObservableObject {
         
         let enrollment = Enrollment(participantId: participantId, studyId: studyId, organizationId: organizationId)
         
-        await ApiClient.enrollDevice(enrollment: enrollment, withOrgId: withOrgId) {
+        await ApiClient.enrollDevice(enrollment: enrollment, withOrgId: withOrgId) { deviceId in
             DispatchQueue.main.async {
                 self.showEnrollmentError = false
+                self.showEnrollmentSuccess = true
                 self.enrolling = false
 
-                EnrollmentUtils.setUserDefaults(organizationId: self.organizationId, studyId: self.studyId, participantId: self.participantId)
+                // save user settings on device
+                self.settings.set(self.participantId, forKey: UserSettingsKeys.participantId)
+                self.settings.set(self.organizationId, forKey: UserSettingsKeys.organizationId)
+                self.settings.set(self.studyId, forKey: UserSettingsKeys.studyId)
+                self.settings.set(true, forKey: UserSettingsKeys.isEnrolled)
+                self.settings.set(deviceId, forKey: UserSettingsKeys.deviceId)
+
             }
         } onError: { error in
             DispatchQueue.main.async {

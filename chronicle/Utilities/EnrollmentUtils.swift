@@ -26,12 +26,13 @@ struct EnrollmentUtils {
         let device = await UIDevice.current
         
         let model = await device.model
+        let localizedModel = await device.localizedModel
         let version = await device.systemVersion
         let name = await device.name
         let deviceId = await device.identifierForVendor?.uuidString // same for apps from the same vendor running on the same device: https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor
         let systemName = await device.systemName
         
-        return IOSDevice(model: model, version: version, deviceId: deviceId, name: name, systemName: systemName)
+        return IOSDevice(model: model, localizedModel: localizedModel, version: version, deviceId: deviceId, name: name, systemName: systemName)
     }
     
     static func setUserDefaults(organizationId: String, studyId: String, participantId: String) {
