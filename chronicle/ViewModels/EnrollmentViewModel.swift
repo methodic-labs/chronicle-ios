@@ -55,14 +55,14 @@ class EnrollmentViewModel: ObservableObject {
                 self.showEnrollmentError = false
                 self.showEnrollmentSuccess = true
                 self.enrolling = false
-                
+
                 // save user settings on device
                 self.settings.set(self.participantId, forKey: UserSettingsKeys.participantId)
                 self.settings.set(self.organizationId, forKey: UserSettingsKeys.organizationId)
                 self.settings.set(self.studyId, forKey: UserSettingsKeys.studyId)
                 self.settings.set(true, forKey: UserSettingsKeys.isEnrolled)
                 self.settings.set(deviceId, forKey: UserSettingsKeys.deviceId)
-                
+
             }
         } onError: { error in
             DispatchQueue.main.async {

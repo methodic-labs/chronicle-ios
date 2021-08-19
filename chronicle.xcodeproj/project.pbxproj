@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B9BBFDC226CD6B1100B770E4 /* AppHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDC126CD6B1100B770E4 /* AppHeader.swift */; };
+		B9BBFDC426CD6D0200B770E4 /* InputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDC326CD6D0200B770E4 /* InputFieldView.swift */; };
+		B9BBFDC626CD6D9800B770E4 /* RadioButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDC526CD6D9800B770E4 /* RadioButtonGroup.swift */; };
+		B9BBFDC826CD6EC800B770E4 /* EnrollmentSuccessMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDC726CD6EC800B770E4 /* EnrollmentSuccessMessage.swift */; };
+		B9BBFDCC26CD707D00B770E4 /* EnrollmentFailureMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDCB26CD707D00B770E4 /* EnrollmentFailureMessage.swift */; };
+		B9BBFDD026CD9C6C00B770E4 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */; };
 		EA46D45426C4F850008CE3C0 /* ChronicleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */; };
 		EA63652326C6D6EF005D6DFC /* UserSettingsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */; };
 		EA802F2926BA4C0400C494F8 /* chronicleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA802F2826BA4C0400C494F8 /* chronicleApp.swift */; };
@@ -32,6 +38,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B9BBFDC126CD6B1100B770E4 /* AppHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHeader.swift; sourceTree = "<group>"; };
+		B9BBFDC326CD6D0200B770E4 /* InputFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldView.swift; sourceTree = "<group>"; };
+		B9BBFDC526CD6D9800B770E4 /* RadioButtonGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButtonGroup.swift; sourceTree = "<group>"; };
+		B9BBFDC726CD6EC800B770E4 /* EnrollmentSuccessMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentSuccessMessage.swift; sourceTree = "<group>"; };
+		B9BBFDCB26CD707D00B770E4 /* EnrollmentFailureMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentFailureMessage.swift; sourceTree = "<group>"; };
+		B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		EA46D44826C4F745008CE3C0 /* chronicleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chronicleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChronicleTests.swift; path = chronicleTests/ChronicleTests.swift; sourceTree = "<group>"; };
 		EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsKeys.swift; sourceTree = "<group>"; };
@@ -66,6 +78,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B9BBFDC026CD6AFC00B770E4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B9BBFDC126CD6B1100B770E4 /* AppHeader.swift */,
+				B9BBFDC326CD6D0200B770E4 /* InputFieldView.swift */,
+				B9BBFDC526CD6D9800B770E4 /* RadioButtonGroup.swift */,
+				B9BBFDC726CD6EC800B770E4 /* EnrollmentSuccessMessage.swift */,
+				B9BBFDCB26CD707D00B770E4 /* EnrollmentFailureMessage.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		EA46D44926C4F745008CE3C0 /* chronicleTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +119,7 @@
 		EA802F2726BA4C0400C494F8 /* chronicle */ = {
 			isa = PBXGroup;
 			children = (
+				B9BBFDC026CD6AFC00B770E4 /* Views */,
 				EA82494926C4F14100F9CD7C /* Utilities */,
 				EA82494826C4F13900F9CD7C /* ViewModels */,
 				EA82494726C4F12500F9CD7C /* Models */,
@@ -102,6 +127,7 @@
 				EA802F2A26BA4C0400C494F8 /* ContentView.swift */,
 				EA802F2C26BA4C0500C494F8 /* Assets.xcassets */,
 				EA802F2E26BA4C0500C494F8 /* Preview Content */,
+				B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */,
 			);
 			path = chronicle;
 			sourceTree = "<group>";
@@ -252,6 +278,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA82495526C4F2F900F9CD7C /* ApiClient.swift in Sources */,
+				B9BBFDC226CD6B1100B770E4 /* AppHeader.swift in Sources */,
+				B9BBFDCC26CD707D00B770E4 /* EnrollmentFailureMessage.swift in Sources */,
+				B9BBFDD026CD9C6C00B770E4 /* Colors.swift in Sources */,
+				B9BBFDC626CD6D9800B770E4 /* RadioButtonGroup.swift in Sources */,
+				B9BBFDC826CD6EC800B770E4 /* EnrollmentSuccessMessage.swift in Sources */,
 				EA82494D26C4F27500F9CD7C /* IOSDevice.swift in Sources */,
 				EA802F2B26BA4C0400C494F8 /* ContentView.swift in Sources */,
 				EA82495326C4F2D500F9CD7C /* EnrollmentViewModel.swift in Sources */,
@@ -259,6 +290,7 @@
 				EA802F2926BA4C0400C494F8 /* chronicleApp.swift in Sources */,
 				EA63652326C6D6EF005D6DFC /* UserSettingsKeys.swift in Sources */,
 				EA82494F26C4F28E00F9CD7C /* Enrollment.swift in Sources */,
+				B9BBFDC426CD6D0200B770E4 /* InputFieldView.swift in Sources */,
 				EA82495926C4F33800F9CD7C /* EnrollmentUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
