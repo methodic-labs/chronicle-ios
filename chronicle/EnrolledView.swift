@@ -13,13 +13,7 @@ struct EnrolledView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                Text("Chronicle")
-                    .font(.title)
-                    .fontWeight(.heavy)
-                    .foregroundColor(Color(red: 109/255, green: 73/255, blue: 254/255, opacity: 1.0))
-                    .lineLimit(nil)
-                    .padding(.top)
-                Divider().padding(.bottom)
+                AppHeader()
                 Text("Study ID:").padding(.bottom)
                 Text(defaults.string(forKey: "studyId") ?? "").padding(.bottom)
                 Text("Participant ID:").padding(.bottom)
