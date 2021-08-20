@@ -15,9 +15,9 @@ struct EnrolledView: View {
             VStack(alignment: .leading) {
                 AppHeader()
                 Text("Study ID:").padding(.bottom)
-                Text(defaults.string(forKey: "studyId") ?? "").padding(.bottom)
+                Text(defaults.string(forKey: UserSettingsKeys.studyId) ?? "").padding(.bottom)
                 Text("Participant ID:").padding(.bottom)
-                Text(defaults.string(forKey: "participantId") ?? "").padding(.bottom)
+                Text(defaults.string(forKey: UserSettingsKeys.participantId) ?? "").padding(.bottom)
             }
             .padding(.horizontal)
         }
