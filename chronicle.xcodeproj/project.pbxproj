@@ -81,6 +81,7 @@
 		B9BBFDC026CD6AFC00B770E4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EA802F2A26BA4C0400C494F8 /* EnrollmentView.swift */,
 				B9BBFDC126CD6B1100B770E4 /* AppHeader.swift */,
 				B9BBFDC326CD6D0200B770E4 /* InputFieldView.swift */,
 				B9BBFDC526CD6D9800B770E4 /* RadioButtonGroup.swift */,
@@ -124,7 +125,6 @@
 				EA82494826C4F13900F9CD7C /* ViewModels */,
 				EA82494726C4F12500F9CD7C /* Models */,
 				EA802F2826BA4C0400C494F8 /* chronicleApp.swift */,
-				EA802F2A26BA4C0400C494F8 /* EnrollmentView.swift */,
 				EA802F2C26BA4C0500C494F8 /* Assets.xcassets */,
 				EA802F2E26BA4C0500C494F8 /* Preview Content */,
 				B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */,
