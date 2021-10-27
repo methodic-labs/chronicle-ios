@@ -19,16 +19,32 @@ class EnrollmentViewModel: ObservableObject {
     @Published var showEnrollmentSuccess = false
     @Published var withOrgId = true
     @Published var enrolling = false
+    @Published var isEnrollmentDetailsViewVisible = false //set to true in response to a button click
     
-    @Published var participantId: String = ""
-    @Published var studyId: String = ""
-    @Published var organizationId :String = ""
+    @Published var participantId: String
+    @Published var studyId: String
+    @Published var organizationId :String
     
+    
+    init() {
+        participantId = settings.object(forKey: UserSettingsKeys.participantId) as? String ?? ""
+        studyId = settings.object(forKey: UserSettingsKeys.studyId) as? String ?? ""
+        organizationId = settings.object(forKey: UserSettingsKeys.organizationId) as? String ?? ""
+    }
     
     func validateInput() {
         invalidStudyId = UUID.init(uuidString: studyId) == nil
         invalidParticipantId = participantId.isEmpty
         invalidOrganizationId = withOrgId && UUID.init(uuidString: organizationId) == nil
+    }
+    
+    func isDeviceEnrolled() -> Bool {
+        return settings.object(forKey: UserSettingsKeys.isEnrolled) as? Bool ?? false
+    }
+    
+    // called when "Done" button in EnrollmentSuccessMessage view is clicked
+    func onShowEnrollmentDetails() {
+        isEnrollmentDetailsViewVisible = true
     }
     
     /** Invoked when the user clicks on "Enroll" button in the UI

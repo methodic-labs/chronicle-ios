@@ -16,7 +16,7 @@
 		EA46D45426C4F850008CE3C0 /* ChronicleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */; };
 		EA63652326C6D6EF005D6DFC /* UserSettingsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */; };
 		EA802F2926BA4C0400C494F8 /* chronicleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA802F2826BA4C0400C494F8 /* chronicleApp.swift */; };
-		EA802F2B26BA4C0400C494F8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA802F2A26BA4C0400C494F8 /* ContentView.swift */; };
+		EA802F2B26BA4C0400C494F8 /* EnrollmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA802F2A26BA4C0400C494F8 /* EnrollmentView.swift */; };
 		EA802F2D26BA4C0500C494F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA802F2C26BA4C0500C494F8 /* Assets.xcassets */; };
 		EA802F3026BA4C0500C494F8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA802F2F26BA4C0500C494F8 /* Preview Assets.xcassets */; };
 		EA82494D26C4F27500F9CD7C /* IOSDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82494C26C4F27500F9CD7C /* IOSDevice.swift */; };
@@ -49,7 +49,7 @@
 		EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsKeys.swift; sourceTree = "<group>"; };
 		EA802F2526BA4C0400C494F8 /* chronicle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chronicle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA802F2826BA4C0400C494F8 /* chronicleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chronicleApp.swift; sourceTree = "<group>"; };
-		EA802F2A26BA4C0400C494F8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		EA802F2A26BA4C0400C494F8 /* EnrollmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentView.swift; sourceTree = "<group>"; };
 		EA802F2C26BA4C0500C494F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EA802F2F26BA4C0500C494F8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		EA82494C26C4F27500F9CD7C /* IOSDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSDevice.swift; sourceTree = "<group>"; };
@@ -124,7 +124,7 @@
 				EA82494826C4F13900F9CD7C /* ViewModels */,
 				EA82494726C4F12500F9CD7C /* Models */,
 				EA802F2826BA4C0400C494F8 /* chronicleApp.swift */,
-				EA802F2A26BA4C0400C494F8 /* ContentView.swift */,
+				EA802F2A26BA4C0400C494F8 /* EnrollmentView.swift */,
 				EA802F2C26BA4C0500C494F8 /* Assets.xcassets */,
 				EA802F2E26BA4C0500C494F8 /* Preview Content */,
 				B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */,
@@ -284,7 +284,7 @@
 				B9BBFDC626CD6D9800B770E4 /* RadioButtonGroup.swift in Sources */,
 				B9BBFDC826CD6EC800B770E4 /* EnrollmentSuccessMessage.swift in Sources */,
 				EA82494D26C4F27500F9CD7C /* IOSDevice.swift in Sources */,
-				EA802F2B26BA4C0400C494F8 /* ContentView.swift in Sources */,
+				EA802F2B26BA4C0400C494F8 /* EnrollmentView.swift in Sources */,
 				EA82495326C4F2D500F9CD7C /* EnrollmentViewModel.swift in Sources */,
 				EA82495726C4F31A00F9CD7C /* ApiUtils.swift in Sources */,
 				EA802F2926BA4C0400C494F8 /* chronicleApp.swift in Sources */,

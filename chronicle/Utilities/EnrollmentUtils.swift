@@ -11,7 +11,8 @@ import UIKit
 
 /// Utility functions to handle device enrollment
 struct EnrollmentUtils {
-    
+    static var defaults = UserDefaults.standard
+
     // returns true if participantId, organizationId and studyId are valid values
     static func validateEnrollmentDetails (enrollment: Enrollment, withOrgId: Bool) -> Bool {
         let invalidParticipantId = enrollment.participantId.isEmpty
