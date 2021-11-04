@@ -10,12 +10,12 @@ import Foundation
 // information about the device
 // ref: https://developer.apple.com/documentation/uikit/uidevice
 struct IOSDevice :Codable {
-    var model: String
-    var version: String
     var deviceId: String?
+    var localizedModel: String
+    var model: String
     var name: String
     var systemName: String
-    var localizedModel: String
+    var version: String
     
     /// fully qualified java class name required when deserializing object
     var className = "com.openlattice.chronicle.sources.IOSDevice"
