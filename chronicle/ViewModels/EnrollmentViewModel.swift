@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Grants view access to the Enrollment model.  Keeps track of input values and errors
+/// Generic state manager for views. Handles intents and sets up binding for various properties
 class EnrollmentViewModel: ObservableObject {
     /// store key value pairs in user's default database
     let settings = UserDefaults.standard
@@ -32,10 +32,10 @@ class EnrollmentViewModel: ObservableObject {
         organizationId = settings.object(forKey: UserSettingsKeys.organizationId) as? String ?? ""
     }
     
-    func validateInput() {
-        invalidStudyId = UUID.init(uuidString: studyId) == nil
-        invalidParticipantId = participantId.isEmpty
-        invalidOrganizationId = withOrgId && UUID.init(uuidString: organizationId) == nil
+    func validateInput(enrollment: Enrollment) {
+        invalidStudyId = !enrollment.isValidStudyId
+        invalidParticipantId = !enrollment.isValidParticipant
+        invalidOrganizationId = !enrollment.isValidOrgId
     }
     
     func isDeviceEnrolled() -> Bool {
@@ -55,18 +55,18 @@ class EnrollmentViewModel: ObservableObject {
      }
      */
     func enroll() async {
+        let enrollment = Enrollment(participantId: participantId, studyId: studyId, organizationId: organizationId, withOrgId: withOrgId)
+        validateInput(enrollment: enrollment)
         
-        validateInput()
-        if (invalidStudyId || invalidParticipantId || invalidOrganizationId ) {
+        guard enrollment.isValid else {
             return
         }
         
         self.enrolling = true
         self.showEnrollmentError = false
         
-        let enrollment = Enrollment(participantId: participantId, studyId: studyId, organizationId: organizationId)
         
-        await ApiClient.enrollDevice(enrollment: enrollment, withOrgId: withOrgId) { deviceId in
+        await ApiClient.enrollDevice(enrollment: enrollment) { deviceId in
             DispatchQueue.main.async {
                 self.showEnrollmentError = false
                 self.showEnrollmentSuccess = true

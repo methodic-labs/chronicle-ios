@@ -16,8 +16,8 @@ struct EnrollmentUtils {
     // returns true if participantId, organizationId and studyId are valid values
     static func validateEnrollmentDetails (enrollment: Enrollment, withOrgId: Bool) -> Bool {
         let invalidParticipantId = enrollment.participantId.isEmpty
-        let invalidStudyId = UUID.init(uuidString: enrollment.studyId) == nil
-        let invalidOrgId = withOrgId && UUID.init(uuidString: enrollment.organizationId) == nil
+        let invalidStudyId = enrollment.studyId == nil
+        let invalidOrgId = withOrgId && enrollment.organizationId == nil
         
         return !(invalidParticipantId || invalidStudyId || invalidOrgId)
     }
