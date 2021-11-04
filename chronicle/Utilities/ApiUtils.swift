@@ -24,7 +24,7 @@ struct ApiUtils {
     
     // returns an optional URLComponent with orgId in the path
     static func makeEnrollDeviceComponentsWithOrg (enrollment: Enrollment, deviceId: String) -> URLComponents? {
-        guard EnrollmentUtils.validateEnrollmentDetails(enrollment: enrollment, withOrgId: true) else {
+        guard enrollment.isValid else {
             return nil
         }
         
@@ -46,7 +46,7 @@ struct ApiUtils {
     // returns an optional URLComponent for legacy enrollment
     static func makeEnrollDeviceComponentsWithoutOrg(enrollment: Enrollment, deviceId: String) -> URLComponents? {
         
-        guard EnrollmentUtils.validateEnrollmentDetails(enrollment: enrollment, withOrgId: false) else {
+        guard enrollment.isValid else {
             return nil
         }
         

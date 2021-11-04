@@ -13,15 +13,6 @@ import UIKit
 struct EnrollmentUtils {
     static var defaults = UserDefaults.standard
 
-    // returns true if participantId, organizationId and studyId are valid values
-    static func validateEnrollmentDetails (enrollment: Enrollment, withOrgId: Bool) -> Bool {
-        let invalidParticipantId = enrollment.participantId.isEmpty
-        let invalidStudyId = enrollment.studyId == nil
-        let invalidOrgId = withOrgId && enrollment.organizationId == nil
-        
-        return !(invalidParticipantId || invalidStudyId || invalidOrgId)
-    }
-    
     // returns information about the device: https://developer.apple.com/documentation/uikit/uidevice
     static func getDeviceInformation() async -> IOSDevice {
         let device = await UIDevice.current
