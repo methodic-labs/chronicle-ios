@@ -12,7 +12,7 @@ struct ApiClient {
     static var settings = UserDefaults.standard
     
     /// Enrolls a device
-    static func enrollDevice(enrollment: Enrollment, withOrgId: Bool, onSuccess: @escaping (String) -> Void, onError: @escaping (String) -> Void) async {
+    static func enrollDevice(enrollment: Enrollment, onSuccess: @escaping (String) -> Void, onError: @escaping (String) -> Void) async {
         
         // device data
         let deviceInformation = await EnrollmentUtils.getDeviceInformation()
@@ -20,7 +20,7 @@ struct ApiClient {
             return
         }
         
-        guard let urlComponents: URLComponents = withOrgId
+        guard let urlComponents: URLComponents = enrollment.withOrgId
                 ? ApiUtils.makeEnrollDeviceComponentsWithOrg(enrollment: enrollment, deviceId: deviceId)
                 : ApiUtils.makeEnrollDeviceComponentsWithoutOrg(enrollment: enrollment, deviceId: deviceId) else {
                     return
