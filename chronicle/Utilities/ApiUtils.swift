@@ -24,7 +24,7 @@ struct ApiUtils {
     
     // returns an optional URLComponent with orgId in the path
     static func makeEnrollDeviceComponentsWithOrg (enrollment: Enrollment, deviceId: String) -> URLComponents? {
-        guard EnrollmentUtils.validateEnrollmentDetails(enrollment: enrollment, withOrgId: true) else {
+        guard enrollment.isValid else {
             return nil
         }
         
@@ -36,7 +36,7 @@ struct ApiUtils {
         
         components.scheme = ChronicleApi.scheme
         components.host = ChronicleApi.host
-        components.path = "\(ChronicleApi.v2Base)/\(enrollment.organizationId)/\(enrollment.studyId)/\(enrollment.participantId)/\(deviceId)\(ChronicleApi.enrollPath)"
+        components.path = "\(ChronicleApi.v2Base)/\(enrollment.organizationId!)/\(enrollment.studyId!)/\(enrollment.participantId)/\(deviceId)\(ChronicleApi.enrollPath)"
         
         // debug: set components.scheme = 'http', components.host = [local server ip] , components.port = 8090
         // expected path: /chronicle/v2 + ORGANIZATION_ID_PATH + STUDY_ID_PATH + PARTICIPANT_ID_PATH + DATASOURCE_ID_PATH + ENROLL_PATH
@@ -46,7 +46,7 @@ struct ApiUtils {
     // returns an optional URLComponent for legacy enrollment
     static func makeEnrollDeviceComponentsWithoutOrg(enrollment: Enrollment, deviceId: String) -> URLComponents? {
         
-        guard EnrollmentUtils.validateEnrollmentDetails(enrollment: enrollment, withOrgId: false) else {
+        guard enrollment.isValid else {
             return nil
         }
         
@@ -57,7 +57,7 @@ struct ApiUtils {
         var components = URLComponents()
         components.scheme = ChronicleApi.scheme
         components.host = ChronicleApi.host
-        components.path = "\(ChronicleApi.base)\(ChronicleApi.studyPath)/\(enrollment.studyId)/\(enrollment.participantId)/\(deviceId)"
+        components.path = "\(ChronicleApi.base)\(ChronicleApi.studyPath)/\(enrollment.studyId!)/\(enrollment.participantId)/\(deviceId)"
         // debug: set components.scheme = 'http', components.host = [local server ip] , components.port = 8090
         
         // expected path: /chronicle/study + STUDY_ID_PATH + PARTICIPANT_ID_PATH + DATASOURCE_ID_PATH

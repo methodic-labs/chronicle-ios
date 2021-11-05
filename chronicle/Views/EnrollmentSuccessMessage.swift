@@ -14,10 +14,27 @@ You have successfully installed Chronicle and may now close the application. Chr
 """
 
 struct EnrollmentSuccessMessage: View {
+    var enrollmentViewModel: EnrollmentViewModel
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text(successMessage)
-            // later, add "Done" button which navigates to home page
+            HStack {
+                Spacer()
+                Button {
+                    enrollmentViewModel.onShowEnrollmentDetails()
+                } label: {
+                    Text("Done")
+                        .foregroundColor(.white)
+                        .padding([.top, .bottom], 10)
+                        .padding([.leading, .trailing], 20)
+                }
+                    .background(Color.primaryPurple)
+                .cornerRadius(8)
+                Spacer()
+            }
+            .padding(.top)
+            
             Spacer()
         }.padding()
     }
@@ -25,6 +42,6 @@ struct EnrollmentSuccessMessage: View {
 
 struct EnrollmentSuccessMessage_Previews: PreviewProvider {
     static var previews: some View {
-        EnrollmentSuccessMessage()
+        EnrollmentSuccessMessage(enrollmentViewModel: EnrollmentViewModel())
     }
 }

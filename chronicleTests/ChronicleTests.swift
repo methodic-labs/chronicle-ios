@@ -16,7 +16,7 @@ class ChronicleTests: XCTestCase {
     let participantId = "1001"
     
     func testEnrollmentUrlWithOrg() {
-        let enrollment = Enrollment(participantId: participantId, studyId: studyId, organizationId: organizationId)
+        let enrollment = Enrollment(participantId: participantId, studyId: studyId, organizationId: organizationId, withOrgId: true)
         let urlComponents = ApiUtils.makeEnrollDeviceComponentsWithOrg(enrollment: enrollment, deviceId: deviceId)
         
         XCTAssertNotNil(urlComponents, "should not be nil")
@@ -29,7 +29,7 @@ class ChronicleTests: XCTestCase {
     }
     
     func testEnrollmentWithoutOrg() {
-        let enrollment = Enrollment(participantId: participantId, studyId: studyId, organizationId: organizationId)
+        let enrollment = Enrollment(participantId: participantId, studyId: studyId, organizationId: organizationId, withOrgId: true)
         let urlComponents = ApiUtils.makeEnrollDeviceComponentsWithoutOrg(enrollment: enrollment, deviceId: deviceId)
         
         XCTAssertNotNil(urlComponents, "should not be nil")
@@ -40,7 +40,7 @@ class ChronicleTests: XCTestCase {
     }
     
     func testInvalidParticipantId() {
-        let enrollment = Enrollment(participantId: "", studyId: studyId, organizationId: organizationId)
+        let enrollment = Enrollment(participantId: "", studyId: studyId, organizationId: organizationId, withOrgId: true)
         let urlComponents = ApiUtils.makeEnrollDeviceComponentsWithOrg(enrollment: enrollment, deviceId: deviceId)
         
         XCTAssertNil(urlComponents, "Empty participantId should result in nil")
@@ -48,7 +48,7 @@ class ChronicleTests: XCTestCase {
     
     func testInvalidStudyId() {
         let invalidStudyId = "invalid"
-        let enrollment = Enrollment(participantId: participantId, studyId: invalidStudyId, organizationId: organizationId)
+        let enrollment = Enrollment(participantId: participantId, studyId: invalidStudyId, organizationId: organizationId, withOrgId: true)
         let urlComponents = ApiUtils.makeEnrollDeviceComponentsWithOrg(enrollment: enrollment, deviceId: deviceId)
         
         XCTAssertNil(urlComponents, "\(invalidStudyId) should result in nil")
@@ -56,7 +56,7 @@ class ChronicleTests: XCTestCase {
     
     func testInvalidOrgId() {
         let invalidOrgId = "orgid"
-        let enrollment = Enrollment(participantId: participantId, studyId: studyId, organizationId: invalidOrgId)
+        let enrollment = Enrollment(participantId: participantId, studyId: studyId, organizationId: invalidOrgId, withOrgId: true)
         let urlComponents = ApiUtils.makeEnrollDeviceComponentsWithOrg(enrollment: enrollment, deviceId: deviceId)
         
         XCTAssertNil(urlComponents, "\(invalidOrgId) should result in nil")

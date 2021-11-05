@@ -11,16 +11,8 @@ import UIKit
 
 /// Utility functions to handle device enrollment
 struct EnrollmentUtils {
-    
-    // returns true if participantId, organizationId and studyId are valid values
-    static func validateEnrollmentDetails (enrollment: Enrollment, withOrgId: Bool) -> Bool {
-        let invalidParticipantId = enrollment.participantId.isEmpty
-        let invalidStudyId = UUID.init(uuidString: enrollment.studyId) == nil
-        let invalidOrgId = withOrgId && UUID.init(uuidString: enrollment.organizationId) == nil
-        
-        return !(invalidParticipantId || invalidStudyId || invalidOrgId)
-    }
-    
+    static var defaults = UserDefaults.standard
+
     // returns information about the device: https://developer.apple.com/documentation/uikit/uidevice
     static func getDeviceInformation() async -> IOSDevice {
         let device = await UIDevice.current
