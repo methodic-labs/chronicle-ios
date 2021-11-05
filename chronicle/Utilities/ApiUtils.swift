@@ -22,6 +22,7 @@ struct ApiUtils {
 
     // returns an optional URLComponent with orgId in the path
     static func makeEnrollDeviceComponentsWithOrg (enrollment: Enrollment, deviceId: String) -> URLComponents? {
+        
         guard enrollment.isValid else {
             return nil
         }
@@ -31,7 +32,6 @@ struct ApiUtils {
         }
 
         var components = URLComponents()
-
         components.scheme = scheme
         components.host = host
         components.path = "\(v2Base)/\(enrollment.organizationId!)/\(enrollment.studyId!)/\(enrollment.participantId)/\(deviceId)/\(enrollPath)"
