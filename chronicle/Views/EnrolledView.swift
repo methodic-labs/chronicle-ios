@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct EnrolledView: View {
+    var enrollmentViewModel: EnrollmentViewModel
     let defaults = UserDefaults.standard
     
     var body: some View {
@@ -18,6 +19,8 @@ struct EnrolledView: View {
                 Text(defaults.string(forKey: UserSettingsKeys.studyId) ?? "").padding(.bottom)
                 Text("Participant ID:").padding(.bottom)
                 Text(defaults.string(forKey: UserSettingsKeys.participantId) ?? "").padding(.bottom)
+                Text("Organization ID:").padding(.bottom)
+                Text(defaults.string(forKey: UserSettingsKeys.organizationId) ?? "").padding(.bottom)
             }
             .padding(.horizontal)
         }
@@ -26,6 +29,6 @@ struct EnrolledView: View {
 
 struct EnrolledView_Previews: PreviewProvider {
     static var previews: some View {
-        EnrolledView()
+        EnrolledView(enrollmentViewModel: EnrollmentViewModel())
     }
 }
