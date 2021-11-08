@@ -18,12 +18,12 @@ struct EnrollmentForm: View {
                 Text("Do you have an organization ID?")
                     .padding(.bottom)
                 RadioButtonGroup(hasOrgId: $enrollmentViewModel.withOrgId)
-
+                
+                InputFieldView(label: "Enter your Participant ID", inputId: $enrollmentViewModel.participantId, invalidInput: $enrollmentViewModel.invalidParticipantId)
+                InputFieldView(label: "Enter your Study ID", inputId: $enrollmentViewModel.studyId, invalidInput: $enrollmentViewModel.invalidStudyId)
                 if enrollmentViewModel.withOrgId == true {
                     InputFieldView(label: "Enter your Organization ID", inputId: $enrollmentViewModel.organizationId, invalidInput: $enrollmentViewModel.invalidOrganizationId)
                 }
-                InputFieldView(label: "Enter your Study ID", inputId: $enrollmentViewModel.studyId, invalidInput: $enrollmentViewModel.invalidStudyId)
-                InputFieldView(label: "Enter your Participant ID", inputId: $enrollmentViewModel.participantId, invalidInput: $enrollmentViewModel.invalidParticipantId)
 
                 HStack {
                     Spacer()

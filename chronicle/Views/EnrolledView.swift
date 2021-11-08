@@ -15,10 +15,10 @@ struct EnrolledView: View {
         ScrollView {
             VStack(alignment: .leading) {
                 AppHeader()
-                Text("Study ID:").padding(.bottom)
-                Text(defaults.string(forKey: UserSettingsKeys.studyId) ?? "").padding(.bottom)
                 Text("Participant ID:").padding(.bottom)
                 Text(defaults.string(forKey: UserSettingsKeys.participantId) ?? "").padding(.bottom)
+                Text("Study ID:").padding(.bottom)
+                Text(defaults.string(forKey: UserSettingsKeys.studyId) ?? "").padding(.bottom)
                 if (defaults.string(forKey: UserSettingsKeys.organizationId) != nil) {
                     Text("Organization ID:").padding(.bottom)
                     Text(defaults.string(forKey: UserSettingsKeys.organizationId) ?? "").padding(.bottom)
