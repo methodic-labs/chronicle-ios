@@ -85,6 +85,7 @@
 		B9BBFDC026CD6AFC00B770E4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B9BBFDBE26C648C100B770E4 /* EnrolledView.swift */,
 				EA802F2A26BA4C0400C494F8 /* EnrollmentView.swift */,
 				B9BBFDC126CD6B1100B770E4 /* AppHeader.swift */,
 				B9BBFDC326CD6D0200B770E4 /* InputFieldView.swift */,
@@ -132,7 +133,6 @@
 				EA802F2826BA4C0400C494F8 /* ChronicleApp.swift */,
 				EA802F2C26BA4C0500C494F8 /* Assets.xcassets */,
 				EA802F2E26BA4C0500C494F8 /* Preview Content */,
-				B9BBFDBE26C648C100B770E4 /* EnrolledView.swift */,
 				B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */,
 			);
 			path = chronicle;
@@ -290,7 +290,7 @@
 				B9BBFDC626CD6D9800B770E4 /* RadioButtonGroup.swift in Sources */,
 				B9BBFDC826CD6EC800B770E4 /* EnrollmentSuccessMessage.swift in Sources */,
 				EA82494D26C4F27500F9CD7C /* IOSDevice.swift in Sources */,
-				EA802F2B26BA4C0400C494F8 /* ContentView.swift in Sources */,
+				EA802F2B26BA4C0400C494F8 /* EnrollmentView.swift in Sources */,
 				B9BBFDBF26C648C100B770E4 /* EnrolledView.swift in Sources */,
 				EA802F2B26BA4C0400C494F8 /* EnrollmentView.swift in Sources */,
 				EA82495326C4F2D500F9CD7C /* EnrollmentViewModel.swift in Sources */,
