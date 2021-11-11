@@ -28,8 +28,9 @@
 		EA82495526C4F2F900F9CD7C /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82495426C4F2F900F9CD7C /* ApiClient.swift */; };
 		EA82495726C4F31A00F9CD7C /* ApiUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82495626C4F31A00F9CD7C /* ApiUtils.swift */; };
 		EA82495926C4F33800F9CD7C /* EnrollmentUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82495826C4F33800F9CD7C /* EnrollmentUtils.swift */; };
-		EAC54875273BFCC5000BF1B8 /* SensorDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC54874273BFCC5000BF1B8 /* SensorDataProvider.swift */; };
 		EAC5487A273C915D000BF1B8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC54879273C915D000BF1B8 /* Utils.swift */; };
+		EAC5487C273CCAF6000BF1B8 /* SensorDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC5487B273CCAF6000BF1B8 /* SensorDataProvider.swift */; };
+		EAC5487D273CCAF6000BF1B8 /* SensorDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC5487B273CCAF6000BF1B8 /* SensorDataProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,8 +66,8 @@
 		EA82495426C4F2F900F9CD7C /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 		EA82495626C4F31A00F9CD7C /* ApiUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiUtils.swift; sourceTree = "<group>"; };
 		EA82495826C4F33800F9CD7C /* EnrollmentUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentUtils.swift; sourceTree = "<group>"; };
-		EAC54874273BFCC5000BF1B8 /* SensorDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SensorDataProvider.swift; path = chronicle/SensorDataProvider.swift; sourceTree = SOURCE_ROOT; };
 		EAC54879273C915D000BF1B8 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		EAC5487B273CCAF6000BF1B8 /* SensorDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDataProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,7 +185,7 @@
 		EAC54876273C2707000BF1B8 /* Sensor */ = {
 			isa = PBXGroup;
 			children = (
-				EAC54874273BFCC5000BF1B8 /* SensorDataProvider.swift */,
+				EAC5487B273CCAF6000BF1B8 /* SensorDataProvider.swift */,
 			);
 			path = Sensor;
 			sourceTree = "<group>";
@@ -291,6 +292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA46D45426C4F850008CE3C0 /* ChronicleTests.swift in Sources */,
+				EAC5487D273CCAF6000BF1B8 /* SensorDataProvider.swift in Sources */,
 				EA28164627346B0C005C26E8 /* SensorDataModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -315,8 +317,8 @@
 				EA63652326C6D6EF005D6DFC /* UserSettingsKeys.swift in Sources */,
 				EA82494F26C4F28E00F9CD7C /* Enrollment.swift in Sources */,
 				B9BBFDC426CD6D0200B770E4 /* InputFieldView.swift in Sources */,
-				EAC54875273BFCC5000BF1B8 /* SensorDataProvider.swift in Sources */,
 				EAC5487A273C915D000BF1B8 /* Utils.swift in Sources */,
+				EAC5487C273CCAF6000BF1B8 /* SensorDataProvider.swift in Sources */,
 				EA82495926C4F33800F9CD7C /* EnrollmentUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
