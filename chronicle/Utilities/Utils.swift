@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+// generic Utilities class
+
+struct Utils {
+    static var formatter = ISO8601DateFormatter.init()
+    
+    static func convertDateToString(_ date: Date) -> String {
+        return formatter.string(from: date)
+    }
+}

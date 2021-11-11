@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import SensorKit
+
+class SensorDataProvider: NSObject, SRSensorReaderDelegate {
+    
+}
