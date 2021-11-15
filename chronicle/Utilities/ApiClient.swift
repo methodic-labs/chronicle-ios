@@ -63,11 +63,12 @@ struct ApiClient {
         task.resume()
     }
     
-    static func getPropertyTypeIds() async -> [FullQualifiedName: UUID]? {
+    
+    static func getPropertyTypeIds() async -> [FullQualifiedName: String]? {
         // get locally stored value
         let result = settings.object(forKey: UserSettingsKeys.propertyTypes) as? [String: String] ?? [:]
         if (result.count == FullQualifiedName.fqns.count) {
-            print("Returning locally stored values")
+            print("Returning locally stored FQNS")
             return Utils.toFqnUUIDMap(result)
         }
         

@@ -19,15 +19,14 @@ struct FullQualifiedName: Codable, Hashable {
 
 extension FullQualifiedName {
     static var dateLoggedFqn = FullQualifiedName(namespace: "ol", name: "datelogged")
-    static var descriptionFqn = FullQualifiedName(namespace: "ol", name: "description")
     static var idFqn = FullQualifiedName(namespace: "ol", name: "id")
     static var valuesFqn = FullQualifiedName(namespace: "ol", name: "values")
     static var variableFqn = FullQualifiedName(namespace: "ol", name: "variable")
     
+    // add other FQNS here that might be needed
     static var fqns: Set<FullQualifiedName> {
         [
             idFqn,
-            descriptionFqn,
             variableFqn,
             valuesFqn,
             dateLoggedFqn

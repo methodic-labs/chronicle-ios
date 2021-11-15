@@ -8,13 +8,13 @@
 import Foundation
 
 struct Utils {
-    // converts a [String: String] dictionary to [FullQualified: UUID]
-    static func toFqnUUIDMap(_ input: [String: String]) -> [FullQualifiedName: UUID] {
-        var result: [FullQualifiedName: UUID] = [:]
+    // converts a [String: String] dictionary to [FullQualified: String]
+    static func toFqnUUIDMap(_ input: [String: String]) -> [FullQualifiedName: String] {
+        var result: [FullQualifiedName: String] = [:]
         
         for (key, val) in input {
-            if let fqn = FullQualifiedName.fromString(key), let id = UUID(uuidString: val) {
-                result[fqn] = id
+            if let fqn = FullQualifiedName.fromString(key) {
+                result[fqn] = val
             }
         }
         
