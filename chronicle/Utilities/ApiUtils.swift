@@ -23,7 +23,7 @@ struct ApiUtils {
     }
     
     // returns an optional URLComponent with orgId in the path
-    static func makeEnrollDeviceComponentsWithOrg (enrollment: Enrollment, deviceId: String) -> URLComponents? {
+    static func makeEnrollDeviceUrlComponents (enrollment: Enrollment, deviceId: String) -> URLComponents? {
         guard enrollment.isValid else {
             return nil
         }
