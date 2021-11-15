@@ -42,25 +42,4 @@ struct ApiUtils {
         // expected path: /chronicle/v2 + ORGANIZATION_ID_PATH + STUDY_ID_PATH + PARTICIPANT_ID_PATH + DATASOURCE_ID_PATH + ENROLL_PATH
         return components
     }
-    
-    // returns an optional URLComponent for legacy enrollment
-    static func makeEnrollDeviceComponentsWithoutOrg(enrollment: Enrollment, deviceId: String) -> URLComponents? {
-        
-        guard enrollment.isValid else {
-            return nil
-        }
-        
-        guard !deviceId.isEmpty else {
-            return nil
-        }
-        
-        var components = URLComponents()
-        components.scheme = ChronicleApi.scheme
-        components.host = ChronicleApi.host
-        components.path = "\(ChronicleApi.base)\(ChronicleApi.studyPath)/\(enrollment.studyId!)/\(enrollment.participantId)/\(deviceId)"
-        // debug: set components.scheme = 'http', components.host = [local server ip] , components.port = 8090
-        
-        // expected path: /chronicle/study + STUDY_ID_PATH + PARTICIPANT_ID_PATH + DATASOURCE_ID_PATH
-        return components
-    }
 }
