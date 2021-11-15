@@ -19,10 +19,8 @@ struct EnrolledView: View {
                 Text(defaults.string(forKey: UserSettingsKeys.participantId) ?? "").padding(.bottom)
                 Text("Study ID:").padding(.bottom)
                 Text(defaults.string(forKey: UserSettingsKeys.studyId) ?? "").padding(.bottom)
-                if (defaults.string(forKey: UserSettingsKeys.organizationId) != nil) {
-                    Text("Organization ID:").padding(.bottom)
-                    Text(defaults.string(forKey: UserSettingsKeys.organizationId) ?? "").padding(.bottom)
-                }
+                Text("Organization ID:").padding(.bottom)
+                Text(defaults.string(forKey: UserSettingsKeys.organizationId) ?? "").padding(.bottom)
             }
             .padding(.horizontal)
         }
