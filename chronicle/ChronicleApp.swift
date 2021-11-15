@@ -6,13 +6,20 @@
 //
 
 import SwiftUI
+import Foundation
 
 @main
 struct ChronicleApp: App {
     @ObservedObject var viewModel = EnrollmentViewModel()
-    let isDeviceEnrolled = UserDefaults.standard.object(forKey: UserSettingsKeys.isEnrolled) as? Bool ?? false
-    let coreDataProvider: SensorDataProvider = .shared
+    
+    let persitenceController: PersistenceController = .shared
+    let dataManager: SensorDataManager = .shared
+
     let interval: TimeInterval = 15 * 60 // 15 minutes
+        
+    var isDeviceEnrolled: Bool {
+        !viewModel.deviceId.isEmpty
+    }
     
     var body: some Scene {
         WindowGroup {
@@ -20,10 +27,18 @@ struct ChronicleApp: App {
                 // TODO: replace with view that accepts an instance of EnrollmentViewModel as a parameter.
                 Text("TODO: replace with view showing participantId, studyId and optionally orgId").onAppear {
                     Timer.scheduledTimer(
-                        timeInterval: 15,
-                        target: coreDataProvider,
-                        selector: #selector(coreDataProvider.mockSensorData),
+                        timeInterval: 10,
+                        target: dataManager,
+                        selector: #selector(dataManager.mockSensorData),
                         userInfo: nil,
+                        repeats: true
+                    )
+
+                    Timer.scheduledTimer(
+                        timeInterval: 10,
+                        target: dataManager,
+                        selector: #selector(dataManager.uploadMockSensorData(timer:)),
+                        userInfo: ["deviceId": viewModel.deviceId],
                         repeats: true
                     )
                 }

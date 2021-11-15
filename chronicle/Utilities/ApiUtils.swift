@@ -36,6 +36,9 @@ struct ApiUtils {
         
         components.scheme = ChronicleApi.scheme
         components.host = ChronicleApi.host
+        components.scheme = "http"
+        components.host = "192.168.1.66"
+        components.port = 8090
         components.path = "\(ChronicleApi.v2Base)/\(enrollment.organizationId!)/\(enrollment.studyId!)/\(enrollment.participantId)/\(deviceId)\(ChronicleApi.enrollPath)"
         
         // debug: set components.scheme = 'http', components.host = [local server ip] , components.port = 8090
@@ -61,6 +64,24 @@ struct ApiUtils {
         // debug: set components.scheme = 'http', components.host = [local server ip] , components.port = 8090
         
         // expected path: /chronicle/study + STUDY_ID_PATH + PARTICIPANT_ID_PATH + DATASOURCE_ID_PATH
+        return components
+    }
+    
+    static func getUploadSensorDataUrlComponents(enrollment: Enrollment, deviceId: String) -> URLComponents? {
+        var components = URLComponents()
+        
+        guard enrollment.isValid else {
+            return nil
+        }
+        guard !deviceId.isEmpty else {
+            return nil
+        }
+        
+        components.scheme = "http"
+        components.host = "192.168.1.66"
+        components.port = 8090
+        components.path = "/chronicle/v2/\(enrollment.organizationId!)/\(enrollment.studyId!)/\(enrollment.participantId)/\(deviceId)/upload/ios"
+        
         return components
     }
 }

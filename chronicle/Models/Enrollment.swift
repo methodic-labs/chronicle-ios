@@ -9,6 +9,7 @@ import Foundation
 
 /// Describes user input values required to initiate device enrollment
 struct Enrollment {
+    
     let participantId: String
     let studyId: UUID?
     let organizationId: UUID?
@@ -40,5 +41,14 @@ struct Enrollment {
         self.withOrgId = withOrgId
     }
     
+    static func getCurrentEnrollment() -> Self {
+        let settings = UserDefaults.standard
+        
+        let participantId = settings.object(forKey: UserSettingsKeys.participantId) as? String ?? ""
+        let studyId = settings.object(forKey: UserSettingsKeys.studyId) as? String ?? ""
+        let organizationId = settings.object(forKey: UserSettingsKeys.organizationId) as? String ?? ""
+        
+        return Enrollment(participantId: participantId, studyId: studyId, organizationId: organizationId, withOrgId: false)
+    }
 }
 

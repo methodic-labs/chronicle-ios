@@ -58,6 +58,11 @@ class PersistenceController {
         return container
     }()
     
+    lazy var backgroundContext: NSManagedObjectContext? = {
+        let context = newTaskContext()
+        return context
+    }()
+    
     // creates and configures a background context
     func newTaskContext() -> NSManagedObjectContext? {
         guard persistentContainer != nil else {
@@ -66,6 +71,7 @@ class PersistenceController {
         }
         
         let taskContext = persistentContainer!.newBackgroundContext()
+        taskContext.automaticallyMergesChangesFromParent = true
         return taskContext
     }
 }
