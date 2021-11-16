@@ -10,6 +10,9 @@ import SwiftUI
 @main
 struct ChronicleApp: App {
     @ObservedObject var viewModel = EnrollmentViewModel()
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     let isDeviceEnrolled = UserDefaults.standard.object(forKey: UserSettingsKeys.isEnrolled) as? Bool ?? false
     let coreDataProvider: SensorDataProvider = .shared
     let interval: TimeInterval = 15 * 60 // 15 minutes

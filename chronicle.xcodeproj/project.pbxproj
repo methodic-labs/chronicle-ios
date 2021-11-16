@@ -13,6 +13,7 @@
 		B9BBFDC826CD6EC800B770E4 /* EnrollmentSuccessMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDC726CD6EC800B770E4 /* EnrollmentSuccessMessage.swift */; };
 		B9BBFDCC26CD707D00B770E4 /* EnrollmentFailureMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDCB26CD707D00B770E4 /* EnrollmentFailureMessage.swift */; };
 		B9BBFDD026CD9C6C00B770E4 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */; };
+		EA0048E42744344400EBA09F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0048E32744344400EBA09F /* AppDelegate.swift */; };
 		EA28164527346B0B005C26E8 /* SensorDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA28164327346B0B005C26E8 /* SensorDataModel.xcdatamodeld */; };
 		EA28164627346B0C005C26E8 /* SensorDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA28164327346B0B005C26E8 /* SensorDataModel.xcdatamodeld */; };
 		EA28164A2738BDE6005C26E8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2816492738BDE5005C26E8 /* Persistence.swift */; };
@@ -51,6 +52,7 @@
 		B9BBFDCB26CD707D00B770E4 /* EnrollmentFailureMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentFailureMessage.swift; sourceTree = "<group>"; };
 		B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		EA0048E227442F0600EBA09F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		EA0048E32744344400EBA09F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA28164427346B0B005C26E8 /* SensorDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SensorDataModel.xcdatamodel; sourceTree = "<group>"; };
 		EA2816492738BDE5005C26E8 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		EA46D44826C4F745008CE3C0 /* chronicleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chronicleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,6 +143,7 @@
 				EA802F2C26BA4C0500C494F8 /* Assets.xcassets */,
 				EA802F2E26BA4C0500C494F8 /* Preview Content */,
 				B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */,
+				EA0048E32744344400EBA09F /* AppDelegate.swift */,
 			);
 			path = chronicle;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 				B9BBFDC826CD6EC800B770E4 /* EnrollmentSuccessMessage.swift in Sources */,
 				EA82494D26C4F27500F9CD7C /* IOSDevice.swift in Sources */,
 				EA802F2B26BA4C0400C494F8 /* EnrollmentView.swift in Sources */,
+				EA0048E42744344400EBA09F /* AppDelegate.swift in Sources */,
 				EA28164A2738BDE6005C26E8 /* Persistence.swift in Sources */,
 				EA82495326C4F2D500F9CD7C /* EnrollmentViewModel.swift in Sources */,
 				EA28164527346B0B005C26E8 /* SensorDataModel.xcdatamodeld in Sources */,
