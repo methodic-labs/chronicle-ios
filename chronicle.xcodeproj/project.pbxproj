@@ -141,7 +141,6 @@
 				EA802F2C26BA4C0500C494F8 /* Assets.xcassets */,
 				EA802F2E26BA4C0500C494F8 /* Preview Content */,
 				B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */,
-				EA2816492738BDE5005C26E8 /* Persistence.swift */,
 			);
 			path = chronicle;
 			sourceTree = "<group>";
@@ -157,6 +156,7 @@
 		EA82494726C4F12500F9CD7C /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				EA2816492738BDE5005C26E8 /* Persistence.swift */,
 				EA28164327346B0B005C26E8 /* SensorDataModel.xcdatamodeld */,
 				EA82494C26C4F27500F9CD7C /* IOSDevice.swift */,
 				EA82494E26C4F28E00F9CD7C /* Enrollment.swift */,
