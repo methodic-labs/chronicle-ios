@@ -45,7 +45,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 1
         
-        guard let context = PersistenceController.shared.newTaskContext() else {
+        guard let context = PersistenceController.shared.newBackgroundContext() else {
             logger.info("unable to execute upload task")
             task.setTaskCompleted(success: false)
             return
