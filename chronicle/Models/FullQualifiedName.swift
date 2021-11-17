@@ -22,6 +22,9 @@ extension FullQualifiedName {
     static var idFqn = FullQualifiedName(namespace: "ol", name: "id")
     static var valuesFqn = FullQualifiedName(namespace: "ol", name: "values")
     static var variableFqn = FullQualifiedName(namespace: "ol", name: "variable")
+    static var nameFqn = FullQualifiedName(namespace: "ol", name: "name")
+    static var dateTimeStartFqn = FullQualifiedName(namespace: "ol", name: "datetimestart")
+    static var dateTimeEndFqn = FullQualifiedName(namespace: "ol", name: "datetimeend")
     
     // add other FQNS here that might be needed
     static var fqns: Set<FullQualifiedName> {
