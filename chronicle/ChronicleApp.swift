@@ -18,7 +18,7 @@ struct ChronicleApp: App {
     var body: some Scene {
         WindowGroup {
             if isDeviceEnrolled || viewModel.isEnrollmentDetailsViewVisible {
-                EnrolledView(enrollmentViewModel: viewModel)
+                EnrolledView(appDelegate: appDelegate, enrollmentViewModel: viewModel)
             } else if viewModel.showEnrollmentSuccess {
                 EnrollmentSuccessMessage(enrollmentViewModel: viewModel)
             } else {

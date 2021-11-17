@@ -19,6 +19,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     // task identifiers in BGTaskSchedulerPermittedIdentifiers array of Info.Plist
     let mockDataTaskIdentifer = "com.openlattice.chronicle.mockSensorData"
     
+    
+    var saveDataBackroundTaskID: UIBackgroundTaskIdentifier?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
         // register handlers for tasks
@@ -75,5 +78,27 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         } catch {
             logger.info("Could not schedule mocking sensor data task: \(error.localizedDescription)")
         }
+    }
+    
+    @objc func mockSensorData() {
+        self.saveDataBackroundTaskID = UIApplication.shared.beginBackgroundTask(withName: "Save mock data to database") {
+            // end task if time expires
+            UIApplication.shared.endBackgroundTask(self.saveDataBackroundTaskID!)
+            self.saveDataBackroundTaskID = nil
+            
+        }
+        
+        guard let context = PersistenceController.shared.newBackgroundContext() else {
+            logger.info("unable to execute task")
+            UIApplication.shared.endBackgroundTask(self.saveDataBackroundTaskID!)
+            return
+        }
+        
+        let saveDataOperation = MockSensorDataOperation(context: context)
+        saveDataOperation.completionBlock = {
+            UIApplication.shared.endBackgroundTask(self.saveDataBackroundTaskID!)
+        }
+        
+        saveDataOperation.start()
     }
 }

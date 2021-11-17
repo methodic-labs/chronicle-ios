@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct EnrolledView: View {
+    @Environment(\.scenePhase) private var scenePhase
+    
+    let appDelegate: AppDelegate
     var enrollmentViewModel: EnrollmentViewModel
     let defaults = UserDefaults.standard
     
@@ -23,12 +26,21 @@ struct EnrolledView: View {
                 Text(defaults.string(forKey: UserSettingsKeys.organizationId) ?? "").padding(.bottom)
             }
             .padding(.horizontal)
+        }.onChange(of: scenePhase) { phase in
+            switch phase {
+            case .background:
+                appDelegate.scheduleMockSensorTask()
+            case .active:
+                Timer.scheduledTimer(timeInterval: 30, target: appDelegate, selector: #selector(appDelegate.mockSensorData), userInfo: nil, repeats: true)
+            default: break
+                
+            }
         }
     }
 }
 
 struct EnrolledView_Previews: PreviewProvider {
     static var previews: some View {
-        EnrolledView(enrollmentViewModel: EnrollmentViewModel())
+        EnrolledView(appDelegate: AppDelegate(), enrollmentViewModel: EnrollmentViewModel())
     }
 }
