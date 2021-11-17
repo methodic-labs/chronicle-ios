@@ -14,22 +14,12 @@ struct ChronicleApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     let isDeviceEnrolled = UserDefaults.standard.object(forKey: UserSettingsKeys.isEnrolled) as? Bool ?? false
-    let coreDataProvider: SensorDataProvider = .shared
-    let interval: TimeInterval = 15 * 60 // 15 minutes
     
     var body: some Scene {
         WindowGroup {
             if isDeviceEnrolled || viewModel.isEnrollmentDetailsViewVisible {
                 // TODO: replace with view that accepts an instance of EnrollmentViewModel as a parameter.
-                Text("TODO: replace with view showing participantId, studyId and optionally orgId").onAppear {
-                    Timer.scheduledTimer(
-                        timeInterval: 15,
-                        target: coreDataProvider,
-                        selector: #selector(coreDataProvider.mockSensorData),
-                        userInfo: nil,
-                        repeats: true
-                    )
-                }
+                Text("TODO: replace with view showing participantId, studyId and optionally orgId")
             } else if viewModel.showEnrollmentSuccess {
                 EnrollmentSuccessMessage(enrollmentViewModel: viewModel)
             } else {
