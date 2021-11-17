@@ -43,7 +43,7 @@ struct Enrollment {
         let studyId = settings.object(forKey: UserSettingsKeys.studyId) as? String ?? ""
         let organizationId = settings.object(forKey: UserSettingsKeys.organizationId) as? String ?? ""
         
-        return Enrollment(participantId: participantId, studyId: studyId, organizationId: organizationId, withOrgId: false)
+        return Enrollment(participantId: participantId, studyId: studyId, organizationId: organizationId)
     }
 }
 
