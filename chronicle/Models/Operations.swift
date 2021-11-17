@@ -61,6 +61,7 @@ class UploadDataOperation: Operation {
     private let fetchLimit = 200
     
     private var uploading = false
+    private var hasMoreData = true
     
     init(context: NSManagedObjectContext, deviceId: String, enrollment: Enrollment) {
         self.context = context
@@ -72,35 +73,53 @@ class UploadDataOperation: Operation {
         // try fetching
         context.performAndWait {
             do {
-                uploading = true
-                
-                let fetchRequest: NSFetchRequest<SensorData>
-                fetchRequest = SensorData.fetchRequest()
-                fetchRequest.fetchLimit = fetchLimit
-                
-                let objects = try context.fetch(fetchRequest)
-                
-                // transform to Data
-                let data = try transformSensorDataForUpload(objects)
-                
-                ApiClient.uploadData(sensorData: data, enrollment: enrollment, deviceId: deviceId) {
-                    try? self.context.save()
-                    self.uploading = false
-                } onError: { error in
-                    self.logger.error("error uploading to server: \(error)")
-                    self.uploading = false
+                while hasMoreData {
+                    let fetchRequest: NSFetchRequest<SensorData>
+                    fetchRequest = SensorData.fetchRequest()
+                    fetchRequest.fetchLimit = fetchLimit
+                    
+                    let objects = try context.fetch(fetchRequest)
+                    
+                    // no data available. signal operation to terminate
+                    if objects.isEmpty {
+                        self.hasMoreData = false
+                        self.uploading = false
+                        break
+                    }
+                    
+                    // transform to Data
+                    let data = try transformSensorDataForUpload(objects)
+                    
+                    self.logger.info("attempting to upload \(objects.count) objects to server")
+                    self.uploading = true
+                    
+                    ApiClient.uploadData(sensorData: data, enrollment: enrollment, deviceId: deviceId) {
+                        objects.forEach (self.context.delete) // delete uploaded data from local db
+                        try? self.context.save()
+                        self.uploading = false
+                    } onError: { error in
+                        self.logger.error("error uploading to server: \(error)")
+                        
+                        // signal operation to terminate
+                        self.uploading = false
+                        self.hasMoreData = false
+                    }
+                    
+                    // wait until the current upload attempt complete, and try again if there is more data
+                    while self.uploading {
+                        Thread.sleep(forTimeInterval: 5000)
+                    }
                 }
                 
             } catch {
                 logger.error("error uploading data to server: \(error.localizedDescription)")
                 uploading = false
             }
-            
         }
     }
     
     override var isExecuting: Bool {
-        return uploading
+        return uploading || hasMoreData
     }
     
     private func transformSensorDataForUpload(_ data: [SensorData]) throws -> Data {
