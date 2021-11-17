@@ -16,6 +16,7 @@ import OSLog
 class AppDelegate: NSObject, UIApplicationDelegate {
     let logger = Logger(subsystem: "com.openlattice.chronicle", category: "AppDelegate")
     
+    // task identifiers in BGTaskSchedulerPermittedIdentifiers array of Info.Plist
     let mockDataTaskIdentifer = "com.openlattice.chronicle.mockSensorData"
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -38,7 +39,30 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // schedule a new task
         scheduleMockSensorTask()
         
+        let queue = OperationQueue()
+        queue.maxConcurrentOperationCount = 1
         
+        guard let context = PersistenceController.shared.newTaskContext() else {
+            logger.info("unable to execute task")
+            task.setTaskCompleted(success: true)
+            return
+        }
+        
+        // operation to create fake sensor data and save to database
+        let mockDataOperation = MockSensorDataOperation(context: context)
+        
+        // expiration handler to cancel operation
+        task.expirationHandler = {
+            queue.cancelAllOperations()
+        }
+        
+        // inform system that task is complete
+        mockDataOperation.completionBlock = {
+            task.setTaskCompleted(success: !mockDataOperation.isCancelled)
+        }
+        
+        // start the operation
+        queue.addOperation(mockDataOperation)
     }
     
     
