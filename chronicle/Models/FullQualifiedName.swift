@@ -32,7 +32,10 @@ extension FullQualifiedName {
             idFqn,
             variableFqn,
             valuesFqn,
-            dateLoggedFqn
+            dateLoggedFqn,
+            dateTimeStartFqn,
+            dateTimeEndFqn,
+            nameFqn
         ]
     }
     
