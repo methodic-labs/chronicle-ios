@@ -15,13 +15,8 @@ struct EnrollmentView: View {
         ScrollView {
             VStack(alignment: .leading) {
                 AppHeader()
-                Text("Do you have an organization ID?")
-                    .padding(.bottom)
-                RadioButtonGroup(hasOrgId: $enrollmentViewModel.withOrgId)
 
-                if enrollmentViewModel.withOrgId == true {
-                    InputFieldView(label: "Enter your Organization ID", inputId: $enrollmentViewModel.organizationId, invalidInput: $enrollmentViewModel.invalidOrganizationId)
-                }
+                InputFieldView(label: "Enter your Organization ID", inputId: $enrollmentViewModel.organizationId, invalidInput: $enrollmentViewModel.invalidOrganizationId)
                 InputFieldView(label: "Enter your Study ID", inputId: $enrollmentViewModel.studyId, invalidInput: $enrollmentViewModel.invalidStudyId)
                 InputFieldView(label: "Enter your Participant ID", inputId: $enrollmentViewModel.participantId, invalidInput: $enrollmentViewModel.invalidParticipantId)
                 HStack {

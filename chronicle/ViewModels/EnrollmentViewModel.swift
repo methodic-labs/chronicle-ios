@@ -17,7 +17,6 @@ class EnrollmentViewModel: ObservableObject {
     @Published var invalidOrganizationId = false
     @Published var showEnrollmentError = false
     @Published var showEnrollmentSuccess = false
-    @Published var withOrgId = true
     @Published var enrolling = false
     @Published var isEnrollmentDetailsViewVisible = false //set to true in response to a button click
     
@@ -55,7 +54,7 @@ class EnrollmentViewModel: ObservableObject {
      }
      */
     func enroll() async {
-        let enrollment = Enrollment(participantId: participantId, studyId: studyId, organizationId: organizationId, withOrgId: withOrgId)
+        let enrollment = Enrollment(participantId: participantId, studyId: studyId, organizationId: organizationId)
         validateInput(enrollment: enrollment)
         
         guard enrollment.isValid else {
