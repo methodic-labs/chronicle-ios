@@ -17,11 +17,10 @@ import SensorKit
 class PersistenceController {
     
     // logging
-    let logger = Logger(subsystem: "com.openlattice.chronicle", category: "Persistence")
+    let logger = Logger(subsystem: "com.openlattice.chronicle", category: "PersistenceController")
     
     // shared instance to provide access to core data
     static let shared = PersistenceController()
-    
     
     lazy var persistentContainer: NSPersistentContainer? = {
         let container = NSPersistentContainer(name: "SensorDataModel")
