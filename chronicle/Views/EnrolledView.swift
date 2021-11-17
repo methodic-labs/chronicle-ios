@@ -9,18 +9,17 @@ import SwiftUI
 
 struct EnrolledView: View {
     var enrollmentViewModel: EnrollmentViewModel
-    let defaults = UserDefaults.standard
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
                 AppHeader()
                 Text("Participant ID:").padding(.bottom)
-                Text(defaults.string(forKey: UserSettingsKeys.participantId) ?? "").padding(.bottom)
+                Text(enrollmentViewModel.participantId).padding(.bottom)
                 Text("Study ID:").padding(.bottom)
-                Text(defaults.string(forKey: UserSettingsKeys.studyId) ?? "").padding(.bottom)
+                Text(enrollmentViewModel.studyId).padding(.bottom)
                 Text("Organization ID:").padding(.bottom)
-                Text(defaults.string(forKey: UserSettingsKeys.organizationId) ?? "").padding(.bottom)
+                Text(enrollmentViewModel.organizationId).padding(.bottom)
             }
             .padding(.horizontal)
         }
