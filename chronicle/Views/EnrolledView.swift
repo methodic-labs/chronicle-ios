@@ -14,11 +14,11 @@ struct EnrolledView: View {
         ScrollView {
             VStack(alignment: .leading) {
                 AppHeader()
-                Text("Participant ID:").padding(.bottom)
+                Text("Participant ID:").fontWeight(.bold).padding(.bottom)
                 Text(enrollmentViewModel.participantId).padding(.bottom)
-                Text("Study ID:").padding(.bottom)
+                Text("Study ID:").fontWeight(.bold).padding(.bottom)
                 Text(enrollmentViewModel.studyId).padding(.bottom)
-                Text("Organization ID:").padding(.bottom)
+                Text("Organization ID:").fontWeight(.bold).padding(.bottom)
                 Text(enrollmentViewModel.organizationId).padding(.bottom)
             }
             .padding(.horizontal)
