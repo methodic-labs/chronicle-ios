@@ -14,6 +14,8 @@
 		B9BBFDCC26CD707D00B770E4 /* EnrollmentFailureMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDCB26CD707D00B770E4 /* EnrollmentFailureMessage.swift */; };
 		B9BBFDD026CD9C6C00B770E4 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */; };
 		EA0048E42744344400EBA09F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0048E32744344400EBA09F /* AppDelegate.swift */; };
+		EA0048E6274440EF00EBA09F /* Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0048E5274440EF00EBA09F /* Operations.swift */; };
+		EA0048E82744472F00EBA09F /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0048E72744472F00EBA09F /* Mocks.swift */; };
 		EA28164527346B0B005C26E8 /* SensorDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA28164327346B0B005C26E8 /* SensorDataModel.xcdatamodeld */; };
 		EA28164627346B0C005C26E8 /* SensorDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA28164327346B0B005C26E8 /* SensorDataModel.xcdatamodeld */; };
 		EA28164A2738BDE6005C26E8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2816492738BDE5005C26E8 /* Persistence.swift */; };
@@ -29,9 +31,6 @@
 		EA82495526C4F2F900F9CD7C /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82495426C4F2F900F9CD7C /* ApiClient.swift */; };
 		EA82495726C4F31A00F9CD7C /* ApiUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82495626C4F31A00F9CD7C /* ApiUtils.swift */; };
 		EA82495926C4F33800F9CD7C /* EnrollmentUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82495826C4F33800F9CD7C /* EnrollmentUtils.swift */; };
-		EAC5487A273C915D000BF1B8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC54879273C915D000BF1B8 /* Utils.swift */; };
-		EAC5487C273CCAF6000BF1B8 /* SensorDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC5487B273CCAF6000BF1B8 /* SensorDataProvider.swift */; };
-		EAC5487D273CCAF6000BF1B8 /* SensorDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC5487B273CCAF6000BF1B8 /* SensorDataProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +52,8 @@
 		B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		EA0048E227442F0600EBA09F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		EA0048E32744344400EBA09F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EA0048E5274440EF00EBA09F /* Operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operations.swift; sourceTree = "<group>"; };
+		EA0048E72744472F00EBA09F /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
 		EA28164427346B0B005C26E8 /* SensorDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SensorDataModel.xcdatamodel; sourceTree = "<group>"; };
 		EA2816492738BDE5005C26E8 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		EA46D44826C4F745008CE3C0 /* chronicleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chronicleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,8 +70,6 @@
 		EA82495426C4F2F900F9CD7C /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 		EA82495626C4F31A00F9CD7C /* ApiUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiUtils.swift; sourceTree = "<group>"; };
 		EA82495826C4F33800F9CD7C /* EnrollmentUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentUtils.swift; sourceTree = "<group>"; };
-		EAC54879273C915D000BF1B8 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		EAC5487B273CCAF6000BF1B8 /* SensorDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDataProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,7 +133,6 @@
 			isa = PBXGroup;
 			children = (
 				EA0048E227442F0600EBA09F /* Info.plist */,
-				EAC54876273C2707000BF1B8 /* Sensor */,
 				B9BBFDC026CD6AFC00B770E4 /* Views */,
 				EA82494926C4F14100F9CD7C /* Utilities */,
 				EA82494826C4F13900F9CD7C /* ViewModels */,
@@ -164,6 +162,7 @@
 				EA82494C26C4F27500F9CD7C /* IOSDevice.swift */,
 				EA82494E26C4F28E00F9CD7C /* Enrollment.swift */,
 				EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */,
+				EA0048E5274440EF00EBA09F /* Operations.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -182,17 +181,9 @@
 				EA82495426C4F2F900F9CD7C /* ApiClient.swift */,
 				EA82495626C4F31A00F9CD7C /* ApiUtils.swift */,
 				EA82495826C4F33800F9CD7C /* EnrollmentUtils.swift */,
-				EAC54879273C915D000BF1B8 /* Utils.swift */,
+				EA0048E72744472F00EBA09F /* Mocks.swift */,
 			);
 			path = Utilities;
-			sourceTree = "<group>";
-		};
-		EAC54876273C2707000BF1B8 /* Sensor */ = {
-			isa = PBXGroup;
-			children = (
-				EAC5487B273CCAF6000BF1B8 /* SensorDataProvider.swift */,
-			);
-			path = Sensor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,7 +288,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA46D45426C4F850008CE3C0 /* ChronicleTests.swift in Sources */,
-				EAC5487D273CCAF6000BF1B8 /* SensorDataProvider.swift in Sources */,
 				EA28164627346B0C005C26E8 /* SensorDataModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -309,6 +299,7 @@
 				EA82495526C4F2F900F9CD7C /* ApiClient.swift in Sources */,
 				B9BBFDC226CD6B1100B770E4 /* AppHeader.swift in Sources */,
 				B9BBFDCC26CD707D00B770E4 /* EnrollmentFailureMessage.swift in Sources */,
+				EA0048E6274440EF00EBA09F /* Operations.swift in Sources */,
 				B9BBFDD026CD9C6C00B770E4 /* Colors.swift in Sources */,
 				B9BBFDC626CD6D9800B770E4 /* RadioButtonGroup.swift in Sources */,
 				B9BBFDC826CD6EC800B770E4 /* EnrollmentSuccessMessage.swift in Sources */,
@@ -316,6 +307,7 @@
 				EA802F2B26BA4C0400C494F8 /* EnrollmentView.swift in Sources */,
 				EA0048E42744344400EBA09F /* AppDelegate.swift in Sources */,
 				EA28164A2738BDE6005C26E8 /* Persistence.swift in Sources */,
+				EA0048E82744472F00EBA09F /* Mocks.swift in Sources */,
 				EA82495326C4F2D500F9CD7C /* EnrollmentViewModel.swift in Sources */,
 				EA28164527346B0B005C26E8 /* SensorDataModel.xcdatamodeld in Sources */,
 				EA82495726C4F31A00F9CD7C /* ApiUtils.swift in Sources */,
@@ -323,8 +315,6 @@
 				EA63652326C6D6EF005D6DFC /* UserSettingsKeys.swift in Sources */,
 				EA82494F26C4F28E00F9CD7C /* Enrollment.swift in Sources */,
 				B9BBFDC426CD6D0200B770E4 /* InputFieldView.swift in Sources */,
-				EAC5487A273C915D000BF1B8 /* Utils.swift in Sources */,
-				EAC5487C273CCAF6000BF1B8 /* SensorDataProvider.swift in Sources */,
 				EA82495926C4F33800F9CD7C /* EnrollmentUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
