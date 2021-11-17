@@ -20,6 +20,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     let mockDataTaskIdentifer = "com.openlattice.chronicle.mockSensorData"
     let uploadDataTaskIdentifier = "com.openlattice.chronicle.uploadData"
 
+    var uploadBackgroundTaskId: UIBackgroundTaskIdentifier?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
 
@@ -51,21 +52,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             task.setTaskCompleted(success: false)
             return
         }
-
-        let deviceId = UserDefaults.standard.object(forKey: UserSettingsKeys.deviceId) as? String ?? ""
-        guard !deviceId.isEmpty else {
-            logger.error("invalid deviceId")
-            return
-        }
-
-        let enrollment = Enrollment.getCurrentEnrollment()
-        guard enrollment.isValid else {
-            logger.error("unable to retrieve enrollment details")
-            return
-        }
-
+        
         // operation to fetch data from database and upload to server
-        let uploadDataOperation = UploadDataOperation(context: context, deviceId: deviceId, enrollment: enrollment)
+        let uploadDataOperation = UploadDataOperation(context: context)
 
         // expiration handler to cancel operation
         task.expirationHandler = {
@@ -146,5 +135,33 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         let mockDataOperation = MockSensorDataOperation(context: context)
 
         mockDataOperation.start()
+    }
+    
+    // invoked on a repeated schedule as long as EnrolledView is visible. This may take a long time, therefore we need to request for extended
+    //  execution time before the app moves to the background
+    @objc func uploadSensorData() {
+        self.uploadBackgroundTaskId = UIApplication.shared.beginBackgroundTask(withName: "Finish uploading data to server") {
+            // end the task if time expires
+            UIApplication.shared.endBackgroundTask(self.uploadBackgroundTaskId!)
+            self.uploadBackgroundTaskId = UIBackgroundTaskIdentifier.invalid
+        }
+        
+        // create backround context
+        guard let context = PersistenceController.shared.newBackgroundContext() else {
+            logger.info("unable to execute upload task")
+            UIApplication.shared.endBackgroundTask(self.uploadBackgroundTaskId!)
+            self.uploadBackgroundTaskId = UIBackgroundTaskIdentifier.invalid
+            return
+        }
+
+        // operation to upload data
+        let uploadOperation = UploadDataOperation(context: context)
+        uploadOperation.completionBlock = {
+            // end the task
+            UIApplication.shared.endBackgroundTask(self.uploadBackgroundTaskId!)
+            self.uploadBackgroundTaskId = UIBackgroundTaskIdentifier.invalid
+        }
+        
+        uploadOperation.start()
     }
 }

@@ -55,21 +55,29 @@ class UploadDataOperation: Operation {
     private let logger = Logger(subsystem: "com.openlattice.chronicle", category: "UploadDataOperation")
     
     private let context: NSManagedObjectContext
-    private let deviceId: String
-    private let enrollment: Enrollment
     
     private let fetchLimit = 200
     
     private var uploading = false
     private var hasMoreData = true
     
-    init(context: NSManagedObjectContext, deviceId: String, enrollment: Enrollment) {
+    init(context: NSManagedObjectContext) {
         self.context = context
-        self.deviceId = deviceId
-        self.enrollment = enrollment
     }
     
     override func main() {
+        let deviceId = UserDefaults.standard.object(forKey: UserSettingsKeys.deviceId) as? String ?? ""
+        guard !deviceId.isEmpty else {
+            logger.error("invalid deviceId")
+            return
+        }
+
+        let enrollment = Enrollment.getCurrentEnrollment()
+        guard enrollment.isValid else {
+            logger.error("unable to retrieve enrollment details")
+            return
+        }
+        
         // try fetching
         context.performAndWait {
             do {
@@ -94,6 +102,7 @@ class UploadDataOperation: Operation {
                     self.uploading = true
                     
                     ApiClient.uploadData(sensorData: data, enrollment: enrollment, deviceId: deviceId) {
+                        self.logger.info("successfully uploaded \(objects.count) to server")
                         objects.forEach (self.context.delete) // delete uploaded data from local db
                         try? self.context.save()
                         self.uploading = false
@@ -107,7 +116,7 @@ class UploadDataOperation: Operation {
                     
                     // wait until the current upload attempt complete, and try again if there is more data
                     while self.uploading {
-                        Thread.sleep(forTimeInterval: 5000)
+                        Thread.sleep(forTimeInterval: 5)
                     }
                 }
                 

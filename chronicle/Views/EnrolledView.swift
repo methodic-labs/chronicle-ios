@@ -32,6 +32,7 @@ struct EnrolledView: View {
                 appDelegate.scheduleMockSensorTask()
             case .active:
                 Timer.scheduledTimer(timeInterval: 30, target: appDelegate, selector: #selector(appDelegate.mockSensorData), userInfo: nil, repeats: true)
+                Timer.scheduledTimer(timeInterval: 30, target: appDelegate, selector: #selector(appDelegate.uploadSensorData), userInfo: nil, repeats: true)
             default: break
                 
             }
