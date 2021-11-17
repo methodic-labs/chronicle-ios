@@ -67,7 +67,7 @@ struct ApiUtils {
         return components
     }
     
-    static func getUploadSensorDataUrlComponents(enrollment: Enrollment, deviceId: String) -> URLComponents? {
+    static func createSensorDataUploadURLComponents(enrollment: Enrollment, deviceId: String) -> URLComponents? {
         var components = URLComponents()
         
         guard enrollment.isValid else {

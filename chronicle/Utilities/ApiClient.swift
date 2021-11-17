@@ -66,7 +66,7 @@ struct ApiClient {
     // upload SensorData to server
     static func uploadData(sensorData: Data, enrollment: Enrollment, deviceId: String, onCompletion: @escaping() -> Void, onError: @escaping (String) -> Void) {
 
-        let urlComponents: URLComponents? = ApiUtils.getUploadSensorDataUrlComponents(enrollment: enrollment, deviceId: deviceId)
+        let urlComponents: URLComponents? = ApiUtils.createSensorDataUploadURLComponents(enrollment: enrollment, deviceId: deviceId)
         
         guard let url = urlComponents?.url else {
             onError("failed to upload sensor data: invalid url")
