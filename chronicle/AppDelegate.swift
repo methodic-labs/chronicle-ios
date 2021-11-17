@@ -20,8 +20,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     let mockDataTaskIdentifer = "com.openlattice.chronicle.mockSensorData"
     
     
-    var saveDataBackroundTaskID: UIBackgroundTaskIdentifier?
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
         // register handlers for tasks
@@ -80,25 +78,16 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
     }
     
+    // This method is called on a repeated schedule when EnrolledView loads. This will only execute as long as the app is in the foreground.
     @objc func mockSensorData() {
-        self.saveDataBackroundTaskID = UIApplication.shared.beginBackgroundTask(withName: "Save mock data to database") {
-            // end task if time expires
-            UIApplication.shared.endBackgroundTask(self.saveDataBackroundTaskID!)
-            self.saveDataBackroundTaskID = nil
-            
-        }
-        
+        // create backround context
         guard let context = PersistenceController.shared.newBackgroundContext() else {
             logger.info("unable to execute task")
-            UIApplication.shared.endBackgroundTask(self.saveDataBackroundTaskID!)
             return
         }
         
-        let saveDataOperation = MockSensorDataOperation(context: context)
-        saveDataOperation.completionBlock = {
-            UIApplication.shared.endBackgroundTask(self.saveDataBackroundTaskID!)
-        }
+        let mockDataOperation = MockSensorDataOperation(context: context)
         
-        saveDataOperation.start()
+        mockDataOperation.start()
     }
 }
