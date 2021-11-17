@@ -52,7 +52,16 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
         
         let deviceId = UserDefaults.standard.object(forKey: UserSettingsKeys.deviceId) as? String ?? ""
+        guard !deviceId.isEmpty else {
+            logger.error("invalid deviceId")
+            return
+        }
+        
         let enrollment = Enrollment.getCurrentEnrollment()
+        guard enrollment.isValid else {
+            logger.error("unable to retrieve enrollment details")
+            return
+        }
         
         // operation to fetch data from database and upload to server
         let uploadDataOperation = UploadDataOperation(context: context, deviceId: deviceId, enrollment: enrollment)
