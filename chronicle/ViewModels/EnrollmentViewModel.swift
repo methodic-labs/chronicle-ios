@@ -27,9 +27,9 @@ class EnrollmentViewModel: ObservableObject {
     
     
     init() {
-        participantId = settings.object(forKey: UserSettingsKeys.participantId) as? String ?? "112121"
-        studyId = settings.object(forKey: UserSettingsKeys.studyId) as? String ?? "c7a06762-d4ec-44cb-bb90-9bf9f591d5d5"
-        organizationId = settings.object(forKey: UserSettingsKeys.organizationId) as? String ?? "41acb0e5-2da7-43ee-86ef-03fae11b246f"
+        participantId = settings.object(forKey: UserSettingsKeys.participantId) as? String ?? ""
+        studyId = settings.object(forKey: UserSettingsKeys.studyId) as? String ?? ""
+        organizationId = settings.object(forKey: UserSettingsKeys.organizationId) as? String ?? ""
         deviceId = settings.object(forKey: UserSettingsKeys.deviceId) as? String ?? ""
     }
     
