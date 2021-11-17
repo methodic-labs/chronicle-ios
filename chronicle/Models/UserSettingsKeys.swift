@@ -14,4 +14,5 @@ struct UserSettingsKeys {
     static let isEnrolled = "isEnrolled"
     static let lastUploadDate = "lastUploadDate"
     static let deviceId = "deviceId"
+    static let propertyTypes = "propertyTypes"
 }
