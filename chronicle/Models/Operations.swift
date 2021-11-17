@@ -51,6 +51,87 @@ class MockSensorDataOperation: Operation {
     }
 }
 
+class UploadDataOperation: Operation {
+    private let logger = Logger(subsystem: "com.openlattice.chronicle", category: "UploadDataOperation")
+    
+    private let context: NSManagedObjectContext
+    private let deviceId: String
+    private let enrollment: Enrollment
+    
+    private let fetchLimit = 200
+    
+    private var uploading = false
+    
+    init(context: NSManagedObjectContext, deviceId: String, enrollment: Enrollment) {
+        self.context = context
+        self.deviceId = deviceId
+        self.enrollment = enrollment
+    }
+    
+    override func main() {
+        // try fetching
+        context.performAndWait {
+            do {
+                uploading = true
+                
+                let fetchRequest: NSFetchRequest<SensorData>
+                fetchRequest = SensorData.fetchRequest()
+                fetchRequest.fetchLimit = fetchLimit
+                
+                let objects = try context.fetch(fetchRequest)
+                
+                // transform to Data
+                let data = try transformSensorDataForUpload(objects)
+                
+                ApiClient.uploadData(sensorData: data, enrollment: enrollment, deviceId: deviceId) {
+                    try? self.context.save()
+                    self.uploading = false
+                } onError: { error in
+                    self.logger.error("error uploading to server: \(error)")
+                    self.uploading = false
+                }
+                
+            } catch {
+                logger.error("error uploading data to server: \(error.localizedDescription)")
+                uploading = false
+            }
+            
+        }
+    }
+    
+    override var isExecuting: Bool {
+        return uploading
+    }
+    
+    private func transformSensorDataForUpload(_ data: [SensorData]) throws -> Data {
+        
+        let transformed: [[String: Any]] = try data.map {
+            var result: [String: Any] = [:]
+            
+            if let dateRecorded = $0.writeTimestamp,
+               let startDate = $0.startTimestamp,
+               let endDate = $0.endTimestamp,
+               let sensor = $0.sensorType,
+               let id = $0.id,
+               let data = $0.data {
+                
+                let toJSon = try JSONSerialization.jsonObject(with: data, options: [])
+                
+                result[PropertyTypeIds.namePTID] = sensor
+                result[PropertyTypeIds.dateLoggedPTID] = dateRecorded
+                result[PropertyTypeIds.startDateTime] = startDate
+                result[PropertyTypeIds.endDateTimePTID] = endDate
+                result[PropertyTypeIds.idPTID] = id
+                result[PropertyTypeIds.valuesPTID] = toJSon
+            }
+            return result
+        }
+        
+        return try JSONSerialization.data(withJSONObject: transformed, options: [])
+    }
+    
+}
+
 extension Date {
     
     // return random date between two dates

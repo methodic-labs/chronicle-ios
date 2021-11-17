@@ -18,6 +18,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     // task identifiers in BGTaskSchedulerPermittedIdentifiers array of Info.Plist
     let mockDataTaskIdentifer = "com.openlattice.chronicle.mockSensorData"
+    let uploadDataTaskIdentifier = "com.openlattice.chronicle.uploadData"
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
@@ -27,11 +28,47 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             self.handleMockSensorData(task: task as! BGAppRefreshTask)
         }
         
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: uploadDataTaskIdentifier, using: nil) { task in
+            // Downncast parameter to background refresh task
+            self.handleUploadDataTask(task: task as! BGAppRefreshTask)
+        }
+        
         return true
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
         scheduleMockSensorTask()
+        scheduleUploadDataTask()
+    }
+    
+    func handleUploadDataTask(task: BGAppRefreshTask) {
+        let queue = OperationQueue()
+        queue.maxConcurrentOperationCount = 1
+        
+        guard let context = PersistenceController.shared.newTaskContext() else {
+            logger.info("unable to execute upload task")
+            task.setTaskCompleted(success: false)
+            return
+        }
+        
+        let deviceId = UserDefaults.standard.object(forKey: UserSettingsKeys.deviceId) as? String ?? ""
+        let enrollment = Enrollment.getCurrentEnrollment()
+        
+        // operation to fetch data from database and upload to server
+        let uploadDataOperation = UploadDataOperation(context: context, deviceId: deviceId, enrollment: enrollment)
+        
+        // expiration handler to cancel operation
+        task.expirationHandler = {
+            queue.cancelAllOperations()
+        }
+        
+        // inform system that task is complete
+        uploadDataOperation.completionBlock = {
+            task.setTaskCompleted(success: !uploadDataOperation.isCancelled)
+        }
+        
+        // start operation
+        queue.addOperation(uploadDataOperation)
         
     }
     
@@ -74,6 +111,17 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             try BGTaskScheduler.shared.submit(request)
         } catch {
             logger.info("Could not schedule mocking sensor data task: \(error.localizedDescription)")
+        }
+    }
+    
+    func scheduleUploadDataTask() {
+        let request = BGAppRefreshTaskRequest(identifier: uploadDataTaskIdentifier)
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60) // no earlier than 15 min from now
+        
+        do {
+            try BGTaskScheduler.shared.submit(request)
+        } catch {
+            logger.info("could not schedule task to upload data: \(error.localizedDescription)")
         }
     }
 }
