@@ -16,6 +16,9 @@ class MockSensorDataOperation: Operation {
     private let logger = Logger(subsystem: "com.openlattice.chronicle", category: "MockSensorDataOperation")
     private let context: NSManagedObjectContext
     
+    private var timezone: String {
+        TimeZone.current.identifier
+    }
     
     init(context: NSManagedObjectContext) {
         self.context = context
@@ -38,6 +41,7 @@ class MockSensorDataOperation: Operation {
                     object.startTimestamp = start.toISOFormat()
                     object.endTimestamp = end.toISOFormat()
                     object.writeTimestamp = now.toISOFormat()
+                    object.timezone = timezone
                     object.data = SensorDataMock.createMockData(sensorType: sensorType)
                     
                     try context.save()
