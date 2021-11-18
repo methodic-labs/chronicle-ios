@@ -60,7 +60,7 @@ class UploadDataOperation: Operation {
     private let logger = Logger(subsystem: "com.openlattice.chronicle", category: "UploadDataOperation")
 
     private let context: NSManagedObjectContext
-    private var propertyTypeIds: [FullQualifiedName: String] = [:]
+    private var propertyTypeIds: [FullQualifiedName: UUID] = [:]
 
     private let fetchLimit = 200
 
@@ -173,6 +173,7 @@ class UploadDataOperation: Operation {
     }
 
     private func transformSensorDataForUpload(_ data: [SensorData]) throws -> Data {
+        
 
         guard let namePTID = self.propertyTypeIds[FullQualifiedName.nameFqn],
               let dateLoggedPTID = self.propertyTypeIds[FullQualifiedName.dateLoggedFqn],
@@ -184,7 +185,7 @@ class UploadDataOperation: Operation {
                   throw("error getting propertyTypeIds")
               }
 
-        let transformed: [[String: Any]] = try data.map {
+        let transformed: [Sample?] = try data.map {
             var result: [String: Any] = [:]
 
             if let dateRecorded = $0.writeTimestamp,
@@ -195,23 +196,38 @@ class UploadDataOperation: Operation {
                let timezone = $0.timezone,
                let data = $0.data {
 
-                let toJSon = try JSONSerialization.jsonObject(with: data, options: [])
+                let toJSon = try JSONSerialization.jsonObject(with: data, options: []) as! [[UUID: String]]
 
-                result[namePTID] = sensor
-                result[dateLoggedPTID] = dateRecorded
-                result[startDateTimePTID] = startDate
-                result[endDateTimePTID] = endDate
-                result[idPTID] = id
-                result[valuesPTID] = toJSon
-                result[timezonePTID] = timezone
+//                result[namePTID] = sensor
+//                result[dateLoggedPTID] = dateRecorded
+//                result[startDateTimePTID] = startDate
+//                result[endDateTimePTID] = endDate
+//                result[idPTID] = id
+//                result[valuesPTID] = toJSon
+//                result[timezonePTID] = timezone
+                
+                return Sample(dateRecorded: dateRecorded, startDate: startDate, endDate: endDate, data: toJSon, timezone: timezone, id: id, sensorName: sensor)
+
             }
-            return result
-        }
+            
+            return nil
+        }.filter { $0 != nil }
 
-        return try JSONSerialization.data(withJSONObject: transformed, options: [])
+        return try JSONEncoder().encode(transformed)
     }
 
 }
+
+struct Sample: Encodable {
+    var dateRecorded: Date
+    var startDate: Date
+    var endDate: Date
+    var data: [[UUID: String]]
+    var timezone: String
+    var id: UUID
+    var sensorName: String
+}
+
 
 extension Date {
 
