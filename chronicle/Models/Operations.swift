@@ -67,10 +67,6 @@ class UploadDataOperation: Operation {
     private var uploading = false
     private var hasMoreData = false
 
-    private var timezone: String {
-        TimeZone.current.identifier
-    }
-
     init(context: NSManagedObjectContext) {
         self.context = context
     }
@@ -196,6 +192,7 @@ class UploadDataOperation: Operation {
                let endDate = $0.endTimestamp,
                let sensor = $0.sensorType,
                let id = $0.id,
+               let timezone = $0.timezone,
                let data = $0.data {
 
                 let toJSon = try JSONSerialization.jsonObject(with: data, options: [])
