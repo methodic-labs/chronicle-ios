@@ -6,9 +6,10 @@
         <attribute name="id" attributeType="String"/>
         <attribute name="sensorType" attributeType="String"/>
         <attribute name="startTimestamp" attributeType="String"/>
+        <attribute name="timezone" attributeType="String"/>
         <attribute name="writeTimestamp" attributeType="String"/>
     </entity>
     <elements>
-        <element name="SensorData" positionX="-63" positionY="-18" width="128" height="14"/>
+        <element name="SensorData" positionX="-63" positionY="-18" width="128" height="134"/>
     </elements>
 </model>
