@@ -40,6 +40,7 @@ struct ApiUtils {
         return components
     }
 
+    
     static func getPropertyTypeIdsUrlComponents() -> URLComponents {
         var components = URLComponents()
         components.scheme = scheme

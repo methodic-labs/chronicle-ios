@@ -25,6 +25,7 @@ extension FullQualifiedName {
     static var nameFqn = FullQualifiedName(namespace: "ol", name: "name")
     static var dateTimeStartFqn = FullQualifiedName(namespace: "ol", name: "datetimestart")
     static var dateTimeEndFqn = FullQualifiedName(namespace: "ol", name: "datetimeend")
+    static var timezoneFqn = FullQualifiedName(namespace: "ol", name: "timezone")
     
     // add other FQNS here that might be needed
     static var fqns: Set<FullQualifiedName> {
@@ -35,7 +36,8 @@ extension FullQualifiedName {
             dateLoggedFqn,
             dateTimeStartFqn,
             dateTimeEndFqn,
-            nameFqn
+            nameFqn,
+            timezoneFqn
         ]
     }
     

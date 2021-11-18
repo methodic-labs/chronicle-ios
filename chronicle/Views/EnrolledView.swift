@@ -12,18 +12,29 @@ struct EnrolledView: View {
     
     let appDelegate: AppDelegate
     var enrollmentViewModel: EnrollmentViewModel
-    let defaults = UserDefaults.standard
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
                 AppHeader()
-                Text("Participant ID:").padding(.bottom)
-                Text(defaults.string(forKey: UserSettingsKeys.participantId) ?? "").padding(.bottom)
-                Text("Study ID:").padding(.bottom)
-                Text(defaults.string(forKey: UserSettingsKeys.studyId) ?? "").padding(.bottom)
-                Text("Organization ID:").padding(.bottom)
-                Text(defaults.string(forKey: UserSettingsKeys.organizationId) ?? "").padding(.bottom)
+                Text("Participant ID:").fontWeight(.bold).padding(.bottom)
+                Text(enrollmentViewModel.participantId)
+                    .scaledToFit()
+                    .minimumScaleFactor(0.01)
+                    .foregroundColor(Color.gray)
+                    .padding(.bottom)
+                Text("Study ID:").fontWeight(.bold).padding(.bottom)
+                Text(enrollmentViewModel.studyId)
+                    .scaledToFit()
+                    .minimumScaleFactor(0.01)
+                    .foregroundColor(Color.gray)
+                    .padding(.bottom)
+                Text("Organization ID:").fontWeight(.bold).padding(.bottom)
+                Text(enrollmentViewModel.organizationId)
+                    .scaledToFit()
+                    .minimumScaleFactor(0.01)
+                    .foregroundColor(Color.gray)
+                    .padding(.bottom)
             }
             .padding(.horizontal)
         }.onChange(of: scenePhase) { phase in
