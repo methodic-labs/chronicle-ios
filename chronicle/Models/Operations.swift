@@ -36,11 +36,11 @@ class MockSensorDataOperation: Operation {
                     let sensorType = SensorType.allCases.randomElement()!
                     
                     let object = SensorData(context: context)
-                    object.id = UUID.init().uuidString
+                    object.id = UUID.init()
                     object.sensorType = sensorType.rawValue
-                    object.startTimestamp = start.toISOFormat()
-                    object.endTimestamp = end.toISOFormat()
-                    object.writeTimestamp = now.toISOFormat()
+                    object.startTimestamp = start
+                    object.endTimestamp = end
+                    object.writeTimestamp = now
                     object.timezone = timezone
                     object.data = SensorDataMock.createMockData(sensorType: sensorType)
                     
