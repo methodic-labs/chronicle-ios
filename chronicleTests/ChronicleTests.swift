@@ -30,7 +30,7 @@ class ChronicleTests: XCTestCase {
     
     func testEnrollmentWithoutOrg() {
         let enrollment = Enrollment(participantId: participantId, studyId: studyId, organizationId: organizationId)
-        let urlComponents = ApiUtils.makeEnrollDeviceComponentsWithoutOrg(enrollment: enrollment, deviceId: deviceId)
+        let urlComponents = ApiUtils.makeEnrollDeviceUrlComponents(enrollment: enrollment, deviceId: deviceId)
         
         XCTAssertNotNil(urlComponents, "should not be nil")
         XCTAssertEqual(
