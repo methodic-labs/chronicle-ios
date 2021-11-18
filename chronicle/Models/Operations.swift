@@ -14,8 +14,8 @@ import OSLog
 
 class MockSensorDataOperation: Operation {
     private let logger = Logger(subsystem: "com.openlattice.chronicle", category: "MockSensorDataOperation")
-    private let context: NSManagedObjectContext
     
+    private let context: NSManagedObjectContext
     
     init(context: NSManagedObjectContext) {
         self.context = context
@@ -55,15 +55,28 @@ class UploadDataOperation: Operation {
     private let logger = Logger(subsystem: "com.openlattice.chronicle", category: "UploadDataOperation")
     
     private let context: NSManagedObjectContext
+    private var propertyTypeIds: [FullQualifiedName: String] = [:]
     
     private let fetchLimit = 200
     
     private var uploading = false
-    private var hasMoreData = true
+    private var hasMoreData = false
     
     init(context: NSManagedObjectContext) {
         self.context = context
     }
+    
+    override func start() {
+        willChangeValue(forKey: #keyPath(isExecuting))
+        self.hasMoreData = true
+        didChangeValue(forKey: #keyPath(isExecuting))
+        // get property type ids
+        Task.init {
+            self.propertyTypeIds = await (ApiClient.getPropertyTypeIds() ?? [:])
+            main()
+        }
+    }
+
     
     override func main() {
         let deviceId = UserDefaults.standard.object(forKey: UserSettingsKeys.deviceId) as? String ?? ""
@@ -71,7 +84,7 @@ class UploadDataOperation: Operation {
             logger.error("invalid deviceId")
             return
         }
-
+        
         let enrollment = Enrollment.getCurrentEnrollment()
         guard enrollment.isValid else {
             logger.error("unable to retrieve enrollment details")
@@ -90,8 +103,16 @@ class UploadDataOperation: Operation {
                     
                     // no data available. signal operation to terminate
                     if objects.isEmpty {
+                        willChangeValue(forKey: #keyPath(isExecuting))
+                        willChangeValue(forKey: #keyPath(isFinished))
                         self.hasMoreData = false
                         self.uploading = false
+                        didChangeValue(forKey: #keyPath(isExecuting))
+                        didChangeValue(forKey: #keyPath(isFinished))
+                        break
+                    }
+                    
+                    if isCancelled {
                         break
                     }
                     
@@ -110,8 +131,12 @@ class UploadDataOperation: Operation {
                         self.logger.error("error uploading to server: \(error)")
                         
                         // signal operation to terminate
+                        self.willChangeValue(forKey: #keyPath(isExecuting))
+                        self.willChangeValue(forKey: #keyPath(isFinished))
                         self.uploading = false
                         self.hasMoreData = false
+                        self.didChangeValue(forKey: #keyPath(isExecuting))
+                        self.didChangeValue(forKey: #keyPath(isFinished))
                     }
                     
                     // wait until the current upload attempt complete, and try again if there is more data
@@ -128,10 +153,27 @@ class UploadDataOperation: Operation {
     }
     
     override var isExecuting: Bool {
-        return uploading || hasMoreData
+        return hasMoreData
+    }
+    
+    override var isAsynchronous: Bool {
+        return true
+    }
+    
+    override var isFinished: Bool {
+        return !hasMoreData
     }
     
     private func transformSensorDataForUpload(_ data: [SensorData]) throws -> Data {
+        
+        guard let namePTID = self.propertyTypeIds[FullQualifiedName.nameFqn],
+              let dateLoggedPTID = self.propertyTypeIds[FullQualifiedName.dateLoggedFqn],
+              let startDateTimePTID = self.propertyTypeIds[FullQualifiedName.dateTimeStartFqn],
+              let endDateTimePTID = self.propertyTypeIds[FullQualifiedName.dateTimeEndFqn],
+              let idPTID = self.propertyTypeIds[FullQualifiedName.idFqn],
+              let valuesPTID = self.propertyTypeIds[FullQualifiedName.idFqn] else {
+                  throw("error getting propertyTypeIds")
+              }
         
         let transformed: [[String: Any]] = try data.map {
             var result: [String: Any] = [:]
@@ -145,12 +187,12 @@ class UploadDataOperation: Operation {
                 
                 let toJSon = try JSONSerialization.jsonObject(with: data, options: [])
                 
-                result[PropertyTypeIds.namePTID] = sensor
-                result[PropertyTypeIds.dateLoggedPTID] = dateRecorded
-                result[PropertyTypeIds.startDateTime] = startDate
-                result[PropertyTypeIds.endDateTimePTID] = endDate
-                result[PropertyTypeIds.idPTID] = id
-                result[PropertyTypeIds.valuesPTID] = toJSon
+                result[namePTID] = sensor
+                result[dateLoggedPTID] = dateRecorded
+                result[startDateTimePTID] = startDate
+                result[endDateTimePTID] = endDate
+                result[idPTID] = id
+                result[valuesPTID] = toJSon
             }
             return result
         }
