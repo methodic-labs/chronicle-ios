@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B9BBFDBF26C648C100B770E4 /* EnrolledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDBE26C648C100B770E4 /* EnrolledView.swift */; };
 		B9BBFDC226CD6B1100B770E4 /* AppHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDC126CD6B1100B770E4 /* AppHeader.swift */; };
 		B9BBFDC426CD6D0200B770E4 /* InputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDC326CD6D0200B770E4 /* InputFieldView.swift */; };
 		B9BBFDC626CD6D9800B770E4 /* RadioButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDC526CD6D9800B770E4 /* RadioButtonGroup.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B9BBFDBE26C648C100B770E4 /* EnrolledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrolledView.swift; sourceTree = "<group>"; };
 		B9BBFDC126CD6B1100B770E4 /* AppHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHeader.swift; sourceTree = "<group>"; };
 		B9BBFDC326CD6D0200B770E4 /* InputFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldView.swift; sourceTree = "<group>"; };
 		B9BBFDC526CD6D9800B770E4 /* RadioButtonGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButtonGroup.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 		B9BBFDC026CD6AFC00B770E4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B9BBFDBE26C648C100B770E4 /* EnrolledView.swift */,
 				EA802F2A26BA4C0400C494F8 /* EnrollmentView.swift */,
 				B9BBFDC126CD6B1100B770E4 /* AppHeader.swift */,
 				B9BBFDC326CD6D0200B770E4 /* InputFieldView.swift */,
@@ -284,6 +287,8 @@
 				B9BBFDC626CD6D9800B770E4 /* RadioButtonGroup.swift in Sources */,
 				B9BBFDC826CD6EC800B770E4 /* EnrollmentSuccessMessage.swift in Sources */,
 				EA82494D26C4F27500F9CD7C /* IOSDevice.swift in Sources */,
+				EA802F2B26BA4C0400C494F8 /* EnrollmentView.swift in Sources */,
+				B9BBFDBF26C648C100B770E4 /* EnrolledView.swift in Sources */,
 				EA802F2B26BA4C0400C494F8 /* EnrollmentView.swift in Sources */,
 				EA82495326C4F2D500F9CD7C /* EnrollmentViewModel.swift in Sources */,
 				EA82495726C4F31A00F9CD7C /* ApiUtils.swift in Sources */,
