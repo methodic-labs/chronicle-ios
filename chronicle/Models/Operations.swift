@@ -126,6 +126,7 @@ class UploadDataOperation: Operation {
                         self.logger.info("successfully uploaded \(objects.count) to server")
                         objects.forEach (self.context.delete) // delete uploaded data from local db
                         try? self.context.save()
+                        PersistenceController.shared.lastUploaded = Date() // record last successful upload
                         self.uploading = false
                     } onError: { error in
                         self.logger.error("error uploading to server: \(error)")
