@@ -15,8 +15,7 @@ struct ChronicleApp: App {
     var body: some Scene {
         WindowGroup {
             if isDeviceEnrolled || viewModel.isEnrollmentDetailsViewVisible {
-                // TODO: replace with view that accepts an instance of EnrollmentViewModel as a parameter.
-                Text("TODO: replace with view showing participantId, studyId and optionally orgId")
+                EnrolledView(enrollmentViewModel: viewModel)
             } else if viewModel.showEnrollmentSuccess {
                 EnrollmentSuccessMessage(enrollmentViewModel: viewModel)
             } else {

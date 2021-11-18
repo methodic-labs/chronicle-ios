@@ -12,7 +12,6 @@ struct Enrollment {
     let participantId: String
     let studyId: UUID?
     let organizationId: UUID?
-    let withOrgId: Bool
     
     var isValidParticipant: Bool {
         !participantId.isEmpty
@@ -23,21 +22,17 @@ struct Enrollment {
     }
     
     var isValidOrgId: Bool {
-        if withOrgId {
-            return organizationId != nil
-        }
-        return true
+        organizationId != nil
     }
     
     var isValid: Bool {
         isValidParticipant && isValidStudyId && isValidOrgId
     }
     
-    init(participantId: String, studyId: String, organizationId: String, withOrgId: Bool) {
+    init(participantId: String, studyId: String, organizationId: String) {
         self.participantId = participantId
         self.studyId = UUID.init(uuidString: studyId)
         self.organizationId = UUID.init(uuidString: organizationId)
-        self.withOrgId = withOrgId
     }
     
 }

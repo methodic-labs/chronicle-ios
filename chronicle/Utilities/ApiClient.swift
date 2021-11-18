@@ -17,14 +17,14 @@ struct ApiClient {
         // device data
         let deviceInformation = await EnrollmentUtils.getDeviceInformation()
         guard let deviceId = deviceInformation.deviceId else {
+            onError("unable to retrieve deviceId")
             return
         }
         
-        guard let urlComponents: URLComponents = enrollment.withOrgId
-                ? ApiUtils.makeEnrollDeviceComponentsWithOrg(enrollment: enrollment, deviceId: deviceId)
-                : ApiUtils.makeEnrollDeviceComponentsWithoutOrg(enrollment: enrollment, deviceId: deviceId) else {
-                    return
-                }
+        guard let urlComponents: URLComponents = ApiUtils.makeEnrollDeviceUrlComponents(enrollment: enrollment, deviceId: deviceId) else {
+            onError("invalid url")
+            return
+        }
         
         // prepare json data
         guard let reqBody = try? JSONEncoder().encode(deviceInformation) else {
