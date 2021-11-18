@@ -41,15 +41,6 @@ class PersistenceController {
         return container
     }()
     
-    var lastUploaded: Date? {
-        get {
-            return UserDefaults.standard.object(forKey: UserSettingsKeys.lastUploadDate) as? Date
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: UserSettingsKeys.lastUploadDate)
-        }
-    }
-    
     // creates and configures a background context
     func newBackgroundContext() -> NSManagedObjectContext? {
         guard persistentContainer != nil else {
