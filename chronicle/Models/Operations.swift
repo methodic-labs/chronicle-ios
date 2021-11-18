@@ -62,6 +62,10 @@ class UploadDataOperation: Operation {
     private var uploading = false
     private var hasMoreData = false
     
+    private var timezone: String {
+        TimeZone.current.identifier
+    }
+    
     init(context: NSManagedObjectContext) {
         self.context = context
     }
@@ -174,6 +178,7 @@ class UploadDataOperation: Operation {
               let startDateTimePTID = self.propertyTypeIds[FullQualifiedName.dateTimeStartFqn],
               let endDateTimePTID = self.propertyTypeIds[FullQualifiedName.dateTimeEndFqn],
               let idPTID = self.propertyTypeIds[FullQualifiedName.idFqn],
+              let timezonePTID = self.propertyTypeIds[FullQualifiedName.timezoneFqn],
               let valuesPTID = self.propertyTypeIds[FullQualifiedName.idFqn] else {
                   throw("error getting propertyTypeIds")
               }
@@ -196,6 +201,7 @@ class UploadDataOperation: Operation {
                 result[endDateTimePTID] = endDate
                 result[idPTID] = id
                 result[valuesPTID] = toJSon
+                result[timezonePTID] = timezone
             }
             return result
         }
