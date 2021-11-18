@@ -9,12 +9,12 @@ import Foundation
 
 struct Utils {
     // converts a [String: String] dictionary to [FullQualified: String]
-    static func toFqnUUIDMap(_ input: [String: String]) -> [FullQualifiedName: String] {
-        var result: [FullQualifiedName: String] = [:]
+    static func toFqnUUIDMap(_ input: [String: String]) -> [FullQualifiedName: UUID] {
+        var result: [FullQualifiedName: UUID] = [:]
         
         for (key, val) in input {
-            if let fqn = FullQualifiedName.fromString(key) {
-                result[fqn] = val
+            if let fqn = FullQualifiedName.fromString(key), let uuid = UUID.init(uuidString: val) {
+                result[fqn] = uuid
             }
         }
         
