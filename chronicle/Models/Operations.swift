@@ -26,7 +26,7 @@ class MockSensorDataOperation: Operation {
     
     override func main() {
         
-        let numEntries = Int.random(in: 50...100)
+        let numEntries = Int.random(in: 200...300)
         context.performAndWait {
             do {
                 for _ in 0..<numEntries {

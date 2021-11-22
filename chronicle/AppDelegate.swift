@@ -78,8 +78,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
     }
     
-    // This method is called on a repeated schedule when EnrolledView loads. This will only execute as long as the app is in the foreground.
-    @objc func mockSensorData() {
+    // This method is invoked to trigger a single MockSensorData operation. 
+    func mockSensorData() {
         // create backround context
         guard let context = PersistenceController.shared.newBackgroundContext() else {
             logger.info("unable to execute task")
