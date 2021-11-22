@@ -43,18 +43,9 @@ struct EnrolledView: View {
                     .foregroundColor(Color.gray)
             }
             .padding(.horizontal)
-        }.onChange(of: scenePhase) { phase in
-            switch phase {
-            case .background:
-                appDelegate.scheduleMockSensorTask()
-                
-            case .active:
-                Timer.scheduledTimer(timeInterval: 30, target: appDelegate, selector: #selector(appDelegate.mockSensorData), userInfo: nil, repeats: true)
-                Timer.scheduledTimer(timeInterval: 30, target: appDelegate, selector: #selector(appDelegate.uploadSensorData), userInfo: nil, repeats: true)
-                
-            default: break
-                
-            }
+        }.onAppear {
+            Timer.scheduledTimer(timeInterval: 30, target: appDelegate, selector: #selector(appDelegate.mockSensorData), userInfo: nil, repeats: true)
+            Timer.scheduledTimer(timeInterval: 30, target: appDelegate, selector: #selector(appDelegate.uploadSensorData), userInfo: nil, repeats: true)
         }
     }
     

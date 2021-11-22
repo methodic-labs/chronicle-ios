@@ -34,7 +34,7 @@ struct SensorDataMock {
         let departureEnd = Date.randomBetween(start: departureStart, end: departureStart + 60 * 60)
         
         let data = [
-            [variablePTID: "distanceFromHome", valuesPTID: 13222],
+            [variablePTID: "distanceFromHome", valuesPTID: String(13222)],
             [variablePTID: "arrivalDateIntervalStart", valuesPTID: arrivalStart.toISOFormat()],
             [variablePTID: "arrivalDateIntervalEnd", valuesPTID: arrivalEnd.toISOFormat()],
             [variablePTID: "departureDateIntervalStart", valuesPTID: departureStart.toISOFormat()],
@@ -51,8 +51,8 @@ struct SensorDataMock {
         let data = [
             [variablePTID: "intervalStart", valuesPTID: now.toISOFormat()],
             [variablePTID: "intervalEnd", valuesPTID: Date.randomBetween(start: now + 60 * 60, end: now + 60 * 60 * 5).toISOFormat()],
-            [variablePTID: "totalScreenWakes", valuesPTID: 10],
-            [variablePTID: "totalUnlocks", valuesPTID: 5],
+            [variablePTID: "totalScreenWakes", valuesPTID: String(10)],
+            [variablePTID: "totalUnlocks", valuesPTID: String(5)],
         ]
         
         return try! JSONSerialization.data(withJSONObject: data, options: [])

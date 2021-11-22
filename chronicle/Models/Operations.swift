@@ -173,20 +173,7 @@ class UploadDataOperation: Operation {
     }
 
     private func transformSensorDataForUpload(_ data: [SensorData]) throws -> Data {
-        
-
-        guard let namePTID = self.propertyTypeIds[FullQualifiedName.nameFqn],
-              let dateLoggedPTID = self.propertyTypeIds[FullQualifiedName.dateLoggedFqn],
-              let startDateTimePTID = self.propertyTypeIds[FullQualifiedName.dateTimeStartFqn],
-              let endDateTimePTID = self.propertyTypeIds[FullQualifiedName.dateTimeEndFqn],
-              let idPTID = self.propertyTypeIds[FullQualifiedName.idFqn],
-              let timezonePTID = self.propertyTypeIds[FullQualifiedName.timezoneFqn],
-              let valuesPTID = self.propertyTypeIds[FullQualifiedName.idFqn] else {
-                  throw("error getting propertyTypeIds")
-              }
-
         let transformed: [Sample?] = try data.map {
-            var result: [String: Any] = [:]
 
             if let dateRecorded = $0.writeTimestamp,
                let startDate = $0.startTimestamp,
@@ -196,33 +183,24 @@ class UploadDataOperation: Operation {
                let timezone = $0.timezone,
                let data = $0.data {
 
-                let toJSon = try JSONSerialization.jsonObject(with: data, options: []) as! [[UUID: String]]
-
-//                result[namePTID] = sensor
-//                result[dateLoggedPTID] = dateRecorded
-//                result[startDateTimePTID] = startDate
-//                result[endDateTimePTID] = endDate
-//                result[idPTID] = id
-//                result[valuesPTID] = toJSon
-//                result[timezonePTID] = timezone
+                let valuesArr = try JSONSerialization.jsonObject(with: data, options: []) as! [[String: String]]
                 
-                return Sample(dateRecorded: dateRecorded, startDate: startDate, endDate: endDate, data: toJSon, timezone: timezone, id: id, sensorName: sensor)
-
+                return Sample(dateRecorded: dateRecorded.toISOFormat(), startDate: startDate.toISOFormat(), endDate: endDate.toISOFormat(), data: valuesArr, timezone: timezone, id: id, sensorName: sensor)
             }
             
             return nil
         }.filter { $0 != nil }
-
+        
         return try JSONEncoder().encode(transformed)
     }
 
 }
 
 struct Sample: Encodable {
-    var dateRecorded: Date
-    var startDate: Date
-    var endDate: Date
-    var data: [[UUID: String]]
+    var dateRecorded: String
+    var startDate: String
+    var endDate: String
+    var data: [[String: String]]
     var timezone: String
     var id: UUID
     var sensorName: String
