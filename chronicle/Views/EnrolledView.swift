@@ -50,11 +50,14 @@ struct EnrolledView: View {
             // schedule a repeating task to create fake sensor data and save to database
             let startDate = Date().addingTimeInterval(5) // 5 seconds from now
 
-            let timer = Timer(fireAt: startDate, interval: 15 * 60, target: appDelegate, selector: #selector(appDelegate.mockSensorData), userInfo: nil, repeats: true)
+            let mockDataTimer = Timer(fireAt: startDate, interval: 15 * 60, target: appDelegate, selector: #selector(appDelegate.mockSensorData), userInfo: nil, repeats: true)
+            let uploadDataTimer = Timer(fireAt: startDate.addingTimeInterval(5), interval: 15 * 60, target: appDelegate, selector: #selector(appDelegate.uploadSensorData), userInfo: nil, repeats: true)
 
             let runLoop = RunLoop.current
 
-            runLoop.add(timer, forMode: RunLoop.Mode.common)
+            runLoop.add(mockDataTimer, forMode: RunLoop.Mode.common)
+            runLoop.add(uploadDataTimer, forMode: RunLoop.Mode.common)
+            
             runLoop.run()
         }
     }
