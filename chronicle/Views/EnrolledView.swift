@@ -38,7 +38,17 @@ struct EnrolledView: View {
             }
             .padding(.horizontal)
         }.onAppear {
-            appDelegate.mockSensorData()
+            
+            // schedule a repeating task to create fake sensor data and save to database
+            let startDate = Date().addingTimeInterval(5) // 5 seconds from now
+            
+            let timer = Timer(fireAt: startDate, interval: 15 * 60, target: appDelegate, selector: #selector(appDelegate.mockSensorData), userInfo: nil, repeats: true)
+            
+            let runLoop = RunLoop.current
+
+            runLoop.add(timer, forMode: RunLoop.Mode.common)
+            runLoop.run()
+
         }
     }
 }

@@ -78,8 +78,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
     }
     
-    // This method is invoked to trigger a single MockSensorData operation. 
-    func mockSensorData() {
+    // This method is invoked to trigger a single MockSensorData operation.
+    @objc func mockSensorData() {
         // create backround context
         guard let context = PersistenceController.shared.newBackgroundContext() else {
             logger.info("unable to execute task")
