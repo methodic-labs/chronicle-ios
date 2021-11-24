@@ -9,13 +9,13 @@ import SwiftUI
 
 struct EnrolledView: View {
     @Environment(\.scenePhase) private var scenePhase
-    
+
     let appDelegate: AppDelegate
     var enrollmentViewModel: EnrollmentViewModel
-    
+
     // convenient to read saved value from UserDefaults
     @AppStorage(UserSettingsKeys.lastUploadDate) var lastUploadDate: String?
-    
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
@@ -46,17 +46,27 @@ struct EnrolledView: View {
         }.onAppear {
             Timer.scheduledTimer(timeInterval: 30, target: appDelegate, selector: #selector(appDelegate.mockSensorData), userInfo: nil, repeats: true)
             Timer.scheduledTimer(timeInterval: 30, target: appDelegate, selector: #selector(appDelegate.uploadSensorData), userInfo: nil, repeats: true)
+
+            // schedule a repeating task to create fake sensor data and save to database
+            let startDate = Date().addingTimeInterval(5) // 5 seconds from now
+
+            let timer = Timer(fireAt: startDate, interval: 15 * 60, target: appDelegate, selector: #selector(appDelegate.mockSensorData), userInfo: nil, repeats: true)
+
+            let runLoop = RunLoop.current
+
+            runLoop.add(timer, forMode: RunLoop.Mode.common)
+            runLoop.run()
         }
     }
-    
+
     private func formatDate() -> String {
         guard let lastUploaded = lastUploadDate, let iSODate = ISO8601DateFormatter().date(from: lastUploaded)  else {
             return "Never"
         }
-        
+
         let dateFormatter = DateFormatter()
         dateFormatter.setLocalizedDateFormatFromTemplate("MMM dd yyy jj:mm:ss")
-        
+
         return dateFormatter.string(from: iSODate)
     }
 }

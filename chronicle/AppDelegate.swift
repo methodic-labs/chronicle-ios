@@ -21,6 +21,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     let uploadDataTaskIdentifier = "com.openlattice.chronicle.uploadData"
 
     var uploadBackgroundTaskId: UIBackgroundTaskIdentifier?
+    var mockDataTaskId: UIBackgroundTaskIdentifier? = nil
+
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
 
@@ -52,7 +54,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             task.setTaskCompleted(success: false)
             return
         }
-        
+
         // operation to fetch data from database and upload to server
         let uploadDataOperation = UploadDataOperation(context: context)
 
@@ -125,6 +127,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
 
     // This method is called on a repeated schedule when EnrolledView loads. This will only execute as long as the app is in the foreground.
+
+    // This method is invoked to trigger a single MockSensorData operation.
     @objc func mockSensorData() {
         // create backround context
         guard let context = PersistenceController.shared.newBackgroundContext() else {
@@ -132,11 +136,23 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             return
         }
 
+        // request additional background execution in case app goes to background
+        self.mockDataTaskId = UIApplication.shared.beginBackgroundTask(withName: "Create mock sensor data") {
+            // end task if time expires
+            UIApplication.shared.endBackgroundTask(self.mockDataTaskId!)
+            self.mockDataTaskId = UIBackgroundTaskIdentifier.invalid
+        }
+
         let mockDataOperation = MockSensorDataOperation(context: context)
+        mockDataOperation.completionBlock = {
+            // end task after operation is completed
+            UIApplication.shared.endBackgroundTask(self.mockDataTaskId!)
+            self.mockDataTaskId = UIBackgroundTaskIdentifier.invalid
+        }
 
         mockDataOperation.start()
     }
-    
+
     // invoked on a repeated schedule as long as EnrolledView is visible. This may take a long time, therefore we need to request for extended
     //  execution time before the app moves to the background
     @objc func uploadSensorData() {
@@ -145,7 +161,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             UIApplication.shared.endBackgroundTask(self.uploadBackgroundTaskId!)
             self.uploadBackgroundTaskId = UIBackgroundTaskIdentifier.invalid
         }
-        
+
         // create backround context
         guard let context = PersistenceController.shared.newBackgroundContext() else {
             logger.info("unable to execute upload task")
@@ -161,7 +177,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             UIApplication.shared.endBackgroundTask(self.uploadBackgroundTaskId!)
             self.uploadBackgroundTaskId = UIBackgroundTaskIdentifier.invalid
         }
-        
+
         uploadOperation.start()
     }
 }

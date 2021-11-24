@@ -16,7 +16,7 @@ class MockSensorDataOperation: Operation {
     private let logger = Logger(subsystem: "com.openlattice.chronicle", category: "MockSensorDataOperation")
 
     private let context: NSManagedObjectContext
-    
+
     private var timezone: String {
         TimeZone.current.identifier
     }
@@ -27,7 +27,7 @@ class MockSensorDataOperation: Operation {
 
     override func main() {
 
-        let numEntries = Int.random(in: 50...100)
+        let numEntries = Int.random(in: 200...300)
         context.performAndWait {
             do {
                 for _ in 0..<numEntries {
@@ -184,13 +184,13 @@ class UploadDataOperation: Operation {
                let data = $0.data {
 
                 let valuesArr = try JSONSerialization.jsonObject(with: data, options: []) as! [[String: String]]
-                
+
                 return Sample(dateRecorded: dateRecorded.toISOFormat(), startDate: startDate.toISOFormat(), endDate: endDate.toISOFormat(), data: valuesArr, timezone: timezone, id: id, sensorName: sensor)
             }
-            
+
             return nil
         }.filter { $0 != nil }
-        
+
         return try JSONEncoder().encode(transformed)
     }
 
