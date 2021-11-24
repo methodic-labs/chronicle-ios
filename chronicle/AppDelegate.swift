@@ -126,8 +126,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
     }
 
-    // This method is called on a repeated schedule when EnrolledView loads. This will only execute as long as the app is in the foreground.
-
     // This method is invoked to trigger a single MockSensorData operation.
     @objc func mockSensorData() {
         // create backround context
