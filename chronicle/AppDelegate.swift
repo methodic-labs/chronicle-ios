@@ -88,6 +88,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             return
         }
         
+        // request additional background execution in case app goes to background
         self.mockDataTaskId = UIApplication.shared.beginBackgroundTask(withName: "Create mock sensor data") {
             // end task if time expires
             UIApplication.shared.endBackgroundTask(self.mockDataTaskId!)
