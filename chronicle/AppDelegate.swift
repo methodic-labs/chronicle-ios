@@ -19,7 +19,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     // task identifiers in BGTaskSchedulerPermittedIdentifiers array of Info.Plist
     let mockDataTaskIdentifer = "com.openlattice.chronicle.mockSensorData"
     
+    var mockDataTaskId: UIBackgroundTaskIdentifier? = nil
     
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
         // register handlers for tasks
@@ -86,7 +88,18 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             return
         }
         
+        self.mockDataTaskId = UIApplication.shared.beginBackgroundTask(withName: "Create mock sensor data") {
+            // end task if time expires
+            UIApplication.shared.endBackgroundTask(self.mockDataTaskId!)
+            self.mockDataTaskId = UIBackgroundTaskIdentifier.invalid
+        }
+        
         let mockDataOperation = MockSensorDataOperation(context: context)
+        mockDataOperation.completionBlock = {
+            // end task after operation is completed
+            UIApplication.shared.endBackgroundTask(self.mockDataTaskId!)
+            self.mockDataTaskId = UIBackgroundTaskIdentifier.invalid
+        }
         
         mockDataOperation.start()
     }
