@@ -15,7 +15,8 @@ struct EnrolledView: View {
 
     // convenient to read saved value from UserDefaults
     @AppStorage(UserSettingsKeys.lastUploadDate) var lastUploadDate: String?
-
+    @AppStorage(UserSettingsKeys.isUploading) var isUploading: Bool = false
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
@@ -41,24 +42,30 @@ struct EnrolledView: View {
                 Text("Last Upload:").fontWeight(.bold).padding(.bottom, 5)
                 Text(formatDate())
                     .foregroundColor(Color.gray)
+                
+                if isUploading {
+                    UploadingProgress().padding(.top, 20)
+                }
             }
             .padding(.horizontal)
         }.onAppear {
-            Timer.scheduledTimer(timeInterval: 30, target: appDelegate, selector: #selector(appDelegate.mockSensorData), userInfo: nil, repeats: true)
-            Timer.scheduledTimer(timeInterval: 30, target: appDelegate, selector: #selector(appDelegate.uploadSensorData), userInfo: nil, repeats: true)
+            // run in a background queue
+            DispatchQueue.global().async {
+                Timer.scheduledTimer(timeInterval: 30, target: appDelegate, selector: #selector(appDelegate.mockSensorData), userInfo: nil, repeats: true)
+                Timer.scheduledTimer(timeInterval: 30, target: appDelegate, selector: #selector(appDelegate.uploadSensorData), userInfo: nil, repeats: true)
 
-            // schedule a repeating task to create fake sensor data and save to database
-            let startDate = Date().addingTimeInterval(5) // 5 seconds from now
+                // schedule a repeating task to create fake sensor data and save to database
+                let startDate = Date().addingTimeInterval(5) // 5 seconds from now
 
-            let mockDataTimer = Timer(fireAt: startDate, interval: 15 * 60, target: appDelegate, selector: #selector(appDelegate.mockSensorData), userInfo: nil, repeats: true)
-            let uploadDataTimer = Timer(fireAt: startDate.addingTimeInterval(5), interval: 15 * 60, target: appDelegate, selector: #selector(appDelegate.uploadSensorData), userInfo: nil, repeats: true)
+                let mockDataTimer = Timer(fireAt: startDate, interval: 15 * 60, target: appDelegate, selector: #selector(appDelegate.mockSensorData), userInfo: nil, repeats: true)
+                let uploadDataTimer = Timer(fireAt: startDate.addingTimeInterval(5), interval: 15 * 60, target: appDelegate, selector: #selector(appDelegate.uploadSensorData), userInfo: nil, repeats: true)
 
-            let runLoop = RunLoop.current
+                let runLoop = RunLoop.main
+                runLoop.run()
 
-            runLoop.add(mockDataTimer, forMode: RunLoop.Mode.common)
-            runLoop.add(uploadDataTimer, forMode: RunLoop.Mode.common)
-            
-            runLoop.run()
+                runLoop.add(mockDataTimer, forMode: RunLoop.Mode.common)
+                runLoop.add(uploadDataTimer, forMode: RunLoop.Mode.common)
+            }
         }
     }
 
@@ -74,8 +81,23 @@ struct EnrolledView: View {
     }
 }
 
+struct UploadingProgress: View {
+    var body: some View {
+        HStack {
+            Spacer()
+            Text("Uploading Data...")
+                .font(.body)
+                .foregroundColor(.gray)
+            ProgressView()
+                .progressViewStyle(CircularProgressViewStyle(tint: .gray))
+            Spacer()
+        }
+    }
+}
+
 struct EnrolledView_Previews: PreviewProvider {
     static var previews: some View {
         EnrolledView(appDelegate: AppDelegate(), enrollmentViewModel: EnrollmentViewModel())
+        UploadingProgress()
     }
 }
