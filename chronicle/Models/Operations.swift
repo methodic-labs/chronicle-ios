@@ -126,6 +126,7 @@ class UploadDataOperation: Operation {
 
                     self.logger.info("attempting to upload \(objects.count) objects to server")
                     self.uploading = true
+                    UserDefaults.standard.set(true, forKey: UserSettingsKeys.isUploading)
 
                     ApiClient.uploadData(sensorData: data, enrollment: enrollment, deviceId: deviceId) {
                         self.logger.info("successfully uploaded \(objects.count) to server")
@@ -135,6 +136,7 @@ class UploadDataOperation: Operation {
                         // record last successful upload
                         UserDefaults.standard.set(Date().toISOFormat(), forKey: UserSettingsKeys.lastUploadDate)
                         self.uploading = false
+                        UserDefaults.standard.set(false, forKey: UserSettingsKeys.isUploading)
                     } onError: { error in
                         self.logger.error("error uploading to server: \(error)")
 
@@ -145,6 +147,8 @@ class UploadDataOperation: Operation {
                         self.hasMoreData = false
                         self.didChangeValue(forKey: #keyPath(isExecuting))
                         self.didChangeValue(forKey: #keyPath(isFinished))
+                        
+                        UserDefaults.standard.set(false, forKey: UserSettingsKeys.isUploading)
                     }
 
                     // wait until the current upload attempt complete, and try again if there is more data
