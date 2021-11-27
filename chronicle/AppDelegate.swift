@@ -109,7 +109,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
     }
 
-    func scheduleUploadDataTask() {
+    // called when app moves to background to schedule task to upload data
+    func scheduleUploadDataBackgroundTask() {
         let request = BGAppRefreshTaskRequest(identifier: uploadDataTaskIdentifier)
         request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60) // no earlier than 15 min from now
 
