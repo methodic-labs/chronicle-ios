@@ -97,7 +97,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         queue.addOperation(mockDataOperation)
     }
 
-    // called when app moves to the background to schedule a BGAppRefreshTask
+    // called when app moves to the background to schedule a task to be handled by mockSensorData()
     func scheduleMockDataBackgroundTask() {
         let request = BGAppRefreshTaskRequest(identifier: mockDataTaskIdentifer)
         request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60) // no earlier than 15minutes from now
@@ -109,7 +109,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
     }
 
-    // called when app moves to background to schedule task to upload data
+    // called when app moves to background to schedule task handled by handleUploadDataTask
     func scheduleUploadDataBackgroundTask() {
         let request = BGAppRefreshTaskRequest(identifier: uploadDataTaskIdentifier)
         request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60) // no earlier than 15 min from now
