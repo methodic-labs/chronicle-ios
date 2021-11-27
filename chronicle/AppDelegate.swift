@@ -21,7 +21,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     var mockDataTaskId: UIBackgroundTaskIdentifier? = nil
     
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
         // register handlers for tasks
@@ -33,14 +32,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return true
     }
     
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        scheduleMockSensorTask()
-        
-    }
-    
     func handleMockSensorData(task: BGAppRefreshTask) {
         // schedule a new task
-        scheduleMockSensorTask()
+        scheduleMockDataBackgroundTask()
         
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 1
@@ -68,8 +62,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         queue.addOperation(mockDataOperation)
     }
     
-    
-    func scheduleMockSensorTask() {
+    // called when app moves to the background to schedule a BGAppRefreshTask
+    func scheduleMockDataBackgroundTask() {
         let request = BGAppRefreshTaskRequest(identifier: mockDataTaskIdentifer)
         request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60) // no earlier than 15minutes from now
         
