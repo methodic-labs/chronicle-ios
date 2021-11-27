@@ -28,7 +28,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // register handlers for tasks
         BGTaskScheduler.shared.register(forTaskWithIdentifier: mockDataTaskIdentifer, using: nil) { task in
             //Downcast parameter to a background refresh task
-            self.scheduleMockDataBackgroundTask(task: task as! BGAppRefreshTask)
+            self.handleMockDataBackgroundTask(task: task as! BGAppRefreshTask)
         }
 
         BGTaskScheduler.shared.register(forTaskWithIdentifier: uploadDataTaskIdentifier, using: nil) { task in
@@ -67,7 +67,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
     }
 
-    func scheduleMockDataBackgroundTask(task: BGAppRefreshTask) {
+    func handleMockDataBackgroundTask(task: BGAppRefreshTask) {
         // schedule a new task
         scheduleMockDataBackgroundTask()
 
@@ -97,7 +97,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         queue.addOperation(mockDataOperation)
     }
 
-    // called when app moves to the background to schedule a task to be handled by handleMockSensorData()
+    // called when app moves to the background to schedule a task to be handled by handleMockDataBackgroundTask()
     func scheduleMockDataBackgroundTask() {
         let request = BGAppRefreshTaskRequest(identifier: mockDataTaskIdentifer)
         request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60) // no earlier than 15minutes from now

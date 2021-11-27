@@ -26,6 +26,7 @@ struct ChronicleApp: App {
         }.onChange(of: scenePhase) { phase in
             if phase == .background && viewModel.isEnrolled {
                 appDelegate.scheduleMockDataBackgroundTask()
+                appDelegate.scheduleUploadDataBackgroundTask()
             }
         }
     }
