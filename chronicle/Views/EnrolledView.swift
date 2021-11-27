@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct EnrolledView: View {
-    @Environment(\.scenePhase) private var scenePhase
 
     let appDelegate: AppDelegate
     var enrollmentViewModel: EnrollmentViewModel
@@ -16,7 +15,7 @@ struct EnrolledView: View {
     // convenient to read saved value from UserDefaults
     @AppStorage(UserSettingsKeys.lastUploadDate) var lastUploadDate: String?
     @AppStorage(UserSettingsKeys.isUploading) var isUploading: Bool = false
-    
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
@@ -42,7 +41,7 @@ struct EnrolledView: View {
                 Text("Last Upload:").fontWeight(.bold).padding(.bottom, 5)
                 Text(formatDate())
                     .foregroundColor(Color.gray)
-                
+
                 if isUploading {
                     UploadingProgress().padding(.top, 20)
                 }
@@ -60,7 +59,7 @@ struct EnrolledView: View {
                 let mockDataTimer = Timer(fireAt: startDate, interval: 15 * 60, target: appDelegate, selector: #selector(appDelegate.mockSensorData), userInfo: nil, repeats: true)
                 let uploadDataTimer = Timer(fireAt: startDate.addingTimeInterval(5), interval: 15 * 60, target: appDelegate, selector: #selector(appDelegate.uploadSensorData), userInfo: nil, repeats: true)
 
-                let runLoop = RunLoop.main
+                let runLoop = RunLoop.current
                 runLoop.run()
 
                 runLoop.add(mockDataTimer, forMode: RunLoop.Mode.common)

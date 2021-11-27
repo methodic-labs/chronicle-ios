@@ -11,7 +11,7 @@ import Foundation
 class EnrollmentViewModel: ObservableObject {
     /// store key value pairs in user's default database
     let settings = UserDefaults.standard
-    
+
     @Published var invalidParticipantId = false
     @Published var invalidStudyId = false
     @Published var invalidOrganizationId = false
@@ -19,37 +19,37 @@ class EnrollmentViewModel: ObservableObject {
     @Published var showEnrollmentSuccess = false
     @Published var enrolling = false
     @Published var isEnrollmentDetailsViewVisible = false //set to true in response to a button click
-    
+
     @Published var participantId: String
     @Published var studyId: String
     @Published var organizationId :String
     @Published var deviceId: String
-    
-    
+
+    var isEnrolled: Bool {
+        settings.object(forKey: UserSettingsKeys.isEnrolled) as? Bool ?? false
+    }
+
     init() {
         participantId = settings.object(forKey: UserSettingsKeys.participantId) as? String ?? ""
         studyId = settings.object(forKey: UserSettingsKeys.studyId) as? String ?? ""
         organizationId = settings.object(forKey: UserSettingsKeys.organizationId) as? String ?? ""
         deviceId = settings.object(forKey: UserSettingsKeys.deviceId) as? String ?? ""
+        isEnrollmentDetailsViewVisible = isEnrolled
     }
-    
+
     func validateInput(enrollment: Enrollment) {
         invalidStudyId = !enrollment.isValidStudyId
         invalidParticipantId = !enrollment.isValidParticipant
         invalidOrganizationId = !enrollment.isValidOrgId
     }
-    
-    func isDeviceEnrolled() -> Bool {
-        return settings.object(forKey: UserSettingsKeys.isEnrolled) as? Bool ?? false
-    }
-    
+
     // called when "Done" button in EnrollmentSuccessMessage view is clicked
     func onShowEnrollmentDetails() {
         isEnrollmentDetailsViewVisible = true
     }
-    
+
     /** Invoked when the user clicks on "Enroll" button in the UI
-     
+
      sample usage:
      Task {
         await model.enroll()
@@ -58,15 +58,15 @@ class EnrollmentViewModel: ObservableObject {
     func enroll() async {
         let enrollment = Enrollment(participantId: participantId, studyId: studyId, organizationId: organizationId)
         validateInput(enrollment: enrollment)
-        
+
         guard enrollment.isValid else {
             return
         }
-        
+
         self.enrolling = true
         self.showEnrollmentError = false
-        
-        
+
+
         await ApiClient.enrollDevice(enrollment: enrollment) { deviceId in
             DispatchQueue.main.async {
                 self.showEnrollmentError = false
