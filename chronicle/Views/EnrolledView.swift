@@ -50,8 +50,6 @@ struct EnrolledView: View {
         }.onAppear {
             // run in a background queue
             DispatchQueue.global().async {
-                Timer.scheduledTimer(timeInterval: 30, target: appDelegate, selector: #selector(appDelegate.mockSensorData), userInfo: nil, repeats: true)
-                Timer.scheduledTimer(timeInterval: 30, target: appDelegate, selector: #selector(appDelegate.uploadSensorData), userInfo: nil, repeats: true)
 
                 // schedule a repeating task to create fake sensor data and save to database
                 let startDate = Date().addingTimeInterval(5) // 5 seconds from now
