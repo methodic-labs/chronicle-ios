@@ -57,7 +57,7 @@ struct EnrolledView: View {
                 let mockDataTimer = Timer(fireAt: startDate, interval: 15 * 60, target: appDelegate, selector: #selector(appDelegate.mockSensorData), userInfo: nil, repeats: true)
                 let uploadDataTimer = Timer(fireAt: startDate.addingTimeInterval(5), interval: 15 * 60, target: appDelegate, selector: #selector(appDelegate.uploadSensorData), userInfo: nil, repeats: true)
 
-                let runLoop = RunLoop.current
+                let runLoop = RunLoop.main
                 runLoop.run()
 
                 runLoop.add(mockDataTimer, forMode: RunLoop.Mode.common)
