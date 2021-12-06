@@ -14,6 +14,10 @@
 		B9BBFDC826CD6EC800B770E4 /* EnrollmentSuccessMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDC726CD6EC800B770E4 /* EnrollmentSuccessMessage.swift */; };
 		B9BBFDCC26CD707D00B770E4 /* EnrollmentFailureMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDCB26CD707D00B770E4 /* EnrollmentFailureMessage.swift */; };
 		B9BBFDD026CD9C6C00B770E4 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */; };
+		EA28163E2733493C005C26E8 /* FullQualifiedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28163D2733493C005C26E8 /* FullQualifiedName.swift */; };
+		EA28163F2733493C005C26E8 /* FullQualifiedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28163D2733493C005C26E8 /* FullQualifiedName.swift */; };
+		EA28164127334C15005C26E8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28164027334C15005C26E8 /* Utils.swift */; };
+		EA28164227334C15005C26E8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28164027334C15005C26E8 /* Utils.swift */; };
 		EA46D45426C4F850008CE3C0 /* ChronicleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */; };
 		EA63652326C6D6EF005D6DFC /* UserSettingsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */; };
 		EA802F2926BA4C0400C494F8 /* ChronicleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA802F2826BA4C0400C494F8 /* ChronicleApp.swift */; };
@@ -46,6 +50,8 @@
 		B9BBFDC726CD6EC800B770E4 /* EnrollmentSuccessMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentSuccessMessage.swift; sourceTree = "<group>"; };
 		B9BBFDCB26CD707D00B770E4 /* EnrollmentFailureMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentFailureMessage.swift; sourceTree = "<group>"; };
 		B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		EA28163D2733493C005C26E8 /* FullQualifiedName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullQualifiedName.swift; sourceTree = "<group>"; };
+		EA28164027334C15005C26E8 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		EA46D44826C4F745008CE3C0 /* chronicleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chronicleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChronicleTests.swift; path = chronicleTests/ChronicleTests.swift; sourceTree = "<group>"; };
 		EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsKeys.swift; sourceTree = "<group>"; };
@@ -149,6 +155,7 @@
 				EA82494C26C4F27500F9CD7C /* IOSDevice.swift */,
 				EA82494E26C4F28E00F9CD7C /* Enrollment.swift */,
 				EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */,
+				EA28163D2733493C005C26E8 /* FullQualifiedName.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -167,6 +174,7 @@
 				EA82495426C4F2F900F9CD7C /* ApiClient.swift */,
 				EA82495626C4F31A00F9CD7C /* ApiUtils.swift */,
 				EA82495826C4F33800F9CD7C /* EnrollmentUtils.swift */,
+				EA28164027334C15005C26E8 /* Utils.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -272,7 +280,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA28163F2733493C005C26E8 /* FullQualifiedName.swift in Sources */,
 				EA46D45426C4F850008CE3C0 /* ChronicleTests.swift in Sources */,
+				EA28164227334C15005C26E8 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,7 +301,9 @@
 				B9BBFDBF26C648C100B770E4 /* EnrolledView.swift in Sources */,
 				EA802F2B26BA4C0400C494F8 /* EnrollmentView.swift in Sources */,
 				EA82495326C4F2D500F9CD7C /* EnrollmentViewModel.swift in Sources */,
+				EA28164127334C15005C26E8 /* Utils.swift in Sources */,
 				EA82495726C4F31A00F9CD7C /* ApiUtils.swift in Sources */,
+				EA28163E2733493C005C26E8 /* FullQualifiedName.swift in Sources */,
 				EA802F2926BA4C0400C494F8 /* ChronicleApp.swift in Sources */,
 				EA63652326C6D6EF005D6DFC /* UserSettingsKeys.swift in Sources */,
 				EA82494F26C4F28E00F9CD7C /* Enrollment.swift in Sources */,
