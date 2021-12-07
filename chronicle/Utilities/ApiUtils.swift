@@ -50,9 +50,8 @@ struct ApiUtils {
             return nil
         }
 
-        components.scheme = "http"
-        components.host = "192.168.1.66"
-        components.port = 8090
+        components.scheme = scheme
+        components.host = host
         components.path = "/chronicle/v2/\(enrollment.organizationId!)/\(enrollment.studyId!)/\(enrollment.participantId)/\(deviceId)/upload/ios"
 
         return components
