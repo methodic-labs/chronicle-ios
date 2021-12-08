@@ -24,21 +24,21 @@ class EnrollmentViewModel: ObservableObject {
     @Published var studyId: String
     @Published var organizationId :String
     
+    var isEnrolled: Bool {
+        settings.object(forKey: UserSettingsKeys.isEnrolled) as? Bool ?? false
+    }
     
     init() {
         participantId = settings.object(forKey: UserSettingsKeys.participantId) as? String ?? ""
         studyId = settings.object(forKey: UserSettingsKeys.studyId) as? String ?? ""
         organizationId = settings.object(forKey: UserSettingsKeys.organizationId) as? String ?? ""
+        isEnrollmentDetailsViewVisible = isEnrolled
     }
     
     func validateInput(enrollment: Enrollment) {
         invalidStudyId = !enrollment.isValidStudyId
         invalidParticipantId = !enrollment.isValidParticipant
         invalidOrganizationId = !enrollment.isValidOrgId
-    }
-    
-    func isDeviceEnrolled() -> Bool {
-        return settings.object(forKey: UserSettingsKeys.isEnrolled) as? Bool ?? false
     }
     
     // called when "Done" button in EnrollmentSuccessMessage view is clicked

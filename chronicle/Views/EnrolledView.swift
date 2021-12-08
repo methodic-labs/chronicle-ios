@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct EnrolledView: View {
+    
+    let appDelegate: AppDelegate
     var enrollmentViewModel: EnrollmentViewModel
     
     var body: some View {
@@ -34,12 +36,25 @@ struct EnrolledView: View {
                     .padding(.bottom)
             }
             .padding(.horizontal)
+        }.onAppear {
+            DispatchQueue.global().async {
+                
+                // schedule a repeating task to create fake sensor data and save to database
+                let startDate = Date().addingTimeInterval(5) // 5 seconds from now
+                
+                let timer = Timer(fireAt: startDate, interval: 15 * 60, target: appDelegate, selector: #selector(appDelegate.mockSensorData), userInfo: nil, repeats: true)
+                
+                let runLoop = RunLoop.current
+                
+                runLoop.add(timer, forMode: RunLoop.Mode.common)
+                runLoop.run()
+            }
         }
     }
 }
 
 struct EnrolledView_Previews: PreviewProvider {
     static var previews: some View {
-        EnrolledView(enrollmentViewModel: EnrollmentViewModel())
+        EnrolledView(appDelegate: AppDelegate(), enrollmentViewModel: EnrollmentViewModel())
     }
 }

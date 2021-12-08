@@ -10,16 +10,21 @@ import SwiftUI
 @main
 struct ChronicleApp: App {
     @ObservedObject var viewModel = EnrollmentViewModel()
-    let isDeviceEnrolled = UserDefaults.standard.object(forKey: UserSettingsKeys.isEnrolled) as? Bool ?? false
-    
+    @Environment(\.scenePhase) var scenePhase
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+        
     var body: some Scene {
         WindowGroup {
-            if isDeviceEnrolled || viewModel.isEnrollmentDetailsViewVisible {
-                EnrolledView(enrollmentViewModel: viewModel)
+            if viewModel.isEnrollmentDetailsViewVisible {
+                EnrolledView(appDelegate: appDelegate, enrollmentViewModel: viewModel)
             } else if viewModel.showEnrollmentSuccess {
                 EnrollmentSuccessMessage(enrollmentViewModel: viewModel)
             } else {
                 EnrollmentView(enrollmentViewModel: viewModel)
+            }
+        }.onChange(of: scenePhase) { phase in
+            if phase == .background && viewModel.isEnrolled {
+                appDelegate.scheduleMockDataBackgroundTask()
             }
         }
     }

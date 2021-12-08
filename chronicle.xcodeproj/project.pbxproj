@@ -14,6 +14,12 @@
 		B9BBFDC826CD6EC800B770E4 /* EnrollmentSuccessMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDC726CD6EC800B770E4 /* EnrollmentSuccessMessage.swift */; };
 		B9BBFDCC26CD707D00B770E4 /* EnrollmentFailureMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDCB26CD707D00B770E4 /* EnrollmentFailureMessage.swift */; };
 		B9BBFDD026CD9C6C00B770E4 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */; };
+		EA0048E42744344400EBA09F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0048E32744344400EBA09F /* AppDelegate.swift */; };
+		EA0048E6274440EF00EBA09F /* Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0048E5274440EF00EBA09F /* Operations.swift */; };
+		EA0048E82744472F00EBA09F /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0048E72744472F00EBA09F /* Mocks.swift */; };
+		EA28164527346B0B005C26E8 /* SensorDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA28164327346B0B005C26E8 /* SensorDataModel.xcdatamodeld */; };
+		EA28164627346B0C005C26E8 /* SensorDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA28164327346B0B005C26E8 /* SensorDataModel.xcdatamodeld */; };
+		EA28164A2738BDE6005C26E8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2816492738BDE5005C26E8 /* Persistence.swift */; };
 		EA28163E2733493C005C26E8 /* FullQualifiedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28163D2733493C005C26E8 /* FullQualifiedName.swift */; };
 		EA28163F2733493C005C26E8 /* FullQualifiedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28163D2733493C005C26E8 /* FullQualifiedName.swift */; };
 		EA28164127334C15005C26E8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28164027334C15005C26E8 /* Utils.swift */; };
@@ -50,6 +56,12 @@
 		B9BBFDC726CD6EC800B770E4 /* EnrollmentSuccessMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentSuccessMessage.swift; sourceTree = "<group>"; };
 		B9BBFDCB26CD707D00B770E4 /* EnrollmentFailureMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentFailureMessage.swift; sourceTree = "<group>"; };
 		B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		EA0048E227442F0600EBA09F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		EA0048E32744344400EBA09F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EA0048E5274440EF00EBA09F /* Operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operations.swift; sourceTree = "<group>"; };
+		EA0048E72744472F00EBA09F /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
+		EA28164427346B0B005C26E8 /* SensorDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SensorDataModel.xcdatamodel; sourceTree = "<group>"; };
+		EA2816492738BDE5005C26E8 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		EA28163D2733493C005C26E8 /* FullQualifiedName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullQualifiedName.swift; sourceTree = "<group>"; };
 		EA28164027334C15005C26E8 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		EA46D44826C4F745008CE3C0 /* chronicleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chronicleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,6 +141,7 @@
 		EA802F2726BA4C0400C494F8 /* chronicle */ = {
 			isa = PBXGroup;
 			children = (
+				EA0048E227442F0600EBA09F /* Info.plist */,
 				B9BBFDC026CD6AFC00B770E4 /* Views */,
 				EA82494926C4F14100F9CD7C /* Utilities */,
 				EA82494826C4F13900F9CD7C /* ViewModels */,
@@ -137,6 +150,7 @@
 				EA802F2C26BA4C0500C494F8 /* Assets.xcassets */,
 				EA802F2E26BA4C0500C494F8 /* Preview Content */,
 				B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */,
+				EA0048E32744344400EBA09F /* AppDelegate.swift */,
 			);
 			path = chronicle;
 			sourceTree = "<group>";
@@ -152,9 +166,12 @@
 		EA82494726C4F12500F9CD7C /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				EA2816492738BDE5005C26E8 /* Persistence.swift */,
+				EA28164327346B0B005C26E8 /* SensorDataModel.xcdatamodeld */,
 				EA82494C26C4F27500F9CD7C /* IOSDevice.swift */,
 				EA82494E26C4F28E00F9CD7C /* Enrollment.swift */,
 				EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */,
+				EA0048E5274440EF00EBA09F /* Operations.swift */,
 				EA28163D2733493C005C26E8 /* FullQualifiedName.swift */,
 			);
 			path = Models;
@@ -174,6 +191,7 @@
 				EA82495426C4F2F900F9CD7C /* ApiClient.swift */,
 				EA82495626C4F31A00F9CD7C /* ApiUtils.swift */,
 				EA82495826C4F33800F9CD7C /* EnrollmentUtils.swift */,
+				EA0048E72744472F00EBA09F /* Mocks.swift */,
 				EA28164027334C15005C26E8 /* Utils.swift */,
 			);
 			path = Utilities;
@@ -282,6 +300,7 @@
 			files = (
 				EA28163F2733493C005C26E8 /* FullQualifiedName.swift in Sources */,
 				EA46D45426C4F850008CE3C0 /* ChronicleTests.swift in Sources */,
+				EA28164627346B0C005C26E8 /* SensorDataModel.xcdatamodeld in Sources */,
 				EA28164227334C15005C26E8 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -293,6 +312,7 @@
 				EA82495526C4F2F900F9CD7C /* ApiClient.swift in Sources */,
 				B9BBFDC226CD6B1100B770E4 /* AppHeader.swift in Sources */,
 				B9BBFDCC26CD707D00B770E4 /* EnrollmentFailureMessage.swift in Sources */,
+				EA0048E6274440EF00EBA09F /* Operations.swift in Sources */,
 				B9BBFDD026CD9C6C00B770E4 /* Colors.swift in Sources */,
 				B9BBFDC626CD6D9800B770E4 /* RadioButtonGroup.swift in Sources */,
 				B9BBFDC826CD6EC800B770E4 /* EnrollmentSuccessMessage.swift in Sources */,
@@ -300,7 +320,11 @@
 				EA802F2B26BA4C0400C494F8 /* EnrollmentView.swift in Sources */,
 				B9BBFDBF26C648C100B770E4 /* EnrolledView.swift in Sources */,
 				EA802F2B26BA4C0400C494F8 /* EnrollmentView.swift in Sources */,
+				EA0048E42744344400EBA09F /* AppDelegate.swift in Sources */,
+				EA28164A2738BDE6005C26E8 /* Persistence.swift in Sources */,
+				EA0048E82744472F00EBA09F /* Mocks.swift in Sources */,
 				EA82495326C4F2D500F9CD7C /* EnrollmentViewModel.swift in Sources */,
+				EA28164527346B0B005C26E8 /* SensorDataModel.xcdatamodeld in Sources */,
 				EA28164127334C15005C26E8 /* Utils.swift in Sources */,
 				EA82495726C4F31A00F9CD7C /* ApiUtils.swift in Sources */,
 				EA28163E2733493C005C26E8 /* FullQualifiedName.swift in Sources */,
@@ -501,6 +525,7 @@
 				DEVELOPMENT_TEAM = 28UYMG34TU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = chronicle/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -531,6 +556,7 @@
 				DEVELOPMENT_TEAM = 28UYMG34TU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = chronicle/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -581,6 +607,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		EA28164327346B0B005C26E8 /* SensorDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				EA28164427346B0B005C26E8 /* SensorDataModel.xcdatamodel */,
+			);
+			currentVersion = EA28164427346B0B005C26E8 /* SensorDataModel.xcdatamodel */;
+			path = SensorDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = EA802F1D26BA4C0400C494F8 /* Project object */;
 }
