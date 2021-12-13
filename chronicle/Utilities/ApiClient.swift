@@ -6,11 +6,11 @@
 //
 
 import Foundation
-
+import OSLog
 /// handles all API requests
 struct ApiClient {
-    static var settings = UserDefaults.standard
-    
+    // logger:
+    static var logger = Logger(subsystem: "com.openlattice.chronicle", category: "ApiClient")
     /// Enrolls a device
     static func enrollDevice(enrollment: Enrollment, onSuccess: @escaping (String) -> Void, onError: @escaping (String) -> Void) async {
         
@@ -63,10 +63,48 @@ struct ApiClient {
         task.resume()
     }
     
+    // upload SensorData to server
+    static func uploadData(sensorData: Data, enrollment: Enrollment, deviceId: String, onCompletion: @escaping() -> Void, onError: @escaping (String) -> Void) {
+        
+        let urlComponents: URLComponents? = ApiUtils.createSensorDataUploadURLComponents(enrollment: enrollment, deviceId: deviceId)
+        
+        guard let url = urlComponents?.url else {
+            onError("failed to upload sensor data: invalid url")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let task = URLSession.shared.uploadTask(with: request, from: sensorData) { data, response, error in
+            if let error = error {
+                onError(error.localizedDescription)
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                onError("Unexpected response: \(String(describing: response))")
+                return
+            }
+            
+            let statusCode = httpResponse.statusCode
+            
+            guard statusCode == 200 else {
+                onError("unexpected status code: \(statusCode)")
+                return
+            }
+            
+            onCompletion()
+        }
+        
+        task.resume()
+    }
+    
     
     static func getPropertyTypeIds() async -> [FullQualifiedName: UUID]? {
         // get locally stored value
-        let result = settings.object(forKey: UserSettingsKeys.propertyTypes) as? [String: String] ?? [:]
+        let result = UserDefaults.standard.object(forKey: UserSettingsKeys.propertyTypes) as? [String: String] ?? [:]
         if (result.count == FullQualifiedName.fqns.count) {
             print("Returning locally stored FQNS")
             return Utils.toFqnUUIDMap(result)
@@ -87,17 +125,20 @@ struct ApiClient {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         guard let (data, response ) = try? await URLSession.shared.upload(for: request, from: reqBody),
-                let httpResponse = response as? HTTPURLResponse,
-                httpResponse.statusCode == 200 else {
-            
-            return nil
-        }
+              let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 200 else {
+                  
+                  return nil
+              }
         
         guard let decoded = try? JSONDecoder().decode([String: String].self, from: data) else {
             return nil
         }
-        settings.set(decoded, forKey: UserSettingsKeys.propertyTypes)
-                
+        UserDefaults.standard.set(decoded, forKey: UserSettingsKeys.propertyTypes)
+        
         return Utils.toFqnUUIDMap(decoded)
     }
 }
+
+// throw strings as errors
+extension String: Error {}

@@ -15,4 +15,5 @@ struct UserSettingsKeys {
     static let lastUploadDate = "lastUploadDate"
     static let deviceId = "deviceId"
     static let propertyTypes = "propertyTypes"
+    static let isUploading = "isUploading"
 }
