@@ -17,13 +17,13 @@
 		EA0048E42744344400EBA09F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0048E32744344400EBA09F /* AppDelegate.swift */; };
 		EA0048E6274440EF00EBA09F /* Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0048E5274440EF00EBA09F /* Operations.swift */; };
 		EA0048E82744472F00EBA09F /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0048E72744472F00EBA09F /* Mocks.swift */; };
-		EA28164527346B0B005C26E8 /* SensorDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA28164327346B0B005C26E8 /* SensorDataModel.xcdatamodeld */; };
-		EA28164627346B0C005C26E8 /* SensorDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA28164327346B0B005C26E8 /* SensorDataModel.xcdatamodeld */; };
-		EA28164A2738BDE6005C26E8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2816492738BDE5005C26E8 /* Persistence.swift */; };
 		EA28163E2733493C005C26E8 /* FullQualifiedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28163D2733493C005C26E8 /* FullQualifiedName.swift */; };
 		EA28163F2733493C005C26E8 /* FullQualifiedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28163D2733493C005C26E8 /* FullQualifiedName.swift */; };
 		EA28164127334C15005C26E8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28164027334C15005C26E8 /* Utils.swift */; };
 		EA28164227334C15005C26E8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28164027334C15005C26E8 /* Utils.swift */; };
+		EA28164527346B0B005C26E8 /* SensorDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA28164327346B0B005C26E8 /* SensorDataModel.xcdatamodeld */; };
+		EA28164627346B0C005C26E8 /* SensorDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA28164327346B0B005C26E8 /* SensorDataModel.xcdatamodeld */; };
+		EA28164A2738BDE6005C26E8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2816492738BDE5005C26E8 /* Persistence.swift */; };
 		EA46D45426C4F850008CE3C0 /* ChronicleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */; };
 		EA63652326C6D6EF005D6DFC /* UserSettingsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */; };
 		EA802F2926BA4C0400C494F8 /* ChronicleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA802F2826BA4C0400C494F8 /* ChronicleApp.swift */; };
@@ -49,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2EB3B10C278CA72F002771CE /* chronicle.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = chronicle.entitlements; sourceTree = "<group>"; };
 		B9BBFDBE26C648C100B770E4 /* EnrolledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrolledView.swift; sourceTree = "<group>"; };
 		B9BBFDC126CD6B1100B770E4 /* AppHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHeader.swift; sourceTree = "<group>"; };
 		B9BBFDC326CD6D0200B770E4 /* InputFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldView.swift; sourceTree = "<group>"; };
@@ -60,10 +61,10 @@
 		EA0048E32744344400EBA09F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA0048E5274440EF00EBA09F /* Operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operations.swift; sourceTree = "<group>"; };
 		EA0048E72744472F00EBA09F /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
-		EA28164427346B0B005C26E8 /* SensorDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SensorDataModel.xcdatamodel; sourceTree = "<group>"; };
-		EA2816492738BDE5005C26E8 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		EA28163D2733493C005C26E8 /* FullQualifiedName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullQualifiedName.swift; sourceTree = "<group>"; };
 		EA28164027334C15005C26E8 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		EA28164427346B0B005C26E8 /* SensorDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SensorDataModel.xcdatamodel; sourceTree = "<group>"; };
+		EA2816492738BDE5005C26E8 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		EA46D44826C4F745008CE3C0 /* chronicleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chronicleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChronicleTests.swift; path = chronicleTests/ChronicleTests.swift; sourceTree = "<group>"; };
 		EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsKeys.swift; sourceTree = "<group>"; };
@@ -141,6 +142,7 @@
 		EA802F2726BA4C0400C494F8 /* chronicle */ = {
 			isa = PBXGroup;
 			children = (
+				2EB3B10C278CA72F002771CE /* chronicle.entitlements */,
 				EA0048E227442F0600EBA09F /* Info.plist */,
 				B9BBFDC026CD6AFC00B770E4 /* Views */,
 				EA82494926C4F14100F9CD7C /* Utilities */,
@@ -519,6 +521,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = chronicle/chronicle.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"chronicle/Preview Content\"";
@@ -550,6 +553,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = chronicle/chronicle.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"chronicle/Preview Content\"";
