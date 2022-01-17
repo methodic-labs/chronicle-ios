@@ -9,19 +9,35 @@ import SwiftUI
 
 struct InputFieldView: View {
     let label: String
+    let placeholder: String
     @Binding var inputId: String
     @Binding var invalidInput: Bool
     
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 8).strokeBorder(lineWidth: 0.3).foregroundColor(Color(invalidInput ? .red : .gray)).frame(minHeight: 40, maxHeight: 40)
-            TextField(label, text: $inputId)
-                .padding(.leading)
-                .textFieldStyle(.plain)
-                .disableAutocorrection(true)
-                .autocapitalization(.none)
-        }.padding([.top, .bottom])
-        
+        VStack(alignment: .leading) {
+            Text(label)
+                .fontWeight(.bold)
+            ZStack {
+                RoundedRectangle(cornerRadius: 8).strokeBorder(lineWidth: 0.3).foregroundColor(Color(invalidInput ? .red : .gray)).frame(minHeight: 40, maxHeight: 40)
+                TextField(placeholder, text: $inputId)
+                    .padding(.leading)
+                    .textFieldStyle(.plain)
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
+            }
+        }.padding(.bottom)
+    }
+}
+
+struct InputFieldView_Previews: PreviewProvider {
+    static var model = EnrollmentViewModel()
+    static var previews: some View {
+        InputFieldView(
+            label: "Organization ID",
+            placeholder: "Enter your Organization ID",
+            inputId: .constant(""),
+            invalidInput: .constant(false)
+        ).previewLayout(.sizeThatFits)
     }
 }
 
