@@ -19,6 +19,7 @@ struct InputFieldView: View {
                 .padding(.leading)
                 .textFieldStyle(.plain)
                 .disableAutocorrection(true)
+                .autocapitalization(.none)
         }.padding([.top, .bottom])
         
     }
