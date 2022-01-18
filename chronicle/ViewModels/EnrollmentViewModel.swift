@@ -47,6 +47,16 @@ class EnrollmentViewModel: ObservableObject {
     func onShowEnrollmentDetails() {
         isEnrollmentDetailsViewVisible = true
     }
+    
+    
+    func initializeEnrollmentValues(_ enrollment: Enrollment) {
+        guard enrollment.isValid else {
+            return
+        }
+        participantId = enrollment.participantId
+        studyId = enrollment.studyId!.uuidString
+        organizationId = enrollment.organizationId!.uuidString
+    }
 
     /** Invoked when the user clicks on "Enroll" button in the UI
 
