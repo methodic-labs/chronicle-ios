@@ -127,7 +127,6 @@ struct ApiClient {
         guard let (data, response ) = try? await URLSession.shared.upload(for: request, from: reqBody),
               let httpResponse = response as? HTTPURLResponse,
               httpResponse.statusCode == 200 else {
-                  
                   return nil
               }
         
@@ -142,3 +141,22 @@ struct ApiClient {
 
 // throw strings as errors
 extension String: Error {}
+
+
+// concurrency backward compatibility (<iOS 15.0)
+// ref: https://www.swiftbysundell.com/articles/making-async-system-apis-backward-compatible/
+extension URLSession {
+    @available(iOS, deprecated: 15.0, message: "Extension no longer necessary. Use built-in API")
+    func upload(for request: URLRequest, from bodyData: Data) async throws -> (Data, URLResponse) {
+        try await withCheckedThrowingContinuation { continuation in
+            let task = self.uploadTask(with: request, from: bodyData) { data, response, error in
+                guard let data = data, let response = response else {
+                    let error = error ?? URLError(.badServerResponse)
+                    return continuation.resume(throwing: error)
+                }
+                continuation.resume(returning: (data, response))
+            }
+            task.resume()
+        }
+    }
+}
