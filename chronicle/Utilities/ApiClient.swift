@@ -144,6 +144,7 @@ extension String: Error {}
 
 
 // concurrency backward compatibility (<iOS 15.0)
+// ref: https://www.swiftbysundell.com/articles/making-async-system-apis-backward-compatible/
 extension URLSession {
     @available(iOS, deprecated: 15.0, message: "Extension no longer necessary. Use built-in API")
     func upload(for request: URLRequest, from bodyData: Data) async throws -> (Data, URLResponse) {
