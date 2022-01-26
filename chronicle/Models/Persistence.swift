@@ -49,6 +49,7 @@ class PersistenceController {
         }
         
         let taskContext = persistentContainer!.newBackgroundContext()
+        taskContext.automaticallyMergesChangesFromParent = true
         return taskContext
     }
 }

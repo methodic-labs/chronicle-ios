@@ -40,7 +40,23 @@ struct ApiUtils {
         return components
     }
 
-    
+    static func createSensorDataUploadURLComponents(enrollment: Enrollment, deviceId: String) -> URLComponents? {
+        var components = URLComponents()
+
+        guard enrollment.isValid else {
+            return nil
+        }
+        guard !deviceId.isEmpty else {
+            return nil
+        }
+
+        components.scheme = scheme
+        components.host = host
+        components.path = "/chronicle/v2/\(enrollment.organizationId!)/\(enrollment.studyId!)/\(enrollment.participantId)/\(deviceId)/upload/ios"
+
+        return components
+    }
+
     static func getPropertyTypeIdsUrlComponents() -> URLComponents {
         var components = URLComponents()
         components.scheme = scheme

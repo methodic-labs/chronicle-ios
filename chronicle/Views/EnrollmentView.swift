@@ -15,10 +15,23 @@ struct EnrollmentView: View {
         ScrollView {
             VStack(alignment: .leading) {
                 AppHeader()
-
-                InputFieldView(label: "Enter your Organization ID", inputId: $enrollmentViewModel.organizationId, invalidInput: $enrollmentViewModel.invalidOrganizationId)
-                InputFieldView(label: "Enter your Study ID", inputId: $enrollmentViewModel.studyId, invalidInput: $enrollmentViewModel.invalidStudyId)
-                InputFieldView(label: "Enter your Participant ID", inputId: $enrollmentViewModel.participantId, invalidInput: $enrollmentViewModel.invalidParticipantId)
+                InputFieldView(
+                    label: "Organization ID",
+                    placeholder: "Enter your Organization ID",
+                    inputId: $enrollmentViewModel.organizationId,
+                    invalidInput: $enrollmentViewModel.invalidOrganizationId
+                )
+                InputFieldView(
+                    label: "Study ID",
+                    placeholder: "Enter your Study ID",
+                    inputId: $enrollmentViewModel.studyId, invalidInput: $enrollmentViewModel.invalidStudyId
+                )
+                InputFieldView(
+                    label: "Participant ID",
+                    placeholder: "Enter your Participant ID",
+                    inputId: $enrollmentViewModel.participantId,
+                    invalidInput: $enrollmentViewModel.invalidParticipantId
+                )
                 HStack {
                     Spacer()
                     if enrollmentViewModel.enrolling == true {
