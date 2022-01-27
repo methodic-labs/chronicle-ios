@@ -26,6 +26,8 @@
 		EA28164A2738BDE6005C26E8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2816492738BDE5005C26E8 /* Persistence.swift */; };
 		EA46D45426C4F850008CE3C0 /* ChronicleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */; };
 		EA63652326C6D6EF005D6DFC /* UserSettingsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */; };
+		EA799C2127A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA799C2027A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist */; };
+		EA799C2227A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA799C2027A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist */; };
 		EA802F2926BA4C0400C494F8 /* ChronicleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA802F2826BA4C0400C494F8 /* ChronicleApp.swift */; };
 		EA802F2B26BA4C0400C494F8 /* EnrollmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA802F2A26BA4C0400C494F8 /* EnrollmentView.swift */; };
 		EA802F2D26BA4C0500C494F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA802F2C26BA4C0500C494F8 /* Assets.xcassets */; };
@@ -67,6 +69,7 @@
 		EA46D44826C4F745008CE3C0 /* chronicleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chronicleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChronicleTests.swift; path = chronicleTests/ChronicleTests.swift; sourceTree = "<group>"; };
 		EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsKeys.swift; sourceTree = "<group>"; };
+		EA799C2027A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = CustomCodeSigningEntitlements.plist; sourceTree = "<group>"; };
 		EA802F2526BA4C0400C494F8 /* chronicle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chronicle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA802F2826BA4C0400C494F8 /* ChronicleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChronicleApp.swift; sourceTree = "<group>"; };
 		EA802F2A26BA4C0400C494F8 /* EnrollmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentView.swift; sourceTree = "<group>"; };
@@ -122,6 +125,7 @@
 		EA802F1C26BA4C0400C494F8 = {
 			isa = PBXGroup;
 			children = (
+				EA799C2027A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist */,
 				EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */,
 				EA802F2726BA4C0400C494F8 /* chronicle */,
 				EA46D44926C4F745008CE3C0 /* chronicleTests */,
@@ -280,6 +284,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA799C2227A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +292,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA799C2127A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist in Resources */,
 				EA802F3026BA4C0500C494F8 /* Preview Assets.xcassets in Resources */,
 				EA802F2D26BA4C0500C494F8 /* Assets.xcassets in Resources */,
 			);
