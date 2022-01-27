@@ -12,6 +12,10 @@ struct EnrolledView: View {
     let appDelegate: AppDelegate
     var enrollmentViewModel: EnrollmentViewModel
 
+    var sensorReader: SensorReader {
+        return SensorReader(appDelegate: appDelegate)
+    }
+
     // convenient to read saved value from UserDefaults
     @AppStorage(UserSettingsKeys.lastUploadDate) var lastUploadDate: String?
     @AppStorage(UserSettingsKeys.isUploading) var isUploading: Bool = false
@@ -52,21 +56,23 @@ struct EnrolledView: View {
             }
             .padding(.horizontal)
         }.onAppear {
-            // run in a background queue
-            DispatchQueue.global().async {
+            sensorReader.configure()
+            uploadData()
+        }
+    }
+    
+    private func uploadData() {
+        DispatchQueue.global().async {
 
-                // schedule a repeating task to create fake sensor data and save to database
-                let startDate = Date().addingTimeInterval(5) // 5 seconds from now
+            // schedule a repeating task to persist locally stored data to server
+            let startDate = Date().addingTimeInterval(5) // 5 seconds from now
 
-                let mockDataTimer = Timer(fireAt: startDate, interval: 15 * 60, target: appDelegate, selector: #selector(appDelegate.mockSensorData), userInfo: nil, repeats: true)
-                let uploadDataTimer = Timer(fireAt: startDate.addingTimeInterval(5), interval: 15 * 60, target: appDelegate, selector: #selector(appDelegate.uploadSensorData), userInfo: nil, repeats: true)
+            let uploadDataTimer = Timer(fireAt: startDate.addingTimeInterval(5), interval: 15 * 60, target: appDelegate, selector: #selector(appDelegate.uploadSensorData), userInfo: nil, repeats: true)
 
-                let runLoop = RunLoop.main
-                runLoop.run()
+            let runLoop = RunLoop.main
+            runLoop.run()
 
-                runLoop.add(mockDataTimer, forMode: RunLoop.Mode.common)
-                runLoop.add(uploadDataTimer, forMode: RunLoop.Mode.common)
-            }
+            runLoop.add(uploadDataTimer, forMode: RunLoop.Mode.common)
         }
     }
 
