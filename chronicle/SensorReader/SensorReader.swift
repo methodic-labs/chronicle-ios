@@ -23,12 +23,14 @@ struct SensorReader {
     func configure() {
         /// displays a prompt to request for user approval
         /// Prompt is not displayed if user has already responded by either approving/denying access
+        
+        let sensorReaderDelegate = SensorReaderDelegate(appDelegate: appDelegate)
+        
         SRSensorReader.requestAuthorization(sensors: availableSensors ) { (error: Error?) -> Void in
             if let error = error {
                 logger.info("Authorization failed: \(error.localizedDescription)")
             }
             
-            let sensorReaderDelegate = SensorReaderDelegate(appDelegate: appDelegate)
             availableSensors.forEach { sensor in
                 let reader = SRSensorReader(sensor: sensor)
                 

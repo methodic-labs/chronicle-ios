@@ -15,7 +15,7 @@
         <key>NSSensorKitUsageDescription</key>
         <string>This is my app&apos;s SensorKit usage description.</string>
         <key>NSSensorKitPrivacyPolicyURL</key>
-        <string>https://my-site.xyz/privacy-policy/</string>
+        <string>https://openlattice.com/#/privacy/</string>
         <key>NSSensorKitUsageDetail</key>
         <dict>
             <key>SRSensorUsageDeviceUsage</key>
