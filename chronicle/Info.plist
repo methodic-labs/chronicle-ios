@@ -1,51 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
-        <key>UIBackgroundModes</key>
-        <array>
-            <string>fetch</string>
-            <string>processing</string>
-        </array>
-        <key>BGTaskSchedulerPermittedIdentifiers</key>
-        <array>
-            <string>com.openlattice.chronicle.mockSensorData</string>
-            <string>com.openlattice.chronicle.uploadData</string>
-        </array>
-        <key>NSSensorKitUsageDescription</key>
-        <string>This is my app&apos;s SensorKit usage description.</string>
-        <key>NSSensorKitPrivacyPolicyURL</key>
-        <string>https://openlattice.com/#/privacy/</string>
-        <key>NSSensorKitUsageDetail</key>
-        <dict>
-            <key>SRSensorUsageDeviceUsage</key>
-            <dict>
-                <key>Description</key>
-                <string>This describes how app uses device usage data.</string>
-                <key>Required</key>
-                <true/>
-            </dict>
-            <key>SRSensorUsageMessageUsage</key>
-            <dict>
-                <key>Description</key>
-                <string>This describes how app uses message usage data.</string>
-                <key>Required</key>
-                <true/>
-            </dict>
-            <key>SRSensorUsagePhoneUsage</key>
-            <dict>
-                <key>Description</key>
-                <string>This describes how app uses phone usage data.</string>
-                <key>Required</key>
-                <true/>
-            </dict>
-            <key>SRSensorUsageKeyboardMetrics</key>
-            <dict>
-                <key>Description</key>
-                <string>This describes how app uses keyboard metrics data.</string>
-                <key>Required</key>
-                <true/>
-            </dict>
-        </dict>
-    </dict>
+<dict>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.openlattice.chronicle.mockSensorData</string>
+		<string>com.openlattice.chronicle.uploadData</string>
+	</array>
+	<key>NSSensorKitUsageDetail</key>
+	<dict>
+		<key>SRSensorUsageDeviceUsage</key>
+		<dict>
+			<key>Description</key>
+			<string>This describes how app uses device usage data.</string>
+			<key>Required</key>
+			<true/>
+		</dict>
+		<key>SRSensorUsageKeyboardMetrics</key>
+		<dict>
+			<key>Description</key>
+			<string>This describes how app uses keyboard metrics data.</string>
+			<key>Required</key>
+			<true/>
+		</dict>
+		<key>SRSensorUsageMessageUsage</key>
+		<dict>
+			<key>Description</key>
+			<string>This describes how app uses message usage data.</string>
+			<key>Required</key>
+			<true/>
+		</dict>
+		<key>SRSensorUsagePhoneUsage</key>
+		<dict>
+			<key>Description</key>
+			<string>This describes how app uses phone usage data.</string>
+			<key>Required</key>
+			<true/>
+		</dict>
+	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>processing</string>
+	</array>
+</dict>
 </plist>
