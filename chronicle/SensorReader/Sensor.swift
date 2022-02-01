@@ -9,7 +9,7 @@
 import Foundation
 import SensorKit
 
-enum Sensor: String {
+enum Sensor: String, CaseIterable {
     case deviceUsage
     case phoneUsage
     case messagesUsage

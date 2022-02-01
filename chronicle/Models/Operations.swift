@@ -108,7 +108,7 @@ class UploadDataOperation: Operation {
                     }
 
                     // transform to Data
-                    let data = SensorDataCodable.encodeArray(arr: objects)
+                    let data = Datasource.encodeArray(arr: objects)
                     guard let data = data else {
                         throw "invalid data"
                     }

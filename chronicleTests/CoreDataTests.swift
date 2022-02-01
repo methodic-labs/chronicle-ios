@@ -11,7 +11,7 @@ import CoreData
 @testable import chronicle
 
 class CoreDataTests: XCTestCase {
-
+    
     var context: NSManagedObjectContext?
     let appDelegate = AppDelegate()
     override func setUpWithError() throws {
@@ -21,28 +21,48 @@ class CoreDataTests: XCTestCase {
             fatalError("unable to set up core data stack")
         }
         context = container.viewContext
+        
+        // delete all locally stored data
+        let request = SensorData.fetchRequest()
+        let objects = try? context?.fetch(request)
+        
+        guard let objects = objects, let context = context else {
+            return
+        }
+        objects.forEach(context.delete)
     }
-
+    
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-    
-    func testStoreDeviceUsageDataSample() {
+
+    func testImportDataSample() {
         guard let context = context else {
             return
         }
         
-        let data = TestUtils.mockSensorDataSample(sensor: Sensor.deviceUsage)
-        XCTAssertTrue(data.isValidSample)
-        
-        let operation = ImportIntoCoreDataOperation(context: context, data: data)
-        
-        operation.completionBlock = {
-      
+        Sensor.allCases.forEach {
+            let data = TestUtils.mockSensorDataSample(sensor: $0)
+            XCTAssertTrue(data.isValidSample)
+            
+            let operation = ImportIntoCoreDataOperation(context: context, data: data)
+            operation.main()
+            
+            Thread.sleep(forTimeInterval: 2.0)
+            
             let fetchRequest: NSFetchRequest<SensorData> = SensorData.fetchRequest()
             let objects = try? context.fetch(fetchRequest)
             XCTAssertNotNil(objects)
+            XCTAssertTrue(!objects!.isEmpty)
             XCTAssertTrue(objects!.count == 1)
+            
+            let datasource = Datasource(source: objects!.first!)
+            
+            let sample = String(data: data.data!, encoding: .utf8)
+            XCTAssertEqual(sample, datasource.data)
+            
+            objects!.forEach(context.delete)
+            Thread.sleep(forTimeInterval: 2.0)
         }
     }
 }
