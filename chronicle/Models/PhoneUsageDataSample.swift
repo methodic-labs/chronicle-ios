@@ -1,0 +1,19 @@
+//
+//  PhoneUsageDataSample.swift
+//  chronicle
+//
+//  Created by Alfonce Nzioka on 1/31/22.
+//  Copyright © 2022 OpenLattice, Inc. All rights reserved.
+//
+
+import Foundation
+
+// encapsulates data sample from phoneUsageReport sensor
+// ref: https://developer.apple.com/documentation/sensorkit/srphoneusagereport
+
+struct PhoneUsageDataSample: Codable {
+    let totalIncomingCalls: Int
+    let totalOutgoingCalls: Int
+    let totalPhoneDuration: Double
+    let totalUniqueContacts: Int
+}

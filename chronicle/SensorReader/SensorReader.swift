@@ -14,13 +14,12 @@ struct SensorReader {
     private let appDelegate: AppDelegate
     
     private let logger = Logger(subsystem: "com.openlattice.chronicle", category: "SensorReader")
-    private let availableSensors: Set<SRSensor> = [.deviceUsageReport, .messagesUsageReport, .phoneUsageReport, .keyboardMetrics]
     
     init(appDelegate: AppDelegate) {
         self.appDelegate = appDelegate
     }
     
-    func configure() {
+    func initialize() {
         /// displays a prompt to request for user approval
         /// Prompt is not displayed if user has already responded by either approving/denying access
         
@@ -40,3 +39,25 @@ struct SensorReader {
         }
     }
 }
+
+extension SensorReader {
+    var availableSensors: Set<SRSensor> {
+        return [
+            .deviceUsageReport,
+            .messagesUsageReport,
+            .phoneUsageReport,
+            .keyboardMetrics
+        ]
+    }
+    
+    // mapping from sensor to friendly name
+    static var sensorNameMapping: [SRSensor:Sensor] {
+        return [
+            .deviceUsageReport: Sensor.deviceUsage,
+            .messagesUsageReport: Sensor.messagesUsage,
+            .phoneUsageReport: Sensor.phoneUsage,
+            .keyboardMetrics: Sensor.keyboardMetrics
+        ]
+    }
+}
+

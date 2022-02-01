@@ -173,4 +173,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
         uploadOperation.start()
     }
+    
+    func importIntoCoreData(data: SensorDataProperties) {
+        
+    }
 }

@@ -56,7 +56,7 @@ struct EnrolledView: View {
             }
             .padding(.horizontal)
         }.onAppear {
-            sensorReader.configure()
+            sensorReader.initialize()
             uploadData()
         }
     }
