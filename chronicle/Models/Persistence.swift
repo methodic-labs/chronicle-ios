@@ -24,7 +24,7 @@ class PersistenceController {
     static let shared = PersistenceController()
     
     // only use this for testing
-    static let preview = PersistenceController(inMemory: false)
+    static let preview = PersistenceController(inMemory: true)
     
     init(inMemory: Bool = false) {
         self.inMemory = inMemory
