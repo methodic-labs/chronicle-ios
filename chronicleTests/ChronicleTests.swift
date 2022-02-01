@@ -28,17 +28,6 @@ class ChronicleTests: XCTestCase {
         XCTAssertEqual(urlComponents?.scheme, "https")
     }
     
-    func testEnrollmentWithoutOrg() {
-        let enrollment = Enrollment(participantId: participantId, studyId: studyId, organizationId: organizationId)
-        let urlComponents = ApiUtils.makeEnrollDeviceUrlComponents(enrollment: enrollment, deviceId: deviceId)
-        
-        XCTAssertNotNil(urlComponents, "should not be nil")
-        XCTAssertEqual(
-            urlComponents?.path,
-            "/chronicle/study/\(studyId)/\(participantId)/\(deviceId)"
-        )
-    }
-    
     func testInvalidParticipantId() {
         let enrollment = Enrollment(participantId: "", studyId: studyId, organizationId: organizationId)
         let urlComponents = ApiUtils.makeEnrollDeviceUrlComponents(enrollment: enrollment, deviceId: deviceId)

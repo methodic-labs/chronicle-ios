@@ -30,7 +30,6 @@
 		EA799C2227A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA799C2027A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist */; };
 		EA799C2427A2D62F006593F8 /* SensorReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA799C2327A2D62F006593F8 /* SensorReader.swift */; };
 		EA799C2827A2D937006593F8 /* SensorReaderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA799C2727A2D937006593F8 /* SensorReaderDelegate.swift */; };
-		EA799C2927A2D937006593F8 /* SensorReaderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA799C2727A2D937006593F8 /* SensorReaderDelegate.swift */; };
 		EA799C2B27A32A31006593F8 /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA799C2A27A32A31006593F8 /* Sensor.swift */; };
 		EA799C2D27A33FE9006593F8 /* SensorDataConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA799C2C27A33FE9006593F8 /* SensorDataConverter.swift */; };
 		EA802F2926BA4C0400C494F8 /* ChronicleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA802F2826BA4C0400C494F8 /* ChronicleApp.swift */; };
@@ -43,6 +42,7 @@
 		EA82495526C4F2F900F9CD7C /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82495426C4F2F900F9CD7C /* ApiClient.swift */; };
 		EA82495726C4F31A00F9CD7C /* ApiUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82495626C4F31A00F9CD7C /* ApiUtils.swift */; };
 		EA82495926C4F33800F9CD7C /* EnrollmentUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82495826C4F33800F9CD7C /* EnrollmentUtils.swift */; };
+		EA9813C027A940490049D1B6 /* CoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9813BF27A940490049D1B6 /* CoreDataTests.swift */; };
 		EABD370D27A883CE005F9EFE /* DeviceUsageDataSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD370C27A883CD005F9EFE /* DeviceUsageDataSample.swift */; };
 		EABD370F27A897D1005F9EFE /* PhoneUsageDataSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD370E27A897D1005F9EFE /* PhoneUsageDataSample.swift */; };
 		EABD371027A897D1005F9EFE /* PhoneUsageDataSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD370E27A897D1005F9EFE /* PhoneUsageDataSample.swift */; };
@@ -51,7 +51,6 @@
 		EABD371527A89BFA005F9EFE /* KeyboardMetricsDataSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD371427A89BFA005F9EFE /* KeyboardMetricsDataSample.swift */; };
 		EABD371627A89BFA005F9EFE /* KeyboardMetricsDataSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD371427A89BFA005F9EFE /* KeyboardMetricsDataSample.swift */; };
 		EAEA218727A49298001964CE /* SensorDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEA218627A49298001964CE /* SensorDataProperties.swift */; };
-		EAEA218827A49298001964CE /* SensorDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEA218627A49298001964CE /* SensorDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,7 +80,7 @@
 		EA28164427346B0B005C26E8 /* SensorDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SensorDataModel.xcdatamodel; sourceTree = "<group>"; };
 		EA2816492738BDE5005C26E8 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		EA46D44826C4F745008CE3C0 /* chronicleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chronicleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChronicleTests.swift; path = chronicleTests/ChronicleTests.swift; sourceTree = "<group>"; };
+		EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChronicleTests.swift; sourceTree = "<group>"; };
 		EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsKeys.swift; sourceTree = "<group>"; };
 		EA799C2027A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = CustomCodeSigningEntitlements.plist; sourceTree = "<group>"; };
 		EA799C2327A2D62F006593F8 /* SensorReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorReader.swift; sourceTree = "<group>"; };
@@ -99,6 +98,7 @@
 		EA82495426C4F2F900F9CD7C /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 		EA82495626C4F31A00F9CD7C /* ApiUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiUtils.swift; sourceTree = "<group>"; };
 		EA82495826C4F33800F9CD7C /* EnrollmentUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentUtils.swift; sourceTree = "<group>"; };
+		EA9813BF27A940490049D1B6 /* CoreDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTests.swift; sourceTree = "<group>"; };
 		EABD370C27A883CD005F9EFE /* DeviceUsageDataSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUsageDataSample.swift; sourceTree = "<group>"; };
 		EABD370E27A897D1005F9EFE /* PhoneUsageDataSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneUsageDataSample.swift; sourceTree = "<group>"; };
 		EABD371127A89924005F9EFE /* MessagesUsageDataSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesUsageDataSample.swift; sourceTree = "<group>"; };
@@ -141,6 +141,8 @@
 		EA46D44926C4F745008CE3C0 /* chronicleTests */ = {
 			isa = PBXGroup;
 			children = (
+				EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */,
+				EA9813BF27A940490049D1B6 /* CoreDataTests.swift */,
 			);
 			path = chronicleTests;
 			sourceTree = "<group>";
@@ -160,7 +162,6 @@
 			isa = PBXGroup;
 			children = (
 				EA799C2027A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist */,
-				EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */,
 				EA802F2726BA4C0400C494F8 /* chronicle */,
 				EA46D44926C4F745008CE3C0 /* chronicleTests */,
 				EA802F2626BA4C0400C494F8 /* Products */,
@@ -345,15 +346,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAEA218827A49298001964CE /* SensorDataProperties.swift in Sources */,
 				EABD371327A89924005F9EFE /* MessagesUsageDataSample.swift in Sources */,
 				EABD371627A89BFA005F9EFE /* KeyboardMetricsDataSample.swift in Sources */,
 				EA28163F2733493C005C26E8 /* FullQualifiedName.swift in Sources */,
 				EA46D45426C4F850008CE3C0 /* ChronicleTests.swift in Sources */,
+				EA9813C027A940490049D1B6 /* CoreDataTests.swift in Sources */,
 				EA28164627346B0C005C26E8 /* SensorDataModel.xcdatamodeld in Sources */,
 				EA28164227334C15005C26E8 /* Utils.swift in Sources */,
 				EABD371027A897D1005F9EFE /* PhoneUsageDataSample.swift in Sources */,
-				EA799C2927A2D937006593F8 /* SensorReaderDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
