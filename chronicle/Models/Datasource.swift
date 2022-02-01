@@ -1,5 +1,5 @@
 //
-//  SensorDataCodable.swift
+//  Datasource.swift
 //  chronicle
 //
 //  Created by Alfonce Nzioka on 2/1/22.
@@ -9,7 +9,7 @@
 import Foundation
 
 //A JSON encodable struct which forms the request body of server request
-struct SensorDataCodable: Codable {
+struct Datasource: Codable {
     let id: UUID?
     let dateRecorded: String?
     let duration: Double?
