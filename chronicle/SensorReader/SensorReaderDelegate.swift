@@ -38,6 +38,7 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
                 device: SensorReaderDevice(device: device),
                 sensorName: Sensor.getSensorName(sensor: reader.sensor)
             )
+            logger.info("fetching data for \(reader.sensor.rawValue) from \(request.from.rawValue) to \(request.to.rawValue)")
             reader.fetch(request)
         }
     }
@@ -46,12 +47,18 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         logger.error("unable to fetch devices for sensor: \(reader.sensor.rawValue)")
     }
     
+    func sensorReader(_ reader: SRSensorReader, didCompleteFetch fetchRequest: SRFetchRequest) {
+        logger.info("completed fetch request for \(reader.sensor.rawValue)")
+    }
+    
     func sensorReader(_ reader: SRSensorReader, fetching fetchRequest: SRFetchRequest, didFetchResult result: SRFetchResult<AnyObject>) -> Bool {
         
         let sensor = reader.sensor
         let timestamp = result.timestamp
         let sample = result.sample
         let device = fetchRequest.device
+        
+        logger.info("successfully fetched sample from \(sensor.rawValue)")
         
         var sensorDataProperties: SensorDataProperties?
 
