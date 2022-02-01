@@ -60,6 +60,11 @@ class CoreDataTests: XCTestCase {
             
             let sample = String(data: data.data!, encoding: .utf8)
             XCTAssertEqual(sample, datasource.data)
+            XCTAssertEqual(data.sensor.rawValue, datasource.sensor)
+            XCTAssertEqual(data.writeTimestamp.toISOFormat(), datasource.dateRecorded)
+            XCTAssertEqual(data.duration, datasource.duration)
+            XCTAssertEqual(data.timezone, datasource.timezone)
+            XCTAssertEqual(objects?.first?.id, datasource.id)
             
             objects!.forEach(context.delete)
             Thread.sleep(forTimeInterval: 2.0)
