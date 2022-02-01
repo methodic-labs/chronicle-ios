@@ -29,6 +29,23 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         logger.info("stopped recording \(reader.sensor.rawValue)")
     }
     
+    func sensorReader(_ reader: SRSensorReader, didFetch devices: [SRDevice]) {
+        devices.forEach { device in
+            let request = SRFetchRequest()
+            request.device = device
+            request.to = SRAbsoluteTime.current()
+            request.from = Utils.getLastFetch(
+                device: SensorReaderDevice(device: device),
+                sensorName: Sensor.getSensorName(sensor: reader.sensor)
+            )
+            reader.fetch(request)
+        }
+    }
+    
+    func sensorReader(_ reader: SRSensorReader, fetchDevicesDidFailWithError error: Error) {
+        logger.error("unable to fetch devices for sensor: \(reader.sensor.rawValue)")
+    }
+    
     func sensorReader(_ reader: SRSensorReader, fetching fetchRequest: SRFetchRequest, didFetchResult result: SRFetchResult<AnyObject>) -> Bool {
         
         let sensor = reader.sensor
@@ -58,7 +75,13 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         if (sensorDataProperties.isValidSample) {
             appDelegate.importIntoCoreData(data: sensorDataProperties)
         }
-
+        
+        // save last fetch
+        Utils.saveLastFetch(
+            device: SensorReaderDevice(device: fetchRequest.device),
+            sensorName: Sensor.getSensorName(sensor: sensor),
+            lastFetchValue: fetchRequest.to.toCFAbsoluteTime()
+        )
         return true
     }
 }

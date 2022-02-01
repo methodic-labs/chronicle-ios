@@ -13,7 +13,6 @@ import SensorKit
 struct SensorDataConverter {
     static var variablePTID = PropertyTypeIds.variablePTID
     static var valuesPTID = PropertyTypeIds.valuesPTID
-    static var mapping = SensorReader.sensorNameMapping
     
     static func getPhoneUsageData(sample: SRPhoneUsageReport, timestamp: SRAbsoluteTime, device: SRDevice) -> SensorDataProperties {
         
@@ -26,7 +25,7 @@ struct SensorDataConverter {
         let encoded = try? JSONEncoder().encode(data)
         
         return SensorDataProperties(
-            sensor: mapping[.phoneUsageReport]!,
+            sensor: Sensor.getSensorName(sensor: .phoneUsageReport),
             duration: sample.duration,
             writeTimeStamp: timestamp,
             data: encoded,
@@ -44,7 +43,7 @@ struct SensorDataConverter {
         let encoded = try? JSONEncoder().encode(data)
         
         return SensorDataProperties(
-            sensor: mapping[.messagesUsageReport]!,
+            sensor: Sensor.getSensorName(sensor: .messagesUsageReport),
             duration: sample.duration,
             writeTimeStamp: timestamp,
             data: encoded,
@@ -105,7 +104,7 @@ struct SensorDataConverter {
         )
         let encoded = try? JSONEncoder().encode(data)
         
-        return SensorDataProperties(sensor: mapping[.deviceUsageReport]!, duration: sample.duration, writeTimeStamp: timestamp, data: encoded, device: SensorReaderDevice(device: device))
+        return SensorDataProperties(sensor: Sensor.getSensorName(sensor: .deviceUsageReport), duration: sample.duration, writeTimeStamp: timestamp, data: encoded, device: SensorReaderDevice(device: device))
     }
     
     static func getKeyboardMetricsData(sample: SRKeyboardMetrics, timestamp: SRAbsoluteTime, device: SRDevice) -> SensorDataProperties {
@@ -165,7 +164,7 @@ struct SensorDataConverter {
         let encoded = try? JSONEncoder().encode(data)
         
         return SensorDataProperties(
-            sensor: mapping[.keyboardMetrics]!,
+            sensor: Sensor.getSensorName(sensor: .keyboardMetrics),
             duration: sample.duration,
             writeTimeStamp: timestamp,
             data: encoded,

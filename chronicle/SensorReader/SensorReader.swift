@@ -25,38 +25,29 @@ struct SensorReader {
         
         let sensorReaderDelegate = SensorReaderDelegate(appDelegate: appDelegate)
         
-        SRSensorReader.requestAuthorization(sensors: availableSensors ) { (error: Error?) -> Void in
+        SRSensorReader.requestAuthorization(sensors: SensorReader.availableSensors ) { (error: Error?) -> Void in
             if let error = error {
                 logger.info("Authorization failed: \(error.localizedDescription)")
             }
             
-            availableSensors.forEach { sensor in
+            SensorReader.availableSensors.forEach { sensor in
                 let reader = SRSensorReader(sensor: sensor)
                 
                 reader.delegate = sensorReaderDelegate
                 reader.startRecording()
+                reader.fetchDevices()
             }
         }
     }
 }
 
 extension SensorReader {
-    var availableSensors: Set<SRSensor> {
+    static var availableSensors: Set<SRSensor> {
         return [
             .deviceUsageReport,
             .messagesUsageReport,
             .phoneUsageReport,
             .keyboardMetrics
-        ]
-    }
-    
-    // mapping from sensor to friendly name
-    static var sensorNameMapping: [SRSensor:Sensor] {
-        return [
-            .deviceUsageReport: Sensor.deviceUsage,
-            .messagesUsageReport: Sensor.messagesUsage,
-            .phoneUsageReport: Sensor.phoneUsage,
-            .keyboardMetrics: Sensor.keyboardMetrics
         ]
     }
 }

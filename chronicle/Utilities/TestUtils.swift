@@ -100,6 +100,6 @@ struct TestUtils {
             data = mockPhoneUsageData()
         }
         
-        return SensorDataProperties(sensor: sensor, duration: 2423.9, writeTimeStamp: SRAbsoluteTime(rawValue: 15413910.591), data: data, device: device)
+        return SensorDataProperties(sensor: sensor.rawValue, duration: 2423.9, writeTimeStamp: SRAbsoluteTime(rawValue: 15413910.591), data: data, device: device)
     }
 }

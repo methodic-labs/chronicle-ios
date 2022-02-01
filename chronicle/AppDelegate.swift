@@ -31,24 +31,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             self.handleUploadDataTask(task: task as! BGAppRefreshTask)
         }
         
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: importDataTaskIdentifier, using: nil) { task in
-            self.handleFetchSensorData(task: task as! BGAppRefreshTask)
-        }
-        
         return true
-    }
-    
-    func handleFetchSensorData(task: BGAppRefreshTask) {
-        let queue = OperationQueue()
-        queue.maxConcurrentOperationCount = 1
-        
-        guard let context = PersistenceController.shared.newBackgroundContext() else {
-            logger.error("unable to execute fetch task")
-            task.setTaskCompleted(success: false)
-            return
-        }
-        
-        
     }
 
     func handleUploadDataTask(task: BGAppRefreshTask) {
@@ -77,48 +60,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // start operation
         queue.addOperation(uploadDataOperation)
 
-    }
-
-//    func handleMockDataBackgroundTask(task: BGAppRefreshTask) {
-//        // schedule a new task
-//        scheduleMockDataBackgroundTask()
-//
-//        let queue = OperationQueue()
-//        queue.maxConcurrentOperationCount = 1
-//
-//        guard let context = PersistenceController.shared.newBackgroundContext() else {
-//            logger.info("unable to execute task")
-//            task.setTaskCompleted(success: true)
-//            return
-//        }
-//
-//        // operation to create fake sensor data and save to database
-//        let mockDataOperation = MockSensorDataOperation(context: context)
-//
-//        // expiration handler to cancel operation
-//        task.expirationHandler = {
-//            queue.cancelAllOperations()
-//        }
-//
-//        // inform system that task is complete
-//        mockDataOperation.completionBlock = {
-//            task.setTaskCompleted(success: !mockDataOperation.isCancelled)
-//        }
-//
-//        // start the operation
-//        queue.addOperation(mockDataOperation)
-//    }
-
-    // called when app moves to the background to schedule a task to be handled by handleMockDataBackgroundTask()
-    func scheduleMockDataBackgroundTask() {
-        let request = BGAppRefreshTaskRequest(identifier: importDataTaskIdentifier)
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60) // no earlier than 15minutes from now
-
-        do {
-            try BGTaskScheduler.shared.submit(request)
-        } catch {
-            logger.info("Could not schedule mocking sensor data task: \(error.localizedDescription)")
-        }
     }
 
     // called when app moves to background to schedule task handled by handleUploadDataTask

@@ -63,7 +63,7 @@ class CoreDataTests: XCTestCase {
             
             XCTAssertEqual(device, datasource.device)
             XCTAssertEqual(data, datasource.data)
-            XCTAssertEqual(sample.sensor.rawValue, datasource.sensor)
+            XCTAssertEqual(sample.sensor, datasource.sensor)
             XCTAssertEqual(sample.writeTimestamp.toISOFormat(), datasource.dateRecorded)
             XCTAssertEqual(sample.duration, datasource.duration)
             XCTAssertEqual(sample.timezone, datasource.timezone)

@@ -11,7 +11,7 @@ import SensorKit
 
 // A struct encapsulating the properties of a SensorData
 struct SensorDataProperties {
-    let sensor: Sensor
+    let sensor: String
     var duration: Double // duration that the sample spans
     let writeTimestamp: Date // when sensor sample was recorded
     let timezone: String = TimeZone.current.identifier
@@ -22,7 +22,7 @@ struct SensorDataProperties {
         return data != nil
     }
     
-    init(sensor: Sensor, duration: TimeInterval, writeTimeStamp: SRAbsoluteTime, data: Data?, device: SensorReaderDevice) {
+    init(sensor: String, duration: TimeInterval, writeTimeStamp: SRAbsoluteTime, data: Data?, device: SensorReaderDevice) {
         
         self.sensor = sensor
         self.duration = duration

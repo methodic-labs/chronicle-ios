@@ -11,7 +11,7 @@ import SensorKit
 
 // this class models SRDevice that provides sample data
 // ref: (https://developer.apple.com/documentation/sensorkit/srdevice)
-struct SensorReaderDevice: Codable {
+struct SensorReaderDevice: Codable, Hashable {
     let model: String
     let name: String
     let systemName: String
