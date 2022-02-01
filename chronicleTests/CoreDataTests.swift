@@ -43,9 +43,6 @@ class CoreDataTests: XCTestCase {
             let objects = try? context.fetch(fetchRequest)
             XCTAssertNotNil(objects)
             XCTAssertTrue(objects!.count == 1)
-            
-            
-            
         }
     }
 }

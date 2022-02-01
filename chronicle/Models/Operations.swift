@@ -41,49 +41,6 @@ class ImportIntoCoreDataOperation: Operation {
         }
     }
 }
-class MockSensorDataOperation: Operation {
-    private let logger = Logger(subsystem: "com.openlattice.chronicle", category: "MockSensorDataOperation")
-
-    private let context: NSManagedObjectContext
-
-    private var timezone: String {
-        TimeZone.current.identifier
-    }
-
-    init(context: NSManagedObjectContext) {
-        self.context = context
-    }
-
-    override func main() {
-
-        let numEntries = Int.random(in: 200...300)
-        context.performAndWait {
-            do {
-                for _ in 0..<numEntries {
-                    let now = Date()
-                    let start = now - (60 * 60) // 1hr before
-                    let end = now + (60 * 60) // 1hr after
-                    let sensorType = SensorType.allCases.randomElement()!
-
-                    let object = SensorData(context: context)
-                    object.id = UUID.init()
-                    object.sensorType = sensorType.rawValue
-                    object.startTimestamp = start
-                    object.endTimestamp = end
-                    object.writeTimestamp = now
-                    object.timezone = timezone
-                    object.data = SensorDataMock.createMockData(sensorType: sensorType)
-
-                    try context.save()
-                }
-                logger.info("saved \(numEntries) SensorData objects to database")
-
-            } catch {
-                logger.error("error saving mock data to database: \(error.localizedDescription)")
-            }
-        }
-    }
-}
 
 class UploadDataOperation: Operation {
     private let logger = Logger(subsystem: "com.openlattice.chronicle", category: "UploadDataOperation")
@@ -151,7 +108,11 @@ class UploadDataOperation: Operation {
                     }
 
                     // transform to Data
-                    let data = try transformSensorDataForUpload(objects)
+                    let data = SensorDataCodable.encodeArray(arr: objects)
+                    guard let data = data else {
+                        throw "invalid data"
+                    }
+
 
                     self.logger.info("attempting to upload \(objects.count) objects to server")
                     self.uploading = true
@@ -202,28 +163,6 @@ class UploadDataOperation: Operation {
 
     override var isFinished: Bool {
         return !hasMoreData
-    }
-
-    private func transformSensorDataForUpload(_ data: [SensorData]) throws -> Data {
-        let transformed: [Sample?] = try data.map {
-
-            if let dateRecorded = $0.writeTimestamp,
-               let startDate = $0.startTimestamp,
-               let endDate = $0.endTimestamp,
-               let sensor = $0.sensorType,
-               let id = $0.id,
-               let timezone = $0.timezone,
-               let data = $0.data {
-
-                let valuesArr = try JSONSerialization.jsonObject(with: data, options: []) as! [[String: String]]
-
-                return Sample(dateRecorded: dateRecorded.toISOFormat(), startDate: startDate.toISOFormat(), endDate: endDate.toISOFormat(), data: valuesArr, timezone: timezone, id: id, sensorName: sensor)
-            }
-
-            return nil
-        }.filter { $0 != nil }
-
-        return try JSONEncoder().encode(transformed)
     }
 
 }

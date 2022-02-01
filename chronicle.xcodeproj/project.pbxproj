@@ -44,6 +44,7 @@
 		EA82495926C4F33800F9CD7C /* EnrollmentUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82495826C4F33800F9CD7C /* EnrollmentUtils.swift */; };
 		EA9813C027A940490049D1B6 /* CoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9813BF27A940490049D1B6 /* CoreDataTests.swift */; };
 		EA9813C427A9508E0049D1B6 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9813C127A9464C0049D1B6 /* TestUtils.swift */; };
+		EA9813C627A95D550049D1B6 /* SensorDataCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9813C527A95D550049D1B6 /* SensorDataCodable.swift */; };
 		EABD370D27A883CE005F9EFE /* DeviceUsageDataSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD370C27A883CD005F9EFE /* DeviceUsageDataSample.swift */; };
 		EABD370F27A897D1005F9EFE /* PhoneUsageDataSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD370E27A897D1005F9EFE /* PhoneUsageDataSample.swift */; };
 		EABD371027A897D1005F9EFE /* PhoneUsageDataSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD370E27A897D1005F9EFE /* PhoneUsageDataSample.swift */; };
@@ -101,6 +102,7 @@
 		EA82495826C4F33800F9CD7C /* EnrollmentUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentUtils.swift; sourceTree = "<group>"; };
 		EA9813BF27A940490049D1B6 /* CoreDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTests.swift; sourceTree = "<group>"; };
 		EA9813C127A9464C0049D1B6 /* TestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
+		EA9813C527A95D550049D1B6 /* SensorDataCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDataCodable.swift; sourceTree = "<group>"; };
 		EABD370C27A883CD005F9EFE /* DeviceUsageDataSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUsageDataSample.swift; sourceTree = "<group>"; };
 		EABD370E27A897D1005F9EFE /* PhoneUsageDataSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneUsageDataSample.swift; sourceTree = "<group>"; };
 		EABD371127A89924005F9EFE /* MessagesUsageDataSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesUsageDataSample.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				EABD370E27A897D1005F9EFE /* PhoneUsageDataSample.swift */,
 				EABD371127A89924005F9EFE /* MessagesUsageDataSample.swift */,
 				EABD371427A89BFA005F9EFE /* KeyboardMetricsDataSample.swift */,
+				EA9813C527A95D550049D1B6 /* SensorDataCodable.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 				B9BBFDC826CD6EC800B770E4 /* EnrollmentSuccessMessage.swift in Sources */,
 				EA82494D26C4F27500F9CD7C /* IOSDevice.swift in Sources */,
 				EA802F2B26BA4C0400C494F8 /* EnrollmentView.swift in Sources */,
+				EA9813C627A95D550049D1B6 /* SensorDataCodable.swift in Sources */,
 				EABD370F27A897D1005F9EFE /* PhoneUsageDataSample.swift in Sources */,
 				EAEA218727A49298001964CE /* SensorDataProperties.swift in Sources */,
 				B9BBFDBF26C648C100B770E4 /* EnrolledView.swift in Sources */,
