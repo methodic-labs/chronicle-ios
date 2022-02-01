@@ -30,9 +30,9 @@ struct Utils {
             return SRAbsoluteTime.fromCFAbsoluteTime(_cf: value)
         }
         
-        // this refers to 1 Jan 2001 00:00:00 GMT.
+        // this refers to 1 Jan 2001 00:00:01 GMT.
         // ref: https://developer.apple.com/documentation/corefoundation/cfabsolutetime
-        let absoluteRefTime: CFTimeInterval = 0
+        let absoluteRefTime: CFTimeInterval = 1
         return SRAbsoluteTime.fromCFAbsoluteTime(_cf: absoluteRefTime)
     }
     

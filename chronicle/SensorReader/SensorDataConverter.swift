@@ -9,11 +9,8 @@
 import Foundation
 import SensorKit
 
-// This class contains utility methods for converting SRSensor sample data to a format that conforms to our core data model
+// This struct contains utility methods for converting SRSensor sample data to a format that conforms to our core data model
 struct SensorDataConverter {
-    static var variablePTID = PropertyTypeIds.variablePTID
-    static var valuesPTID = PropertyTypeIds.valuesPTID
-    
     static func getPhoneUsageData(sample: SRPhoneUsageReport, timestamp: SRAbsoluteTime, device: SRDevice) -> SensorDataProperties {
         
         let data = PhoneUsageDataSample(

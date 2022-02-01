@@ -14,7 +14,6 @@ class UploadDataOperation: Operation {
     private let logger = Logger(subsystem: "com.openlattice.chronicle", category: "UploadDataOperation")
 
     private let context: NSManagedObjectContext
-    private var propertyTypeIds: [FullQualifiedName: UUID] = [:]
 
     private let fetchLimit = 200
 
@@ -29,11 +28,7 @@ class UploadDataOperation: Operation {
         willChangeValue(forKey: #keyPath(isExecuting))
         self.hasMoreData = true
         didChangeValue(forKey: #keyPath(isExecuting))
-        // get property type ids
-        Task.init {
-            self.propertyTypeIds = await (ApiClient.getPropertyTypeIds() ?? [:])
-            main()
-        }
+        main()
     }
 
 
