@@ -176,6 +176,22 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     // imports sensor data into core data
     func importIntoCoreData(data: SensorDataProperties) {
+        self.importDataTaskId = UIApplication.shared.beginBackgroundTask(withName: "Import sensor sample to core data") {
+            UIApplication.shared.endBackgroundTask(self.importDataTaskId!)
+            self.importDataTaskId = nil
+        }
         
+        guard let context = PersistenceController.shared.newBackgroundContext() else {
+            logger.error("unable to import sensor sample into core data. Exiting")
+            return
+        }
+        
+        let operation = UploadDataOperation(context: context)
+        operation.completionBlock = {
+            UIApplication.shared.endBackgroundTask(self.importDataTaskId!)
+            self.importDataTaskId = nil
+        }
+        
+        operation.start()
     }
 }
