@@ -30,8 +30,10 @@ struct Utils {
             return SRAbsoluteTime.fromCFAbsoluteTime(_cf: value)
         }
         
-        let date =  Date.timeIntervalSinceReferenceDate
-        return SRAbsoluteTime.fromCFAbsoluteTime(_cf: date)
+        // this refers to 1 Jan 2001 00:00:00 GMT.
+        // ref: https://developer.apple.com/documentation/corefoundation/cfabsolutetime
+        let absoluteRefTime: CFTimeInterval = 0
+        return SRAbsoluteTime.fromCFAbsoluteTime(_cf: absoluteRefTime)
     }
     
     static func saveLastFetch(device: SensorReaderDevice, sensorName: String, lastFetchValue: Double) {
