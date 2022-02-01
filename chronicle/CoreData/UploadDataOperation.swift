@@ -1,47 +1,14 @@
 //
-//  Operations.swift
-//  Operations
+//  UploadDataOperation.swift
+//  chronicle
 //
-//  Created by Alfonce Nzioka on 11/16/21.
+//  Created by Alfonce Nzioka on 2/1/22.
+//  Copyright © 2022 OpenLattice, Inc. All rights reserved.
 //
 
-/*
- classes and functions for fetching and adding sensor data entries to database
- */
 import Foundation
 import CoreData
 import OSLog
-
-class ImportIntoCoreDataOperation: Operation {
-    private let logger = Logger(subsystem: "com.openlattice.chronicle", category: "ImportIntoCoreDataOperation")
-    private let context: NSManagedObjectContext
-    private let sensorDataProperties: SensorDataProperties
-    
-    init(context: NSManagedObjectContext, data: SensorDataProperties) {
-        self.context = context
-        self.sensorDataProperties = data
-    }
-    
-    override func main() {
-        // what what
-        context.performAndWait {
-            do {
-                let object = SensorData(context: context)
-                object.id = UUID.init()
-                object.data = sensorDataProperties.data
-                object.device = sensorDataProperties.device
-                object.duration = sensorDataProperties.duration
-                object.sensorType = sensorDataProperties.sensor.rawValue
-                object.timezone = sensorDataProperties.timezone
-                object.writeTimestamp = sensorDataProperties.writeTimestamp
-                
-                try context.save()
-            } catch {
-                self.logger.error("error importing sensor data to core data \(self.sensorDataProperties.toString())")
-            }
-        }
-    }
-}
 
 class UploadDataOperation: Operation {
     private let logger = Logger(subsystem: "com.openlattice.chronicle", category: "UploadDataOperation")
@@ -166,34 +133,4 @@ class UploadDataOperation: Operation {
         return !hasMoreData
     }
 
-}
-
-struct Sample: Encodable {
-    var dateRecorded: String
-    var startDate: String
-    var endDate: String
-    var data: [[String: String]]
-    var timezone: String
-    var id: UUID
-    var sensorName: String
-}
-
-
-extension Date {
-
-    // return random date between two dates
-    static func randomBetween(start: Date, end: Date) -> Date {
-        var date1 = start
-        var date2 = end
-        if date2 < date1 {
-            swap(&date1, &date2)
-        }
-
-        let span = TimeInterval.random(in: date1.timeIntervalSinceNow...date2.timeIntervalSinceNow)
-        return Date(timeIntervalSinceNow: span)
-    }
-
-    func toISOFormat() -> String {
-        return ISO8601DateFormatter.init().string(from: self)
-    }
 }

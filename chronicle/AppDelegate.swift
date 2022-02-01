@@ -25,18 +25,30 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
 
-        // register handlers for tasks
-//        BGTaskScheduler.shared.register(forTaskWithIdentifier: mockDataTaskIdentifer, using: nil) { task in
-//            //Downcast parameter to a background refresh task
-//            self.handleMockDataBackgroundTask(task: task as! BGAppRefreshTask)
-//        }
-
-//        BGTaskScheduler.shared.register(forTaskWithIdentifier: uploadDataTaskIdentifier, using: nil) { task in
-//            // Downncast parameter to background refresh task
-//            self.handleUploadDataTask(task: task as! BGAppRefreshTask)
-//        }
-
+        // register handlers for background tasks
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: uploadDataTaskIdentifier, using: nil) { task in
+            // Downncast parameter to background refresh task
+            self.handleUploadDataTask(task: task as! BGAppRefreshTask)
+        }
+        
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: importDataTaskIdentifier, using: nil) { task in
+            self.handleFetchSensorData(task: task as! BGAppRefreshTask)
+        }
+        
         return true
+    }
+    
+    func handleFetchSensorData(task: BGAppRefreshTask) {
+        let queue = OperationQueue()
+        queue.maxConcurrentOperationCount = 1
+        
+        guard let context = PersistenceController.shared.newBackgroundContext() else {
+            logger.error("unable to execute fetch task")
+            task.setTaskCompleted(success: false)
+            return
+        }
+        
+        
     }
 
     func handleUploadDataTask(task: BGAppRefreshTask) {
@@ -44,7 +56,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         queue.maxConcurrentOperationCount = 1
 
         guard let context = PersistenceController.shared.newBackgroundContext() else {
-            logger.info("unable to execute upload task")
+            logger.error("unable to execute upload task")
             task.setTaskCompleted(success: false)
             return
         }
@@ -120,31 +132,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             logger.info("could not schedule task to upload data: \(error.localizedDescription)")
         }
     }
-
-    // This method is invoked to trigger a single MockSensorData operation.
-//    @objc func mockSensorData() {
-//        // create backround context
-//        guard let context = PersistenceController.shared.newBackgroundContext() else {
-//            logger.info("unable to execute task")
-//            return
-//        }
-//
-//        // request additional background execution in case app goes to background
-//        self.importDataTaskId = UIApplication.shared.beginBackgroundTask(withName: "Create mock sensor data") {
-//            // end task if time expires
-//            UIApplication.shared.endBackgroundTask(self.importDataTaskId!)
-//            self.importDataTaskId = UIBackgroundTaskIdentifier.invalid
-//        }
-//
-//        let mockDataOperation = MockSensorDataOperation(context: context)
-//        mockDataOperation.completionBlock = {
-//            // end task after operation is completed
-//            UIApplication.shared.endBackgroundTask(self.importDataTaskId!)
-//            self.importDataTaskId = UIBackgroundTaskIdentifier.invalid
-//        }
-//
-//        mockDataOperation.start()
-//    }
 
     // invoked on a repeated schedule as long as EnrolledView is visible. This may take a long time, therefore we need to request for extended
     //  execution time before the app moves to the background
