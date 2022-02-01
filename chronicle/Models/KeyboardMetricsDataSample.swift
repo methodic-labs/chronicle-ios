@@ -10,7 +10,7 @@ import Foundation
 
 // encapsulates data sample from keyboardMetrics sensor
 // ref: https://developer.apple.com/documentation/sensorkit/srkeyboardmetrics
-// NOTE: this properties are not exhaustive, might expand in future to include probability data depending on need
+// NOTE: this properties are not exhaustive, might expand in future to include other data e.g probability metrics depending on need
 struct KeyboardMetricsDataSample: Codable {
     let totalWords: Int
     let totalAlteredWords: Int
