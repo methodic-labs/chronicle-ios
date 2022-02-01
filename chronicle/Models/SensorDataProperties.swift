@@ -16,16 +16,18 @@ struct SensorDataProperties {
     let writeTimestamp: Date // when sensor sample was recorded
     let timezone: String = TimeZone.current.identifier
     let data: Data?
+    let device: Data?
     
     var isValidSample: Bool {
         return data != nil
     }
     
-    init(sensor: Sensor, duration: TimeInterval, writeTimeStamp: SRAbsoluteTime, data: Data?) {
+    init(sensor: Sensor, duration: TimeInterval, writeTimeStamp: SRAbsoluteTime, data: Data?, device: SensorReaderDevice) {
         
         self.sensor = sensor
         self.duration = duration
         self.data = data
+        self.device = try? JSONEncoder().encode(device)
         
         // specific point in time relative to the absolute reference date of 1 Jan 2001 00:00:00 GMT.
         let abs = writeTimeStamp.toCFAbsoluteTime()

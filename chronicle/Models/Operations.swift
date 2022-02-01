@@ -29,6 +29,7 @@ class ImportIntoCoreDataOperation: Operation {
                 let object = SensorData(context: context)
                 object.id = UUID.init()
                 object.data = sensorDataProperties.data
+                object.device = sensorDataProperties.device
                 object.duration = sensorDataProperties.duration
                 object.sensorType = sensorDataProperties.sensor.rawValue
                 object.timezone = sensorDataProperties.timezone

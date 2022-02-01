@@ -42,10 +42,10 @@ class CoreDataTests: XCTestCase {
         }
         
         Sensor.allCases.forEach {
-            let data = TestUtils.mockSensorDataSample(sensor: $0)
-            XCTAssertTrue(data.isValidSample)
+            let sample = TestUtils.mockSensorDataSample(sensor: $0)
+            XCTAssertTrue(sample.isValidSample)
             
-            let operation = ImportIntoCoreDataOperation(context: context, data: data)
+            let operation = ImportIntoCoreDataOperation(context: context, data: sample)
             operation.main()
             
             Thread.sleep(forTimeInterval: 2.0)
@@ -58,12 +58,15 @@ class CoreDataTests: XCTestCase {
             
             let datasource = Datasource(source: objects!.first!)
             
-            let sample = String(data: data.data!, encoding: .utf8)
-            XCTAssertEqual(sample, datasource.data)
-            XCTAssertEqual(data.sensor.rawValue, datasource.sensor)
-            XCTAssertEqual(data.writeTimestamp.toISOFormat(), datasource.dateRecorded)
-            XCTAssertEqual(data.duration, datasource.duration)
-            XCTAssertEqual(data.timezone, datasource.timezone)
+            let data = String(data: sample.data!, encoding: .utf8)
+            let device = String(data: sample.device!, encoding: .utf8)
+            
+            XCTAssertEqual(device, datasource.device)
+            XCTAssertEqual(data, datasource.data)
+            XCTAssertEqual(sample.sensor.rawValue, datasource.sensor)
+            XCTAssertEqual(sample.writeTimestamp.toISOFormat(), datasource.dateRecorded)
+            XCTAssertEqual(sample.duration, datasource.duration)
+            XCTAssertEqual(sample.timezone, datasource.timezone)
             XCTAssertEqual(objects?.first?.id, datasource.id)
             
             objects!.forEach(context.delete)

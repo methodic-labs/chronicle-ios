@@ -34,18 +34,19 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         let sensor = reader.sensor
         let timestamp = result.timestamp
         let sample = result.sample
+        let device = fetchRequest.device
         
         var sensorDataProperties: SensorDataProperties?
 
         switch sensor {
         case .phoneUsageReport:
-            sensorDataProperties = SensorDataConverter.getPhoneUsageData(sample: sample as! SRPhoneUsageReport, timestamp: timestamp)
+            sensorDataProperties = SensorDataConverter.getPhoneUsageData(sample: sample as! SRPhoneUsageReport, timestamp: timestamp, device: device)
         case .keyboardMetrics:
-            sensorDataProperties = SensorDataConverter.getKeyboardMetricsData(sample: sample as! SRKeyboardMetrics, timestamp: timestamp)
+            sensorDataProperties = SensorDataConverter.getKeyboardMetricsData(sample: sample as! SRKeyboardMetrics, timestamp: timestamp, device: device)
         case .deviceUsageReport:
-            sensorDataProperties = SensorDataConverter.getDeviceUsageData(sample: sample as! SRDeviceUsageReport, timestamp: timestamp)
+            sensorDataProperties = SensorDataConverter.getDeviceUsageData(sample: sample as! SRDeviceUsageReport, timestamp: timestamp, device: device)
         case .messagesUsageReport:
-            sensorDataProperties = SensorDataConverter.getMessagesData(sample: sample as! SRMessagesUsageReport, timestamp: timestamp)
+            sensorDataProperties = SensorDataConverter.getMessagesData(sample: sample as! SRMessagesUsageReport, timestamp: timestamp, device: device)
         default:
             print("sensor \(sensor) is not supported")
         }

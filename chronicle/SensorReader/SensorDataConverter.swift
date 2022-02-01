@@ -15,7 +15,7 @@ struct SensorDataConverter {
     static var valuesPTID = PropertyTypeIds.valuesPTID
     static var mapping = SensorReader.sensorNameMapping
     
-    static func getPhoneUsageData(sample: SRPhoneUsageReport, timestamp: SRAbsoluteTime) -> SensorDataProperties {
+    static func getPhoneUsageData(sample: SRPhoneUsageReport, timestamp: SRAbsoluteTime, device: SRDevice) -> SensorDataProperties {
         
         let data = PhoneUsageDataSample(
             totalIncomingCalls: sample.totalIncomingCalls,
@@ -25,11 +25,16 @@ struct SensorDataConverter {
         )
         let encoded = try? JSONEncoder().encode(data)
         
-        return SensorDataProperties(sensor: mapping[.phoneUsageReport]!, duration: sample.duration, writeTimeStamp: timestamp, data: encoded)
-
+        return SensorDataProperties(
+            sensor: mapping[.phoneUsageReport]!,
+            duration: sample.duration,
+            writeTimeStamp: timestamp,
+            data: encoded,
+            device: SensorReaderDevice(device: device)
+        )
     }
     
-    static func getMessagesData(sample: SRMessagesUsageReport, timestamp: SRAbsoluteTime) -> SensorDataProperties {
+    static func getMessagesData(sample: SRMessagesUsageReport, timestamp: SRAbsoluteTime, device: SRDevice) -> SensorDataProperties {
         
         let data = MessagesUsageDataSample(
             totalIncomingMessages: sample.totalIncomingMessages,
@@ -38,10 +43,16 @@ struct SensorDataConverter {
         )
         let encoded = try? JSONEncoder().encode(data)
         
-        return SensorDataProperties(sensor: mapping[.messagesUsageReport]!, duration: sample.duration, writeTimeStamp: timestamp, data: encoded)
+        return SensorDataProperties(
+            sensor: mapping[.messagesUsageReport]!,
+            duration: sample.duration,
+            writeTimeStamp: timestamp,
+            data: encoded,
+            device: SensorReaderDevice(device: device)
+        )
     }
     
-    static func getDeviceUsageData(sample: SRDeviceUsageReport, timestamp: SRAbsoluteTime) -> SensorDataProperties {
+    static func getDeviceUsageData(sample: SRDeviceUsageReport, timestamp: SRAbsoluteTime, device: SRDevice) -> SensorDataProperties {
 
         // application usage
         var appUsage: [String: [AppUsage]] = [:]
@@ -94,10 +105,10 @@ struct SensorDataConverter {
         )
         let encoded = try? JSONEncoder().encode(data)
         
-        return SensorDataProperties(sensor: mapping[.deviceUsageReport]!, duration: sample.duration, writeTimeStamp: timestamp, data: encoded)
+        return SensorDataProperties(sensor: mapping[.deviceUsageReport]!, duration: sample.duration, writeTimeStamp: timestamp, data: encoded, device: SensorReaderDevice(device: device))
     }
     
-    static func getKeyboardMetricsData(sample: SRKeyboardMetrics, timestamp: SRAbsoluteTime) -> SensorDataProperties {
+    static func getKeyboardMetricsData(sample: SRKeyboardMetrics, timestamp: SRAbsoluteTime, device: SRDevice) -> SensorDataProperties {
         
         var wordCountBySentiment: [String: Int] = [:]
         var emojiCountBySentiment: [String: Int] = [:]
@@ -153,7 +164,13 @@ struct SensorDataConverter {
         
         let encoded = try? JSONEncoder().encode(data)
         
-        return SensorDataProperties(sensor: mapping[.keyboardMetrics]!, duration: sample.duration, writeTimeStamp: timestamp, data: encoded)
+        return SensorDataProperties(
+            sensor: mapping[.keyboardMetrics]!,
+            duration: sample.duration,
+            writeTimeStamp: timestamp,
+            data: encoded,
+            device: SensorReaderDevice(device: device)
+        )
     }
 }
 

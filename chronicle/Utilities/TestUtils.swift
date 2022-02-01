@@ -85,6 +85,8 @@ struct TestUtils {
     }
     
     static func mockSensorDataSample(sensor: Sensor) -> SensorDataProperties {
+        
+        let device = SensorReaderDevice(model: "iPhone", name: "user iPhone", systemName: "iOS", systemVersion: "15.4")
         var data: Data?
         
         switch (sensor) {
@@ -98,6 +100,6 @@ struct TestUtils {
             data = mockPhoneUsageData()
         }
         
-        return SensorDataProperties(sensor: sensor, duration: 2423.9, writeTimeStamp: SRAbsoluteTime(rawValue: 15413910.591), data: data)
+        return SensorDataProperties(sensor: sensor, duration: 2423.9, writeTimeStamp: SRAbsoluteTime(rawValue: 15413910.591), data: data, device: device)
     }
 }
