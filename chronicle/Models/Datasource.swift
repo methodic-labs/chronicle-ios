@@ -12,9 +12,10 @@ import Foundation
 struct Datasource: Codable {
     let id: UUID?
     let dateRecorded: String?
+    let startDate: String?
+    let endDate: String?
     let duration: Double?
     let data: String? // a stringified json representing all supported sensor sample types
-    let device: String? //json representing device on which sample was recorded
     let timezone: String?
     let sensor: String?
     
@@ -26,7 +27,8 @@ struct Datasource: Codable {
         self.data = String(data: source.data ?? Data.init(), encoding: .utf8)
         self.timezone = source.timezone
         self.sensor = source.sensorType
-        self.device = String(data: source.device ?? Data.init(), encoding: .utf8)
+        self.startDate = source.startDate?.toISOFormat()
+        self.endDate = source.endDate?.toISOFormat()
     }
     
     func isValidSource () -> Bool {

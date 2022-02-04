@@ -27,13 +27,15 @@ class ImportIntoCoreDataOperation: Operation {
                 let object = SensorData(context: context)
                 object.id = UUID.init()
                 object.data = sensorDataProperties.data
-                object.device = sensorDataProperties.device
                 object.duration = sensorDataProperties.duration
-                object.sensorType = sensorDataProperties.sensor
+                object.sensorType = sensorDataProperties.sensor.rawValue
                 object.timezone = sensorDataProperties.timezone
                 object.writeTimestamp = sensorDataProperties.writeTimestamp
+                object.endDate = sensorDataProperties.endDate
+                object.startDate = sensorDataProperties.startDate
                 
                 try context.save()
+                logger.info("imported \(self.sensorDataProperties.toString()) into core data")
             } catch {
                 self.logger.error("error importing sensor data to core data \(self.sensorDataProperties.toString())")
             }

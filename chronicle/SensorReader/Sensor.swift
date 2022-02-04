@@ -14,23 +14,25 @@ enum Sensor: String, CaseIterable {
     case phoneUsage
     case messagesUsage
     case keyboardMetrics
+    case unknown
 }
 
 extension Sensor {
-    static func getSensorName(sensor: SRSensor) -> String {
+    static func getSensor(sensor: SRSensor) -> Self {
         switch(sensor) {
         case.deviceUsageReport:
-            return Self.deviceUsage.rawValue
+            return Self.deviceUsage
+            
         case .phoneUsageReport:
-            return Self.phoneUsage.rawValue
+            return Self.phoneUsage
             
         case .messagesUsageReport:
-            return Self.messagesUsage.rawValue
+            return Self.messagesUsage
             
         case .keyboardMetrics:
-            return Self.keyboardMetrics.rawValue
+            return Self.keyboardMetrics
         default:
-            return "unknown"
+            return unknown
         }
     }
 }

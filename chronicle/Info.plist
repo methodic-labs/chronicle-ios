@@ -4,7 +4,7 @@
 <dict>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
-		<string>com.openlattice.chronicle.mockSensorData</string>
+		<string>com.openlattice.chronicle.fetchSensorSamples</string>
 		<string>com.openlattice.chronicle.uploadData</string>
 	</array>
 	<key>NSSensorKitUsageDetail</key>

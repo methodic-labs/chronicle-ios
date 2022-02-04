@@ -14,12 +14,18 @@ import OSLog
   This class responds to sensor-related events
  */
 class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
-    private let appDelegate: AppDelegate
-    
-    init(appDelegate: AppDelegate) {
-        self.appDelegate = appDelegate
-    }
     private let logger = Logger(subsystem: "com.openlattice.chronicle", category: "SensorReader")
+    
+    static var shared = SensorReaderDelegate()
+    
+    static var availableSensors: Set<SRSensor> {
+        return [
+            .deviceUsageReport,
+            .messagesUsageReport,
+            .phoneUsageReport,
+            .keyboardMetrics
+        ]
+    }
     
     func sensorReaderWillStartRecording(_ reader: SRSensorReader) {
         logger.info("started recording \(reader.sensor.rawValue)")
@@ -36,7 +42,7 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
             request.to = SRAbsoluteTime.current()
             request.from = Utils.getLastFetch(
                 device: SensorReaderDevice(device: device),
-                sensorName: Sensor.getSensorName(sensor: reader.sensor)
+                sensor: Sensor.getSensor(sensor: reader.sensor)
             )
             logger.info("fetching data for \(reader.sensor.rawValue) from \(request.from.rawValue) to \(request.to.rawValue)")
             reader.fetch(request)
@@ -48,45 +54,66 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
     }
     
     func sensorReader(_ reader: SRSensorReader, didCompleteFetch fetchRequest: SRFetchRequest) {
-        logger.info("completed fetch request for \(reader.sensor.rawValue)")
+        logger.info("successfully fetched sample from \(reader.sensor.rawValue)")
     }
     
+    // NOTE: this will be invoked multiple times if the request has multiple samples
     func sensorReader(_ reader: SRSensorReader, fetching fetchRequest: SRFetchRequest, didFetchResult result: SRFetchResult<AnyObject>) -> Bool {
         
         let sensor = reader.sensor
         let timestamp = result.timestamp
         let sample = result.sample
-        let device = fetchRequest.device
-        
-        logger.info("successfully fetched sample from \(sensor.rawValue)")
-        
-        var sensorDataProperties: SensorDataProperties?
+                
+        var sensorDataProperties: SensorDataProperties
 
         switch sensor {
         case .phoneUsageReport:
-            sensorDataProperties = SensorDataConverter.getPhoneUsageData(sample: sample as! SRPhoneUsageReport, timestamp: timestamp, device: device)
+            sensorDataProperties = SensorDataConverter.getPhoneUsageData(
+                sample: sample as! SRPhoneUsageReport,
+                timestamp: timestamp,
+                request: fetchRequest
+            )
         case .keyboardMetrics:
-            sensorDataProperties = SensorDataConverter.getKeyboardMetricsData(sample: sample as! SRKeyboardMetrics, timestamp: timestamp, device: device)
+            sensorDataProperties = SensorDataConverter.getKeyboardMetricsData(
+                sample: sample as! SRKeyboardMetrics,
+                timestamp: timestamp,
+                request: fetchRequest
+            )
         case .deviceUsageReport:
-            sensorDataProperties = SensorDataConverter.getDeviceUsageData(sample: sample as! SRDeviceUsageReport, timestamp: timestamp, device: device)
+            sensorDataProperties = SensorDataConverter.getDeviceUsageData(
+                sample: sample as! SRDeviceUsageReport,
+                timestamp: timestamp,
+                request: fetchRequest
+            )
         case .messagesUsageReport:
-            sensorDataProperties = SensorDataConverter.getMessagesData(sample: sample as! SRMessagesUsageReport, timestamp: timestamp, device: device)
+            sensorDataProperties = SensorDataConverter.getMessagesData(
+                sample: sample as! SRMessagesUsageReport,
+                timestamp: timestamp,
+                request: fetchRequest
+            )
         default:
-            print("sensor \(sensor) is not supported")
-        }
-        
-        guard let sensorDataProperties = sensorDataProperties else {
-            return true
+            logger.error("sensor \(sensor.rawValue) is not supported")
+            return false
         }
         
         if (sensorDataProperties.isValidSample) {
-            appDelegate.importIntoCoreData(data: sensorDataProperties)
+            guard let context = PersistenceController.shared.newBackgroundContext() else {
+                logger.error("invalid sensor sample: \(sensorDataProperties.toString())")
+                Utils.saveLastFetch(
+                    device: SensorReaderDevice(device: fetchRequest.device),
+                    sensor: Sensor.getSensor(sensor: reader.sensor),
+                    lastFetchValue: fetchRequest.to.toCFAbsoluteTime()
+                )
+                return false
+            }
+            let operation = ImportIntoCoreDataOperation(context: context, data: sensorDataProperties)
+            operation.start()
         }
         
         // save last fetch
         Utils.saveLastFetch(
             device: SensorReaderDevice(device: fetchRequest.device),
-            sensorName: Sensor.getSensorName(sensor: sensor),
+            sensor: Sensor.getSensor(sensor: reader.sensor),
             lastFetchValue: fetchRequest.to.toCFAbsoluteTime()
         )
         return true

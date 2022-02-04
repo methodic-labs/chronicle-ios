@@ -11,29 +11,28 @@ import SensorKit
 
 // A struct encapsulating the properties of a SensorData
 struct SensorDataProperties {
-    let sensor: String
+    let sensor: Sensor
     var duration: Double // duration that the sample spans
     let writeTimestamp: Date // when sensor sample was recorded
+    let startDate: Date
+    let endDate: Date
     let timezone: String = TimeZone.current.identifier
     let data: Data?
-    let device: Data?
     
     var isValidSample: Bool {
         return data != nil
     }
     
-    init(sensor: String, duration: TimeInterval, writeTimeStamp: SRAbsoluteTime, data: Data?, device: SensorReaderDevice) {
+    init(sensor: Sensor, duration: TimeInterval, writeTimeStamp: SRAbsoluteTime, from: SRAbsoluteTime, to: SRAbsoluteTime, data: Data?) {
         
         self.sensor = sensor
         self.duration = duration
         self.data = data
-        self.device = try? JSONEncoder().encode(device)
-        
-        // specific point in time relative to the absolute reference date of 1 Jan 2001 00:00:00 GMT.
-        let abs = writeTimeStamp.toCFAbsoluteTime()
         
         // Date relative to 00:00:00 UTC on 1 January 2001 by a given number of seconds.
-        self.writeTimestamp = Date(timeIntervalSinceReferenceDate: abs)
+        self.writeTimestamp = Date(timeIntervalSinceReferenceDate: writeTimeStamp.toCFAbsoluteTime())
+        self.endDate = Date(timeIntervalSinceReferenceDate: to.toCFAbsoluteTime())
+        self.startDate = Date(timeIntervalSinceReferenceDate: from.toCFAbsoluteTime())
         
     }
     

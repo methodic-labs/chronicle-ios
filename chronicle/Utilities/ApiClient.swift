@@ -109,43 +109,6 @@ struct ApiClient {
         
         task.resume()
     }
-    
-    
-    static func getPropertyTypeIds() async -> [FullQualifiedName: UUID]? {
-        // get locally stored value
-        let result = UserDefaults.standard.object(forKey: UserSettingsKeys.propertyTypes) as? [String: String] ?? [:]
-        if (result.count == FullQualifiedName.fqns.count) {
-            print("Returning locally stored FQNS")
-            return Utils.toFqnUUIDMap(result)
-        }
-        
-        let urlComponents: URLComponents = ApiUtils.getPropertyTypeIdsUrlComponents()
-        
-        guard let reqBody = try? JSONEncoder().encode(FullQualifiedName.fqns) else {
-            return nil
-        }
-        
-        guard let url = urlComponents.url else {
-            return nil
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        guard let (data, response ) = try? await URLSession.shared.upload(for: request, from: reqBody),
-              let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else {
-                  return nil
-              }
-        
-        guard let decoded = try? JSONDecoder().decode([String: String].self, from: data) else {
-            return nil
-        }
-        UserDefaults.standard.set(decoded, forKey: UserSettingsKeys.propertyTypes)
-        
-        return Utils.toFqnUUIDMap(decoded)
-    }
 }
 
 // throw strings as errors

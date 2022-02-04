@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import BackgroundTasks
 import OSLog
+import SensorKit
 
 /*
  The app delegate submits task requests and registers launch handlers for database background tasks
@@ -17,7 +18,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     let logger = Logger(subsystem: "com.openlattice.chronicle", category: "AppDelegate")
 
     // task identifiers in BGTaskSchedulerPermittedIdentifiers array of Info.Plist
-    let importDataTaskIdentifier = "com.openlattice.chronicle.importSensorData"
+    let fetchSamplesTaskIdentifer = "com.openlattice.chronicle.fetchSensorSamples"
     let uploadDataTaskIdentifier = "com.openlattice.chronicle.uploadData"
 
     var uploadBackgroundTaskId: UIBackgroundTaskIdentifier?
@@ -31,10 +32,25 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             self.handleUploadDataTask(task: task as! BGAppRefreshTask)
         }
         
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: fetchSamplesTaskIdentifer, using: nil) { task in
+            self.handleFetchSensorSamples(task: task as! BGAppRefreshTask)
+        }
+        
         return true
+    }
+    
+    // task handler to fetch data from sensor kit when app is in background
+    func handleFetchSensorSamples(task: BGAppRefreshTask) {
+        scheduleAppRefreshTask(delay: 15 * 60, taskIdentifer: fetchSamplesTaskIdentifer)
+        
+        fetchSensorSamples()
+        
+        task.setTaskCompleted(success: true)
     }
 
     func handleUploadDataTask(task: BGAppRefreshTask) {
+        scheduleAppRefreshTask(delay: 15 * 60, taskIdentifer: uploadDataTaskIdentifier) // execute after 15 min
+        
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 1
 
@@ -63,9 +79,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
 
     // called when app moves to background to schedule task handled by handleUploadDataTask
-    func scheduleUploadDataBackgroundTask() {
-        let request = BGAppRefreshTaskRequest(identifier: uploadDataTaskIdentifier)
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60) // no earlier than 15 min from now
+    func scheduleAppRefreshTask(delay: Double = 0, taskIdentifer: String) {
+        let request = BGAppRefreshTaskRequest(identifier: taskIdentifer)
+        request.earliestBeginDate = Date(timeIntervalSinceNow: delay) // no earlier than 15 min from now
 
         do {
             try BGTaskScheduler.shared.submit(request)
@@ -94,7 +110,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // operation to upload data
         let uploadOperation = UploadDataOperation(context: context)
         uploadOperation.completionBlock = {
-            // end the task
+
+            // terminate the task
             UIApplication.shared.endBackgroundTask(self.uploadBackgroundTaskId!)
             self.uploadBackgroundTaskId = UIBackgroundTaskIdentifier.invalid
         }
@@ -102,24 +119,38 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         uploadOperation.start()
     }
     
-    // imports sensor data into core data
-    func importIntoCoreData(data: SensorDataProperties) {
-        self.importDataTaskId = UIApplication.shared.beginBackgroundTask(withName: "Import sensor sample to core data") {
-            UIApplication.shared.endBackgroundTask(self.importDataTaskId!)
-            self.importDataTaskId = nil
+    func fetchSensorSamples() {
+        let sensors = SensorReaderDelegate.availableSensors
+        sensors.forEach { sensor in
+            let reader = SRSensorReader(sensor: sensor)
+            reader.delegate = SensorReaderDelegate.shared
+            
+            if reader.authorizationStatus == SRAuthorizationStatus.authorized {
+                reader.fetchDevices()
+            }
         }
+    }
+    
+    // Displays a prompt to request user to authorize sensors
+    // If authorization has already been granted, no prompt is displayed
+    func requestSensorReaderAuthorization() {
+        let sensors = SensorReaderDelegate.availableSensors
         
-        guard let context = PersistenceController.shared.newBackgroundContext() else {
-            logger.error("unable to import sensor sample into core data. Exiting")
-            return
+        SRSensorReader.requestAuthorization(sensors: sensors ) { (error: Error?) -> Void in
+            if let error = error {
+                self.logger.info("Authorization failed: \(error.localizedDescription)")
+            }
+            
+            sensors.forEach { sensor in
+                let reader = SRSensorReader(sensor: sensor)
+                
+                if reader.authorizationStatus == SRAuthorizationStatus.authorized {
+                    reader.delegate = SensorReaderDelegate.shared
+                    reader.startRecording()
+                    
+                    Utils.saveInitialLastFetch(sensor: Sensor.getSensor(sensor: sensor))
+                }
+            }
         }
-        
-        let operation = UploadDataOperation(context: context)
-        operation.completionBlock = {
-            UIApplication.shared.endBackgroundTask(self.importDataTaskId!)
-            self.importDataTaskId = nil
-        }
-        
-        operation.start()
     }
 }

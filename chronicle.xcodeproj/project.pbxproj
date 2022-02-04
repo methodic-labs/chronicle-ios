@@ -24,7 +24,6 @@
 		EA63652326C6D6EF005D6DFC /* UserSettingsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */; };
 		EA799C2127A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA799C2027A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist */; };
 		EA799C2227A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA799C2027A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist */; };
-		EA799C2427A2D62F006593F8 /* SensorReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA799C2327A2D62F006593F8 /* SensorReader.swift */; };
 		EA799C2827A2D937006593F8 /* SensorReaderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA799C2727A2D937006593F8 /* SensorReaderDelegate.swift */; };
 		EA799C2B27A32A31006593F8 /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA799C2A27A32A31006593F8 /* Sensor.swift */; };
 		EA799C2D27A33FE9006593F8 /* SensorDataConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA799C2C27A33FE9006593F8 /* SensorDataConverter.swift */; };
@@ -83,7 +82,6 @@
 		EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChronicleTests.swift; sourceTree = "<group>"; };
 		EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsKeys.swift; sourceTree = "<group>"; };
 		EA799C2027A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = CustomCodeSigningEntitlements.plist; sourceTree = "<group>"; };
-		EA799C2327A2D62F006593F8 /* SensorReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorReader.swift; sourceTree = "<group>"; };
 		EA799C2727A2D937006593F8 /* SensorReaderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorReaderDelegate.swift; sourceTree = "<group>"; };
 		EA799C2A27A32A31006593F8 /* Sensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
 		EA799C2C27A33FE9006593F8 /* SensorDataConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDataConverter.swift; sourceTree = "<group>"; };
@@ -156,7 +154,6 @@
 		EA799C2627A2D89B006593F8 /* SensorReader */ = {
 			isa = PBXGroup;
 			children = (
-				EA799C2327A2D62F006593F8 /* SensorReader.swift */,
 				EA799C2727A2D937006593F8 /* SensorReaderDelegate.swift */,
 				EA799C2A27A32A31006593F8 /* Sensor.swift */,
 				EA799C2C27A33FE9006593F8 /* SensorDataConverter.swift */,
@@ -394,7 +391,6 @@
 				EA9813D227A990AE0049D1B6 /* ImportIntoCoreDataOperation.swift in Sources */,
 				EA0048E42744344400EBA09F /* AppDelegate.swift in Sources */,
 				EA28164A2738BDE6005C26E8 /* Persistence.swift in Sources */,
-				EA799C2427A2D62F006593F8 /* SensorReader.swift in Sources */,
 				EA799C2B27A32A31006593F8 /* Sensor.swift in Sources */,
 				EA9813D427A990F80049D1B6 /* DateUtils.swift in Sources */,
 				EA82495326C4F2D500F9CD7C /* EnrollmentViewModel.swift in Sources */,

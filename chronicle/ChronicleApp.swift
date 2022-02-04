@@ -13,7 +13,7 @@ struct ChronicleApp: App {
     @ObservedObject var viewModel = EnrollmentViewModel()
     @Environment(\.scenePhase) var scenePhase
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-
+    
     var body: some Scene {
         WindowGroup {
             if viewModel.isEnrollmentDetailsViewVisible {
@@ -25,7 +25,13 @@ struct ChronicleApp: App {
             }
         }.onChange(of: scenePhase) { phase in
             if phase == .background && viewModel.isEnrolled {
-                appDelegate.scheduleUploadDataBackgroundTask()
+                appDelegate.scheduleAppRefreshTask(taskIdentifer: appDelegate.uploadDataTaskIdentifier)
+                appDelegate.scheduleAppRefreshTask(taskIdentifer: appDelegate.fetchSamplesTaskIdentifer)
+            }
+            
+            if phase == .active && viewModel.isEnrolled {
+                appDelegate.uploadSensorData()
+                appDelegate.fetchSensorSamples()
             }
         }
     }

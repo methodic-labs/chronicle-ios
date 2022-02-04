@@ -7,28 +7,19 @@
 
 import Foundation
 import SensorKit
+import OSLog
 
 struct Utils {
-    // converts a [String: String] dictionary to [FullQualified: String]
-    static func toFqnUUIDMap(_ input: [String: String]) -> [FullQualifiedName: UUID] {
-        var result: [FullQualifiedName: UUID] = [:]
-        
-        for (key, val) in input {
-            if let fqn = FullQualifiedName.fromString(key), let uuid = UUID.init(uuidString: val) {
-                result[fqn] = uuid
-            }
-        }
-        
-        return result
-    }
     
-    static func getLastFetch(device: SensorReaderDevice, sensorName: String) -> SRAbsoluteTime {
-        let data = UserDefaults.standard.object(forKey: UserSettingsKeys.lastFetch) as? [String: [Int: Double]] ?? [:]
+    private static var logger = Logger(subsystem: "com.openlattice.chronicle", category: "Utils")
+    
+    static func getLastFetch(device: SensorReaderDevice, sensor: Sensor) -> SRAbsoluteTime {
         
-        if let valuesBySensor = data[sensorName], let value = valuesBySensor[device.hashValue] {
-            
-            return SRAbsoluteTime.fromCFAbsoluteTime(_cf: value)
-        }
+        let data = UserDefaults.standard.object(forKey: UserSettingsKeys.lastFetch) as? [String: [String: Double]] ?? [:]
+        
+//        if let valuesBySensor = data[sensorName], let value = valuesBySensor[device.systemName] {
+//            return SRAbsoluteTime.fromCFAbsoluteTime(_cf: value)
+//        }
         
         // this refers to 1 Jan 2001 00:00:01 GMT.
         // ref: https://developer.apple.com/documentation/corefoundation/cfabsolutetime
@@ -36,13 +27,37 @@ struct Utils {
         return SRAbsoluteTime.fromCFAbsoluteTime(_cf: absoluteRefTime)
     }
     
-    static func saveLastFetch(device: SensorReaderDevice, sensorName: String, lastFetchValue: Double) {
-        var data = UserDefaults.standard.object(forKey: UserSettingsKeys.lastFetch) as? [String: [Int: Double]] ?? [:]
-        if var valuesBySensor = data[sensorName] {
-            valuesBySensor[device.hashValue] = lastFetchValue
-            data[sensorName] = valuesBySensor
-        }
+    static func saveLastFetch(device: SensorReaderDevice, sensor: Sensor, lastFetchValue: Double) {
+        
+        var data = UserDefaults.standard.object(forKey: UserSettingsKeys.lastFetch) as? [String: [String: Double]] ?? [:]
+        
+        var valuesBySensor = data[sensor.rawValue] ?? [:]
+        valuesBySensor[device.systemName] = lastFetchValue
+        data[sensor.rawValue] = valuesBySensor
         
         UserDefaults.standard.set(data, forKey: UserSettingsKeys.lastFetch)
+    }
+
+    
+    // saves lastFetch = current date the very first time authorization to use sensor is granted
+    
+    static func saveInitialLastFetch(sensor: Sensor) {
+        var dict = UserDefaults.standard.object(forKey: UserSettingsKeys.lastFetch) as? [String: [String: Double]] ?? [:]
+        
+        let lastFetch = Date()
+        var savedValues = dict[sensor.rawValue] ?? [:]
+        
+        if (savedValues.isEmpty) {
+            savedValues[SensorReaderDevice.iOSModel] = lastFetch.timeIntervalSinceNow
+            
+            if (sensor == Sensor.deviceUsage ) {
+                savedValues[SensorReaderDevice.watchOSModel] = lastFetch.timeIntervalSinceNow
+            }
+            dict[sensor.rawValue] = savedValues
+            
+            logger.info("saving initial lastFetch value for \(sensor.rawValue) sensor: \(savedValues)")
+        }
+        
+        UserDefaults.standard.set(dict, forKey: UserSettingsKeys.lastFetch)
     }
 }

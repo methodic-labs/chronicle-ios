@@ -40,7 +40,9 @@ struct TestUtils {
                 "finance": [
                     NotificationUsage(bundleIdentifier: randomString(length: 4), event: "hide")
                 ]
-            ]
+            ],
+            device: SensorReaderDevice(model: "iPhone", name: "test phone", systemName: "iOS", systemVersion: "15.4")
+            
         )
         
         return try? JSONEncoder().encode(data)
@@ -86,7 +88,6 @@ struct TestUtils {
     
     static func mockSensorDataSample(sensor: Sensor) -> SensorDataProperties {
         
-        let device = SensorReaderDevice(model: "iPhone", name: "user iPhone", systemName: "iOS", systemVersion: "15.4")
         var data: Data?
         
         switch (sensor) {
@@ -98,8 +99,18 @@ struct TestUtils {
             data = mockMessagesUsageData()
         case .phoneUsage:
             data = mockPhoneUsageData()
+        default:
+            break
         }
         
-        return SensorDataProperties(sensor: sensor.rawValue, duration: 2423.9, writeTimeStamp: SRAbsoluteTime(rawValue: 15413910.591), data: data, device: device)
+        
+        return SensorDataProperties(
+            sensor: sensor,
+            duration: 2423.9,
+            writeTimeStamp: SRAbsoluteTime(rawValue: 15413910.591),
+            from: SRAbsoluteTime.init(rawValue: 283),
+            to: SRAbsoluteTime.init(rawValue: 92392),
+            data: data
+        )
     }
 }

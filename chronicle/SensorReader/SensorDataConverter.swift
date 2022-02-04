@@ -9,9 +9,9 @@
 import Foundation
 import SensorKit
 
-// This struct contains utility methods for converting SRSensor sample data to a format that conforms to our core data model
+// This struct contains utility methods for converting SRSensor sample data to a format that is compatible to our core data model
 struct SensorDataConverter {
-    static func getPhoneUsageData(sample: SRPhoneUsageReport, timestamp: SRAbsoluteTime, device: SRDevice) -> SensorDataProperties {
+    static func getPhoneUsageData(sample: SRPhoneUsageReport, timestamp: SRAbsoluteTime, request: SRFetchRequest) -> SensorDataProperties {
         
         let data = PhoneUsageDataSample(
             totalIncomingCalls: sample.totalIncomingCalls,
@@ -22,15 +22,16 @@ struct SensorDataConverter {
         let encoded = try? JSONEncoder().encode(data)
         
         return SensorDataProperties(
-            sensor: Sensor.getSensorName(sensor: .phoneUsageReport),
+            sensor: Sensor.getSensor(sensor: .phoneUsageReport),
             duration: sample.duration,
             writeTimeStamp: timestamp,
-            data: encoded,
-            device: SensorReaderDevice(device: device)
+            from: request.from,
+            to: request.to,
+            data: encoded
         )
     }
     
-    static func getMessagesData(sample: SRMessagesUsageReport, timestamp: SRAbsoluteTime, device: SRDevice) -> SensorDataProperties {
+    static func getMessagesData(sample: SRMessagesUsageReport, timestamp: SRAbsoluteTime, request: SRFetchRequest) -> SensorDataProperties {
         
         let data = MessagesUsageDataSample(
             totalIncomingMessages: sample.totalIncomingMessages,
@@ -40,15 +41,16 @@ struct SensorDataConverter {
         let encoded = try? JSONEncoder().encode(data)
         
         return SensorDataProperties(
-            sensor: Sensor.getSensorName(sensor: .messagesUsageReport),
+            sensor: Sensor.getSensor(sensor: .messagesUsageReport),
             duration: sample.duration,
             writeTimeStamp: timestamp,
-            data: encoded,
-            device: SensorReaderDevice(device: device)
+            from: request.from,
+            to: request.to,
+            data: encoded
         )
     }
     
-    static func getDeviceUsageData(sample: SRDeviceUsageReport, timestamp: SRAbsoluteTime, device: SRDevice) -> SensorDataProperties {
+    static func getDeviceUsageData(sample: SRDeviceUsageReport, timestamp: SRAbsoluteTime, request: SRFetchRequest) -> SensorDataProperties {
 
         // application usage
         var appUsage: [String: [AppUsage]] = [:]
@@ -97,14 +99,22 @@ struct SensorDataConverter {
             totalUnlockDuration: sample.totalUnlockDuration,
             appUsage: appUsage,
             webUsage: webUsage,
-            notificationUsage: notificationUsage
+            notificationUsage: notificationUsage,
+            device: SensorReaderDevice(device: request.device)
         )
         let encoded = try? JSONEncoder().encode(data)
         
-        return SensorDataProperties(sensor: Sensor.getSensorName(sensor: .deviceUsageReport), duration: sample.duration, writeTimeStamp: timestamp, data: encoded, device: SensorReaderDevice(device: device))
+        return SensorDataProperties(
+            sensor: Sensor.getSensor(sensor: .deviceUsageReport),
+            duration: sample.duration,
+            writeTimeStamp: timestamp,
+            from: request.from,
+            to: request.to,
+            data: encoded
+        )
     }
     
-    static func getKeyboardMetricsData(sample: SRKeyboardMetrics, timestamp: SRAbsoluteTime, device: SRDevice) -> SensorDataProperties {
+    static func getKeyboardMetricsData(sample: SRKeyboardMetrics, timestamp: SRAbsoluteTime, request: SRFetchRequest) -> SensorDataProperties {
         
         var wordCountBySentiment: [String: Int] = [:]
         var emojiCountBySentiment: [String: Int] = [:]
@@ -161,11 +171,12 @@ struct SensorDataConverter {
         let encoded = try? JSONEncoder().encode(data)
         
         return SensorDataProperties(
-            sensor: Sensor.getSensorName(sensor: .keyboardMetrics),
+            sensor: Sensor.getSensor(sensor: .keyboardMetrics),
             duration: sample.duration,
             writeTimeStamp: timestamp,
-            data: encoded,
-            device: SensorReaderDevice(device: device)
+            from: request.from,
+            to: request.to,
+            data: encoded
         )
     }
 }
