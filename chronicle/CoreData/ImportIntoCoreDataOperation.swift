@@ -25,7 +25,7 @@ class ImportIntoCoreDataOperation: Operation {
         context.performAndWait {
             do {
                 let object = SensorData(context: context)
-                object.id = UUID.init()
+                object.id = sensorDataProperties.id
                 object.data = sensorDataProperties.data
                 object.duration = sensorDataProperties.duration
                 object.sensorType = sensorDataProperties.sensor.rawValue

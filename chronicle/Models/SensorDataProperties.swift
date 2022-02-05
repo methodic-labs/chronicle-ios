@@ -11,6 +11,7 @@ import SensorKit
 
 // A struct encapsulating the properties of a SensorData
 struct SensorDataProperties {
+    let id: UUID = UUID.init()
     let sensor: Sensor
     var duration: Double // duration that the sample spans
     let writeTimestamp: Date // when sensor sample was recorded

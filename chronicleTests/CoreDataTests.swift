@@ -21,15 +21,6 @@ class CoreDataTests: XCTestCase {
             fatalError("unable to set up core data stack")
         }
         context = container.viewContext
-        
-        // delete all locally stored data
-        let request = SensorData.fetchRequest()
-        let objects = try? context?.fetch(request)
-        
-        guard let objects = objects, let context = context else {
-            return
-        }
-        objects.forEach(context.delete)
     }
     
     override func tearDownWithError() throws {
@@ -52,6 +43,8 @@ class CoreDataTests: XCTestCase {
             Thread.sleep(forTimeInterval: 2.0)
             
             let fetchRequest: NSFetchRequest<SensorData> = SensorData.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id = %@", sample.id.uuidString)
+            
             let objects = try? context.fetch(fetchRequest)
             XCTAssertNotNil(objects)
             XCTAssertTrue(!objects!.isEmpty)
@@ -69,9 +62,6 @@ class CoreDataTests: XCTestCase {
             XCTAssertEqual(sample.duration, datasource.duration)
             XCTAssertEqual(sample.timezone, datasource.timezone)
             XCTAssertEqual(objects?.first?.id, datasource.id)
-            
-            objects!.forEach(context.delete)
-            Thread.sleep(forTimeInterval: 2.0)
         }
     }
 }
