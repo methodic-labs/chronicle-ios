@@ -17,7 +17,6 @@ struct DeviceUsageDataSample: Codable {
     let appUsage: [String: [AppUsage]] // app category -> usages
     let webUsage: [String: Double] // category -> total usage time
     let notificationUsage: [String: [NotificationUsage]]
-    let device: SensorReaderDevice // this could be an iOS or watchOS device
 }
 
 // struct encapsulates applicationusage data from deviceUsageReport sensor

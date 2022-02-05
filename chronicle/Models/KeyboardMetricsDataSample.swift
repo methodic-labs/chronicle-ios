@@ -18,18 +18,24 @@ struct KeyboardMetricsDataSample: Codable {
     let totalDrags: Int
     let totalDeletes: Int
     let totalEmojis: Int
-    let totalSpaceCorrections: Int
-    let totalTypingDuration: Double
-    let totalHitTestCorrections: Int // hit test correctiosn for the keyboard
-    let totalSubstitutionCorrections: Int
-    let totalNearKeyCorrections: Int // near key corrections
-    let totalSkipTouchCorrections: Int //
-    let totalInsertKeyCorrections: Int
-    let totalTranspositionCorrections: Int
-    let totalRetroCorrections: Int
-    let totalAutoCorrections: Int
     let totalPaths: Int // total number of completed paths for keyboard
     let totalPathTime : Double // time to complete paths for the keyboard
+    let totalPathLength: Double //units in cm
+    let totalAutoCorrections: Int
+    let totalSpaceCorrections: Int
+    let totalRetroCorrections: Int
+    let totalTranspositionCorrections: Int
+    let totalInsertKeyCorrections: Int
+    let totalSkipTouchCorrections: Int //
+    let totalNearKeyCorrections: Int // near key corrections
+    let totalSubstitutionCorrections: Int
+    let totalHitTestCorrections: Int // hit test correctiosn for the keyboard
+    let totalTypingDuration: Double
+    var totalPathPauses: Int?
+    var totalPauses: Int?
+    var totalTypingEpisodes: Int?
+    var pathTypingSpeed: Double? // QuickWords per minute
+    var typingSpeed: Double? // typing rate in characters per second
     let emojiCountBySentiment: [String: Int] //number of typed emojis for specified sentiment
     let wordCountBySentiment: [String: Int] // number of typed words for specified sentiment
 }

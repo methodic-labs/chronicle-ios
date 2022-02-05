@@ -40,9 +40,7 @@ struct TestUtils {
                 "finance": [
                     NotificationUsage(bundleIdentifier: randomString(length: 4), event: "hide")
                 ]
-            ],
-            device: SensorReaderDevice(model: "iPhone", name: "test phone", systemName: "iOS", systemVersion: "15.4")
-            
+            ]
         )
         
         return try? JSONEncoder().encode(data)
@@ -56,18 +54,19 @@ struct TestUtils {
             totalDrags: 379,
             totalDeletes: 392,
             totalEmojis: 90,
-            totalSpaceCorrections: 0,
-            totalTypingDuration: 0,
-            totalHitTestCorrections: 0,
-            totalSubstitutionCorrections: 893,
-            totalNearKeyCorrections: 039,
-            totalSkipTouchCorrections: 0920,
-            totalInsertKeyCorrections: 20,
-            totalTranspositionCorrections: 2,
-            totalRetroCorrections: 89,
-            totalAutoCorrections: 9,
             totalPaths: 90,
             totalPathTime: 92,
+            totalPathLength: 203,
+            totalAutoCorrections: 9,
+            totalSpaceCorrections: 0,
+            totalRetroCorrections: 89,
+            totalTranspositionCorrections: 2,
+            totalInsertKeyCorrections: 20,
+            totalSkipTouchCorrections: 0920,
+            totalNearKeyCorrections: 039,
+            totalSubstitutionCorrections: 2,
+            totalHitTestCorrections: 0,
+            totalTypingDuration: 0,
             emojiCountBySentiment: ["angry": 45, "happy": 77],
             wordCountBySentiment: ["down": 89, "excited": 93]
         )
@@ -87,6 +86,7 @@ struct TestUtils {
     }
     
     static func mockSensorDataSample(sensor: Sensor) -> SensorDataProperties {
+        let device = SensorReaderDevice(model: "iPhone", name: "test phone", systemName: "iOS", systemVersion: "15.4")
         
         var data: Data?
         
@@ -103,14 +103,14 @@ struct TestUtils {
             break
         }
         
-        
         return SensorDataProperties(
             sensor: sensor,
             duration: 2423.9,
             writeTimeStamp: SRAbsoluteTime(rawValue: 15413910.591),
             from: SRAbsoluteTime.init(rawValue: 283),
             to: SRAbsoluteTime.init(rawValue: 92392),
-            data: data
+            data: data,
+            device: try? JSONEncoder().encode(device)
         )
     }
 }

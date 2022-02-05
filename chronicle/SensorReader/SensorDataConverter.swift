@@ -19,7 +19,6 @@ struct SensorDataConverter {
             totalPhoneDuration: sample.totalPhoneCallDuration,
             totalUniqueContacts: sample.totalUniqueContacts
         )
-        let encoded = try? JSONEncoder().encode(data)
         
         return SensorDataProperties(
             sensor: Sensor.getSensor(sensor: .phoneUsageReport),
@@ -27,7 +26,9 @@ struct SensorDataConverter {
             writeTimeStamp: timestamp,
             from: request.from,
             to: request.to,
-            data: encoded
+            data: try? JSONEncoder().encode(data),
+            device: try? JSONEncoder().encode(SensorReaderDevice(device: request.device))
+            
         )
     }
     
@@ -38,7 +39,6 @@ struct SensorDataConverter {
             totalOutgoingMessages: sample.totalOutgoingMessages,
             totalUniqueContacts: sample.totalUniqueContacts
         )
-        let encoded = try? JSONEncoder().encode(data)
         
         return SensorDataProperties(
             sensor: Sensor.getSensor(sensor: .messagesUsageReport),
@@ -46,7 +46,8 @@ struct SensorDataConverter {
             writeTimeStamp: timestamp,
             from: request.from,
             to: request.to,
-            data: encoded
+            data: try? JSONEncoder().encode(data),
+            device: try? JSONEncoder().encode(SensorReaderDevice(device: request.device))
         )
     }
     
@@ -99,18 +100,17 @@ struct SensorDataConverter {
             totalUnlockDuration: sample.totalUnlockDuration,
             appUsage: appUsage,
             webUsage: webUsage,
-            notificationUsage: notificationUsage,
-            device: SensorReaderDevice(device: request.device)
+            notificationUsage: notificationUsage
         )
-        let encoded = try? JSONEncoder().encode(data)
-        
+                
         return SensorDataProperties(
             sensor: Sensor.getSensor(sensor: .deviceUsageReport),
             duration: sample.duration,
             writeTimeStamp: timestamp,
             from: request.from,
             to: request.to,
-            data: encoded
+            data: try? JSONEncoder().encode(data),
+            device: try? JSONEncoder().encode(SensorReaderDevice(device: request.device))
         )
     }
     
@@ -146,29 +146,38 @@ struct SensorDataConverter {
                 $0.value != 0
             }
         }
-        let data = KeyboardMetricsDataSample(
+        var data = KeyboardMetricsDataSample(
             totalWords: sample.totalWords,
             totalAlteredWords: sample.totalAlteredWords,
             totalTaps: sample.totalTaps,
             totalDrags: sample.totalDrags,
             totalDeletes: sample.totalDeletes,
             totalEmojis: sample.totalEmojis,
-            totalSpaceCorrections: sample.totalSpaceCorrections,
-            totalTypingDuration: sample.totalTypingDuration,
-            totalHitTestCorrections: sample.totalHitTestCorrections,
-            totalSubstitutionCorrections: sample.totalSubstitutionCorrections,
-            totalNearKeyCorrections: sample.totalNearKeyCorrections,
-            totalSkipTouchCorrections: sample.totalSkipTouchCorrections,
-            totalInsertKeyCorrections: sample.totalInsertKeyCorrections,
-            totalTranspositionCorrections: sample.totalTranspositionCorrections,
-            totalRetroCorrections: sample.totalRetroCorrections,
-            totalAutoCorrections: sample.totalAutoCorrections,
             totalPaths: sample.totalPaths,
             totalPathTime: sample.totalPathTime,
+            totalPathLength: sample.totalPathLength.converted(to: UnitLength.centimeters).value,
+            totalAutoCorrections: sample.totalAutoCorrections,
+            totalSpaceCorrections: sample.totalSpaceCorrections,
+            totalRetroCorrections: sample.totalRetroCorrections,
+            totalTranspositionCorrections: sample.totalTranspositionCorrections,
+            totalInsertKeyCorrections: sample.totalInsertKeyCorrections,
+            totalSkipTouchCorrections: sample.totalSkipTouchCorrections,
+            totalNearKeyCorrections: sample.totalNearKeyCorrections,
+            totalSubstitutionCorrections: sample.totalSubstitutionCorrections,
+            totalHitTestCorrections: sample.totalHitTestCorrections,
+            totalTypingDuration: sample.totalTypingDuration,
             emojiCountBySentiment: emojiCountBySentiment,
-            wordCountBySentiment: wordCountBySentiment)
+            wordCountBySentiment: wordCountBySentiment
+        )
         
-        let encoded = try? JSONEncoder().encode(data)
+        if #available(iOS 15.0, *) {
+            data.totalPathPauses = sample.totalPathPauses
+            data.typingSpeed = sample.typingSpeed
+            data.pathTypingSpeed = sample.pathTypingSpeed
+            data.totalTypingEpisodes = sample.totalTypingEpisodes
+            data.totalPauses = sample.totalPauses
+            data.totalPathPauses = sample.totalPathPauses
+        }
         
         return SensorDataProperties(
             sensor: Sensor.getSensor(sensor: .keyboardMetrics),
@@ -176,7 +185,8 @@ struct SensorDataConverter {
             writeTimeStamp: timestamp,
             from: request.from,
             to: request.to,
-            data: encoded
+            data: try? JSONEncoder().encode(data),
+            device: try? JSONEncoder().encode(SensorReaderDevice(device: request.device))
         )
     }
 }

@@ -33,6 +33,7 @@ class ImportIntoCoreDataOperation: Operation {
                 object.writeTimestamp = sensorDataProperties.writeTimestamp
                 object.endDate = sensorDataProperties.endDate
                 object.startDate = sensorDataProperties.startDate
+                object.device = sensorDataProperties.device
                 
                 try context.save()
                 logger.info("imported \(self.sensorDataProperties.toString()) into core data")
