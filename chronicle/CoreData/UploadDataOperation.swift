@@ -15,7 +15,7 @@ class UploadDataOperation: Operation {
 
     private let context: NSManagedObjectContext
 
-    private let fetchLimit = 200
+    private let fetchLimit = 50
 
     private var uploading = false
     private var hasMoreData = false
