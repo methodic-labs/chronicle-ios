@@ -12,14 +12,15 @@ struct ApiUtils {
 
     static let scheme = "https"
     static var host = "api.openlattice.com"
-    static let v2Base = "/chronicle/v2"
-    static let base = "/chronicle"
+    static let studyApiBase = "/chronicle/v3/study"
     
     // path constants
     static let enroll = "enroll"
+    static let iosSensor = "ios-sensor"
     static let study = "study"
     static let participant = "participant"
-    static let edmPath = "edm"
+    static let sensor = "sensor"
+    static let upload = "upload"
 
     // returns an optional URLComponent with orgId in the path
     static func makeEnrollDeviceUrlComponents (enrollment: Enrollment, deviceId: String) -> URLComponents? {
@@ -34,10 +35,8 @@ struct ApiUtils {
         var components = URLComponents()
         components.scheme = scheme
         components.host = host
-        components.path = "\(base)/\(study)/\(enrollment.studyId!)/\(participant)/\(enrollment.participantId)/\(deviceId)/\(enroll)"
+        components.path = "\(studyApiBase)/\(enrollment.studyId!)/\(participant)/\(enrollment.participantId)/\(deviceId)/\(enroll)"
 
-        // debug: set components.scheme = 'http', components.host = [local server ip] , components.port = 8090
-        // expected path: /chronicle/v2 + ORGANIZATION_ID_PATH + STUDY_ID_PATH + PARTICIPANT_ID_PATH + DATASOURCE_ID_PATH + ENROLL_PATH
         return components
     }
 
@@ -53,16 +52,7 @@ struct ApiUtils {
 
         components.scheme = scheme
         components.host = host
-        components.path = "/chronicle/v2/\(enrollment.organizationId!)/\(enrollment.studyId!)/\(enrollment.participantId)/\(deviceId)/upload/ios"
-
-        return components
-    }
-
-    static func getPropertyTypeIdsUrlComponents() -> URLComponents {
-        var components = URLComponents()
-        components.scheme = scheme
-        components.host = host
-        components.path = "\(v2Base)/\(edmPath)"
+        components.path = "\(studyApiBase)/\(enrollment.studyId!)/\(enrollment.participantId)/\(deviceId)/\(upload)/\(sensor)"
 
         return components
     }

@@ -22,9 +22,9 @@ class ChronicleTests: XCTestCase {
         XCTAssertNotNil(urlComponents, "should not be nil")
         XCTAssertEqual(
             urlComponents?.path,
-            "/chronicle/v2/\(organizationId)/\(studyId)/\(participantId)/\(deviceId)/enroll"
+            "/chronicle/v3/study/\(studyId)/participant/\(participantId)/\(deviceId)/enroll"
         )
-        XCTAssertEqual(urlComponents?.host, "api.openlattice.com")
+        XCTAssertEqual(urlComponents?.host!, "api.openlattice.com")
         XCTAssertEqual(urlComponents?.scheme, "https")
     }
     
