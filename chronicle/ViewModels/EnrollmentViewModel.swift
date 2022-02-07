@@ -89,4 +89,10 @@ class EnrollmentViewModel: ObservableObject {
             }
         }
     }
+    
+    func setUrlParams(organizationIdFromUrl: String, studyIdFromUrl: String, participantIdFromUrl: String) {
+        organizationId = organizationIdFromUrl
+        studyId = studyIdFromUrl
+        participantId = participantIdFromUrl
+    }
 }
