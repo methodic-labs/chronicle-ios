@@ -22,6 +22,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
     var uploadBackgroundTaskId: UIBackgroundTaskIdentifier?
     var mockDataTaskId: UIBackgroundTaskIdentifier? = nil
+    
+    var enrollmentViewModel: EnrollmentViewModel! = EnrollmentViewModel()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
 
@@ -175,7 +177,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
     
     // called when universal link for enrollment is clicked
-    private func application(_ application: UIApplication,
+    func application(_ application: UIApplication,
                          continue userActivity: NSUserActivity,
                          restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         
@@ -186,51 +188,22 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             return false
         }
 
-        // Check for specific URL components that you need.
+        // Check for specific URL components
         guard let path = components.path,
         let params = components.queryItems else {
             return false
         }
-        print("path = \(path)")
 
-//        if let orgId = params.first(where: { $0.name == "orgId" } )?.value,
-//            let studyId = params.first(where: { $0.name == "studyId" })?.value,
-//            let participantId = params.first(where: { $0.name == "participantId" })?.value {
-//
-//
-//            return true
-//
-//        } else {
-//            return false
-//        }
-        if let url = userActivity.webpageURL {
-            var view = url.lastPathComponent
-            var parameters: [String: String] = [:]
-            URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems?.forEach {
-                parameters[$0.name] = $0.value
-            }
-            
-           
+        if let orgId = params.first(where: { $0.name == "organizationId" } )?.value,
+            let studyId = params.first(where: { $0.name == "studyId" })?.value,
+            let participantId = params.first(where: { $0.name == "participantId" })?.value {
+
+            enrollmentViewModel.setUrlParams(organizationIdFromUrl: orgId, studyIdFromUrl: studyId, participantIdFromUrl: participantId)
+            return true
+
+        } else {
+            return false
         }
-        
-        
     }
-    
-//    func application2(_ application: UIApplication,
-//                        continue userActivity: NSUserActivity,
-//                        restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
-//            if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
-//                guard let url = userActivity.webpageURL else {
-//                    return false
-//                }
-//
-//                //Ferching query parameters
-//                let queryParams = url.queryParams()
-//                if let accessToken = queryParams["access_token"] as? String {
-//                    //Do your actions here
-//                }
-//
-//            }
-//            return true
-//    }
+
 }
