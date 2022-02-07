@@ -90,33 +90,36 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
     }
 
-    // invoked on a repeated schedule as long as EnrolledView is visible. This may take a long time, therefore we need to request for extended
-    //  execution time before the app moves to the background
+    // Attempts to upload locally stored data to server
     @objc func uploadSensorData() {
-        self.uploadBackgroundTaskId = UIApplication.shared.beginBackgroundTask(withName: "Finish uploading data to server") {
-            // end the task if time expires
-            UIApplication.shared.endBackgroundTask(self.uploadBackgroundTaskId!)
-            self.uploadBackgroundTaskId = UIBackgroundTaskIdentifier.invalid
+        //perform on a background queue
+        DispatchQueue.global().async {
+            self.uploadBackgroundTaskId = UIApplication.shared.beginBackgroundTask(withName: "Finish uploading data to server") {
+                // end the task if time expires
+                UIApplication.shared.endBackgroundTask(self.uploadBackgroundTaskId!)
+                self.uploadBackgroundTaskId = UIBackgroundTaskIdentifier.invalid
+            }
+
+            // create backround context
+            guard let context = PersistenceController.shared.newBackgroundContext() else {
+                self.logger.info("unable to execute upload task")
+                UIApplication.shared.endBackgroundTask(self.uploadBackgroundTaskId!)
+                self.uploadBackgroundTaskId = UIBackgroundTaskIdentifier.invalid
+                return
+            }
+
+            // operation to upload data
+            let uploadOperation = UploadDataOperation(context: context)
+            uploadOperation.completionBlock = {
+
+                // terminate the task
+                UIApplication.shared.endBackgroundTask(self.uploadBackgroundTaskId!)
+                self.uploadBackgroundTaskId = UIBackgroundTaskIdentifier.invalid
+            }
+
+            uploadOperation.start()
         }
 
-        // create backround context
-        guard let context = PersistenceController.shared.newBackgroundContext() else {
-            logger.info("unable to execute upload task")
-            UIApplication.shared.endBackgroundTask(self.uploadBackgroundTaskId!)
-            self.uploadBackgroundTaskId = UIBackgroundTaskIdentifier.invalid
-            return
-        }
-
-        // operation to upload data
-        let uploadOperation = UploadDataOperation(context: context)
-        uploadOperation.completionBlock = {
-
-            // terminate the task
-            UIApplication.shared.endBackgroundTask(self.uploadBackgroundTaskId!)
-            self.uploadBackgroundTaskId = UIBackgroundTaskIdentifier.invalid
-        }
-
-        uploadOperation.start()
     }
     
     func fetchSensorSamples() {
