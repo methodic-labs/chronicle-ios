@@ -1,5 +1,5 @@
 //
-//  MessagesUsageDataSample.swift
+//  MessagesUsageData.swift
 //  chronicle
 //
 //  Created by Alfonce Nzioka on 1/31/22.
@@ -10,7 +10,7 @@ import Foundation
 
 // encapsulate sample from messagesUsageReport sensor
 // ref: https://developer.apple.com/documentation/sensorkit/srmessagesusagereport
-struct MessagesUsageDataSample: Codable {
+struct MessagesUsageData: Codable {
     let totalIncomingMessages: Int
     let totalOutgoingMessages: Int
     let totalUniqueContacts: Int

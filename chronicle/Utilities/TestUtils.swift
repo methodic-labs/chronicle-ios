@@ -20,7 +20,7 @@ struct TestUtils {
     }
     
     static func mockDeviceUsageData() -> Data? {
-        let data = DeviceUsageDataSample(
+        let data = DeviceUsageData(
             totalScreenWakes: 30,
             totalUnlocks: 20,
             totalUnlockDuration: 235.9,
@@ -29,25 +29,16 @@ struct TestUtils {
                     AppUsage(
                         usageTime: 223.9,
                         textInputSessions: ["keyboard": 89, "pencil": 423],
-                        bundleIdentifer: randomString(length: 5))]
+                        bundleIdentifier: randomString(length: 5))]
             ],
-            webUsage: ["catalogs": 9202.0],
-            notificationUsage: [
-                "education": [
-                    NotificationUsage(bundleIdentifier: randomString(length: 9), event: "clear"),
-                    NotificationUsage(bundleIdentifier: randomString(length: 7), event: "expired")
-                ],
-                "finance": [
-                    NotificationUsage(bundleIdentifier: randomString(length: 4), event: "hide")
-                ]
-            ]
+            webUsage: ["catalogs": 9202.0]
         )
         
         return try? JSONEncoder().encode(data)
     }
     
     private static func mockKeyboardMetricsData() -> Data? {
-        let data = KeyboardMetricsDataSample(
+        let data = KeyboardMetricsData(
             totalWords: 34,
             totalAlteredWords: 98,
             totalTaps: 93,
@@ -75,12 +66,12 @@ struct TestUtils {
     }
     
     private static func mockMessagesUsageData() -> Data? {
-        let data = MessagesUsageDataSample(totalIncomingMessages: 34, totalOutgoingMessages: 98, totalUniqueContacts: 4)
+        let data = MessagesUsageData(totalIncomingMessages: 34, totalOutgoingMessages: 98, totalUniqueContacts: 4)
         return try? JSONEncoder().encode(data)
     }
     
     private static func mockPhoneUsageData() -> Data? {
-        let data = PhoneUsageDataSample(totalIncomingCalls: 3, totalOutgoingCalls: 10, totalPhoneDuration: 600.9, totalUniqueContacts: 5)
+        let data = PhoneUsageData(totalIncomingCalls: 3, totalOutgoingCalls: 10, totalPhoneDuration: 600.9, totalUniqueContacts: 5)
         
         return try? JSONEncoder().encode(data)
     }

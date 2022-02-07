@@ -1,5 +1,5 @@
 //
-//  PhoneUsageDataSample.swift
+//  PhoneUsageData.swift
 //  chronicle
 //
 //  Created by Alfonce Nzioka on 1/31/22.
@@ -11,7 +11,7 @@ import Foundation
 // encapsulates data sample from phoneUsageReport sensor
 // ref: https://developer.apple.com/documentation/sensorkit/srphoneusagereport
 
-struct PhoneUsageDataSample: Codable {
+struct PhoneUsageData: Codable {
     let totalIncomingCalls: Int
     let totalOutgoingCalls: Int
     let totalPhoneDuration: Double

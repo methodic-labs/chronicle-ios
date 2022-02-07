@@ -13,7 +13,7 @@ import SensorKit
 struct SensorDataConverter {
     static func getPhoneUsageData(sample: SRPhoneUsageReport, timestamp: SRAbsoluteTime, request: SRFetchRequest) -> SensorDataProperties {
         
-        let data = PhoneUsageDataSample(
+        let data = PhoneUsageData(
             totalIncomingCalls: sample.totalIncomingCalls,
             totalOutgoingCalls: sample.totalOutgoingCalls,
             totalPhoneDuration: sample.totalPhoneCallDuration,
@@ -34,7 +34,7 @@ struct SensorDataConverter {
     
     static func getMessagesData(sample: SRMessagesUsageReport, timestamp: SRAbsoluteTime, request: SRFetchRequest) -> SensorDataProperties {
         
-        let data = MessagesUsageDataSample(
+        let data = MessagesUsageData(
             totalIncomingMessages: sample.totalIncomingMessages,
             totalOutgoingMessages: sample.totalOutgoingMessages,
             totalUniqueContacts: sample.totalUniqueContacts
@@ -57,7 +57,7 @@ struct SensorDataConverter {
         var appUsage: [String: [AppUsage]] = [:]
         
         for (category, appUsages) in sample.applicationUsageByCategory {
-            let key = category.rawValue
+            let key = category.localizedString()
             
             var appUsageArr: [AppUsage] = []
             appUsages.filter {
@@ -66,10 +66,10 @@ struct SensorDataConverter {
                 var textInput: [String: Double] = [:]
                 if #available(iOS 15.0, *) {
                     textInput = $0.textInputSessions.reduce(into: [String: Double]()) { result, session in
-                        result[session.sessionType.toString()] = session.duration
+                        result[session.sessionType.toLocalizedString()] = session.duration
                     }
                 }
-                appUsageArr.append(AppUsage(usageTime: $0.usageTime, textInputSessions: textInput, bundleIdentifer: $0.bundleIdentifier!)) // safe to force unwrap optional since we already filtered out entries where bundleIdenfier = nil
+                appUsageArr.append(AppUsage(usageTime: $0.usageTime, textInputSessions: textInput, bundleIdentifier: $0.bundleIdentifier!)) // safe to force unwrap optional since we already filtered out entries where bundleIdenfier = nil
             }
             appUsage[key] = appUsageArr
         }
@@ -80,27 +80,15 @@ struct SensorDataConverter {
             let duration = webUsageEntries.reduce(0, { resultSoFar, usage in
                 resultSoFar + usage.totalUsageTime
             })
-            webUsage[category.rawValue] = duration
+            webUsage[category.localizedString()] = duration
         }
         
-        // notification usage
-        var notificationUsage: [String: [NotificationUsage]] = [:]
-        for (category, notificationUsageEntries) in sample.notificationUsageByCategory {
-            let events: [NotificationUsage] = notificationUsageEntries.filter {
-                $0.bundleIdentifier != nil
-            }.map {
-                NotificationUsage(bundleIdentifier: $0.bundleIdentifier!, event: $0.event.toString())
-            }
-            notificationUsage[category.rawValue] = events
-        }
-        
-        let data = DeviceUsageDataSample(
+        let data = DeviceUsageData(
             totalScreenWakes: sample.totalScreenWakes,
             totalUnlocks: sample.totalUnlocks,
             totalUnlockDuration: sample.totalUnlockDuration,
             appUsage: appUsage,
-            webUsage: webUsage,
-            notificationUsage: notificationUsage
+            webUsage: webUsage
         )
                 
         return SensorDataProperties(
@@ -134,19 +122,20 @@ struct SensorDataConverter {
                 .positive,
                 .sad
             ]
+
             wordCountBySentiment = sentiments.reduce(into: [String: Int]()) {
-                $0[$1.toString()] = sample.wordCount(for: $1)
+                $0[$1.toLocalizedString()] = sample.wordCount(for: $1)
             }.filter {
                 $0.value != 0
             }
             
             emojiCountBySentiment = sentiments.reduce(into: [String: Int]()) {
-                $0[$1.toString()] = sample.wordCount(for: $1)
+                $0[$1.toLocalizedString()] = sample.wordCount(for: $1)
             }.filter {
                 $0.value != 0
             }
         }
-        var data = KeyboardMetricsDataSample(
+        var data = KeyboardMetricsData(
             totalWords: sample.totalWords,
             totalAlteredWords: sample.totalAlteredWords,
             totalTaps: sample.totalTaps,
@@ -193,7 +182,7 @@ struct SensorDataConverter {
 
 @available(iOS 15.0, *)
 extension SRTextInputSession.SessionType {
-    func toString() -> String {
+    func toLocalizedString() -> String {
         switch (self) {
         case .keyboard:
             return "keyboard"
@@ -209,52 +198,9 @@ extension SRTextInputSession.SessionType {
     }
 }
 
-extension SRDeviceUsageReport.NotificationUsage.Event {
-    func toString() -> String {
-        switch (self) {
-        case .deviceUnlocked:
-            return "deviceUnlocked"
-        case .appLaunch:
-            return "appLaunch"
-        case .bannerPulldown:
-            return "bannerPullDown"
-        case .clear:
-            return "clear"
-        case .deduped:
-            return "deduped"
-        case .defaultAction:
-            return "defaultAction"
-        case .deviceActivated:
-            return "deviceActivated"
-        case Self.expired:
-            return "expired"
-        case .hide:
-            return "hide"
-        case .longLook:
-            return "longLook"
-        case .notificationCenterClearAll:
-            return "clearAll"
-        case .received:
-            return "received"
-        case .removed:
-            return "removed"
-        case .silence:
-            return "silence"
-        case .supplementaryAction:
-            return "supplimentaryAction"
-        case .tapCoalesce:
-            return "tapCoalesce"
-        case .unknown:
-            return "unknown"
-        default:
-            return "unknown"
-        }
-    }
-}
-
 @available(iOS 15.0, *)
 extension SRKeyboardMetrics.SentimentCategory {
-    func toString() -> String {
+    func toLocalizedString() -> String {
         switch (self) {
         case .absolutist:
             return "absolutist"
@@ -282,3 +228,69 @@ extension SRKeyboardMetrics.SentimentCategory {
     }
 }
 
+extension SRDeviceUsageReport.CategoryKey {
+    func localizedString() -> String {
+        switch(self) {
+        case .books:
+            return "books"
+        case .business:
+            return "business"
+        case .catalogs:
+            return "catalogs"
+        case .developerTools:
+            return "developerTools"
+        case .education:
+            return "education"
+        case .entertainment:
+            return "entertainment"
+        case .finance:
+            return "finance"
+        case .foodAndDrink:
+            return "foodAndDrink"
+        case .games:
+            return "games"
+        case .graphicsAndDesign:
+            return "graphicsAndDesign"
+        case .healthAndFitness:
+            return "healthAndFitness"
+        case .kids:
+            return "kids"
+        case .lifestyle:
+            return "lifestyle"
+        case .medical:
+            return "medical"
+        case .miscellaneous:
+            return "miscellaneous"
+        case .music:
+            return "music"
+        case .navigation:
+            return "navigation"
+        case .news:
+            return "news"
+        case .newsstand: // category for Apple News
+            return "newsstand"
+        case .photoAndVideo:
+            return "photoAndVideo"
+        case .productivity:
+            return "productivity"
+        case .reference:
+            return "reference"
+        case .shopping:
+            return "shopping"
+        case .socialNetworking:
+            return "socialNetworking"
+        case .sports:
+            return "sports"
+        case .stickers:
+            return "stickers"
+        case .travel:
+            return "travel"
+        case .utilities:
+            return "utilities"
+        case .weather:
+            return "weather"
+        default:
+            return "unknown"
+        }
+    }
+}

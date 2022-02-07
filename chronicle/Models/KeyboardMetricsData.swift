@@ -1,5 +1,5 @@
 //
-//  KeyboardMetricsDataSample.swift
+//  KeyboardMetricsData.swift
 //  chronicle
 //
 //  Created by Alfonce Nzioka on 1/31/22.
@@ -11,7 +11,7 @@ import Foundation
 // encapsulates data sample from keyboardMetrics sensor
 // ref: https://developer.apple.com/documentation/sensorkit/srkeyboardmetrics
 // NOTE: this properties are not exhaustive, might expand in future to include other data e.g probability metrics depending on need
-struct KeyboardMetricsDataSample: Codable {
+struct KeyboardMetricsData: Codable {
     let totalWords: Int
     let totalAlteredWords: Int
     let totalTaps: Int

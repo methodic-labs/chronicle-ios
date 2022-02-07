@@ -64,7 +64,7 @@ struct ApiClient {
     }
     
     // upload SensorData to server
-    static func uploadData(sensorData: Data, count: Int, enrollment: Enrollment, deviceId: String, onCompletion: @escaping() -> Void, onError: @escaping (String) -> Void) {
+    static func uploadData(sensorData: Data, enrollment: Enrollment, deviceId: String, onCompletion: @escaping() -> Void, onError: @escaping (String) -> Void) {
         
         let urlComponents: URLComponents? = ApiUtils.createSensorDataUploadURLComponents(enrollment: enrollment, deviceId: deviceId)
         
@@ -100,8 +100,8 @@ struct ApiClient {
                 return
             }
             
-            if (written != count) {
-                onError("expected to persist \(count) objects on server but persisted \(written)")
+            if (written == 0) {
+                onError("no data uploaded to server")
                 return
             }
             onCompletion()

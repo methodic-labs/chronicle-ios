@@ -81,7 +81,7 @@ class UploadDataOperation: Operation {
                     self.uploading = true
                     UserDefaults.standard.set(true, forKey: UserSettingsKeys.isUploading)
 
-                    ApiClient.uploadData(sensorData: data, count: objects.count, enrollment: enrollment, deviceId: deviceId) {
+                    ApiClient.uploadData(sensorData: data, enrollment: enrollment, deviceId: deviceId) {
                         self.logger.info("successfully uploaded \(objects.count) to server")
                         objects.forEach (self.context.delete) // delete uploaded data from local db
                         try? self.context.save()

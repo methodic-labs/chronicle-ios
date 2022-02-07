@@ -44,13 +44,13 @@
 		EA9813D027A9906E0049D1B6 /* UploadDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9813CF27A9906E0049D1B6 /* UploadDataOperation.swift */; };
 		EA9813D227A990AE0049D1B6 /* ImportIntoCoreDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9813D127A990AE0049D1B6 /* ImportIntoCoreDataOperation.swift */; };
 		EA9813D427A990F80049D1B6 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9813D327A990F80049D1B6 /* DateUtils.swift */; };
-		EABD370D27A883CE005F9EFE /* DeviceUsageDataSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD370C27A883CD005F9EFE /* DeviceUsageDataSample.swift */; };
-		EABD370F27A897D1005F9EFE /* PhoneUsageDataSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD370E27A897D1005F9EFE /* PhoneUsageDataSample.swift */; };
-		EABD371027A897D1005F9EFE /* PhoneUsageDataSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD370E27A897D1005F9EFE /* PhoneUsageDataSample.swift */; };
-		EABD371227A89924005F9EFE /* MessagesUsageDataSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD371127A89924005F9EFE /* MessagesUsageDataSample.swift */; };
-		EABD371327A89924005F9EFE /* MessagesUsageDataSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD371127A89924005F9EFE /* MessagesUsageDataSample.swift */; };
-		EABD371527A89BFA005F9EFE /* KeyboardMetricsDataSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD371427A89BFA005F9EFE /* KeyboardMetricsDataSample.swift */; };
-		EABD371627A89BFA005F9EFE /* KeyboardMetricsDataSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD371427A89BFA005F9EFE /* KeyboardMetricsDataSample.swift */; };
+		EABD370D27A883CE005F9EFE /* DeviceUsageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD370C27A883CD005F9EFE /* DeviceUsageData.swift */; };
+		EABD370F27A897D1005F9EFE /* PhoneUsageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD370E27A897D1005F9EFE /* PhoneUsageData.swift */; };
+		EABD371027A897D1005F9EFE /* PhoneUsageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD370E27A897D1005F9EFE /* PhoneUsageData.swift */; };
+		EABD371227A89924005F9EFE /* MessagesUsageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD371127A89924005F9EFE /* MessagesUsageData.swift */; };
+		EABD371327A89924005F9EFE /* MessagesUsageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD371127A89924005F9EFE /* MessagesUsageData.swift */; };
+		EABD371527A89BFA005F9EFE /* KeyboardMetricsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD371427A89BFA005F9EFE /* KeyboardMetricsData.swift */; };
+		EABD371627A89BFA005F9EFE /* KeyboardMetricsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD371427A89BFA005F9EFE /* KeyboardMetricsData.swift */; };
 		EAEA218727A49298001964CE /* SensorDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEA218627A49298001964CE /* SensorDataProperties.swift */; };
 /* End PBXBuildFile section */
 
@@ -103,10 +103,10 @@
 		EA9813CF27A9906E0049D1B6 /* UploadDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadDataOperation.swift; sourceTree = "<group>"; };
 		EA9813D127A990AE0049D1B6 /* ImportIntoCoreDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportIntoCoreDataOperation.swift; sourceTree = "<group>"; };
 		EA9813D327A990F80049D1B6 /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
-		EABD370C27A883CD005F9EFE /* DeviceUsageDataSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUsageDataSample.swift; sourceTree = "<group>"; };
-		EABD370E27A897D1005F9EFE /* PhoneUsageDataSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneUsageDataSample.swift; sourceTree = "<group>"; };
-		EABD371127A89924005F9EFE /* MessagesUsageDataSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesUsageDataSample.swift; sourceTree = "<group>"; };
-		EABD371427A89BFA005F9EFE /* KeyboardMetricsDataSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardMetricsDataSample.swift; sourceTree = "<group>"; };
+		EABD370C27A883CD005F9EFE /* DeviceUsageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUsageData.swift; sourceTree = "<group>"; };
+		EABD370E27A897D1005F9EFE /* PhoneUsageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneUsageData.swift; sourceTree = "<group>"; };
+		EABD371127A89924005F9EFE /* MessagesUsageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesUsageData.swift; sourceTree = "<group>"; };
+		EABD371427A89BFA005F9EFE /* KeyboardMetricsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardMetricsData.swift; sourceTree = "<group>"; };
 		EAEA218627A49298001964CE /* SensorDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDataProperties.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -216,10 +216,10 @@
 				EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */,
 				EA28163D2733493C005C26E8 /* FullQualifiedName.swift */,
 				EAEA218627A49298001964CE /* SensorDataProperties.swift */,
-				EABD370C27A883CD005F9EFE /* DeviceUsageDataSample.swift */,
-				EABD370E27A897D1005F9EFE /* PhoneUsageDataSample.swift */,
-				EABD371127A89924005F9EFE /* MessagesUsageDataSample.swift */,
-				EABD371427A89BFA005F9EFE /* KeyboardMetricsDataSample.swift */,
+				EABD370C27A883CD005F9EFE /* DeviceUsageData.swift */,
+				EABD370E27A897D1005F9EFE /* PhoneUsageData.swift */,
+				EABD371127A89924005F9EFE /* MessagesUsageData.swift */,
+				EABD371427A89BFA005F9EFE /* KeyboardMetricsData.swift */,
 				EA9813C527A95D550049D1B6 /* Datasource.swift */,
 				EA9813C727A984840049D1B6 /* SensorReaderDevice.swift */,
 			);
@@ -361,12 +361,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EABD371327A89924005F9EFE /* MessagesUsageDataSample.swift in Sources */,
-				EABD371627A89BFA005F9EFE /* KeyboardMetricsDataSample.swift in Sources */,
+				EABD371327A89924005F9EFE /* MessagesUsageData.swift in Sources */,
+				EABD371627A89BFA005F9EFE /* KeyboardMetricsData.swift in Sources */,
 				EA28163F2733493C005C26E8 /* FullQualifiedName.swift in Sources */,
 				EA46D45426C4F850008CE3C0 /* ChronicleTests.swift in Sources */,
 				EA9813C027A940490049D1B6 /* CoreDataTests.swift in Sources */,
-				EABD371027A897D1005F9EFE /* PhoneUsageDataSample.swift in Sources */,
+				EABD371027A897D1005F9EFE /* PhoneUsageData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,7 +384,7 @@
 				EA82494D26C4F27500F9CD7C /* IOSDevice.swift in Sources */,
 				EA802F2B26BA4C0400C494F8 /* EnrollmentView.swift in Sources */,
 				EA9813C627A95D550049D1B6 /* Datasource.swift in Sources */,
-				EABD370F27A897D1005F9EFE /* PhoneUsageDataSample.swift in Sources */,
+				EABD370F27A897D1005F9EFE /* PhoneUsageData.swift in Sources */,
 				EAEA218727A49298001964CE /* SensorDataProperties.swift in Sources */,
 				B9BBFDBF26C648C100B770E4 /* EnrolledView.swift in Sources */,
 				EA9813C427A9508E0049D1B6 /* TestUtils.swift in Sources */,
@@ -396,7 +396,7 @@
 				EA82495326C4F2D500F9CD7C /* EnrollmentViewModel.swift in Sources */,
 				EA799C2D27A33FE9006593F8 /* SensorDataConverter.swift in Sources */,
 				EA9813C827A984840049D1B6 /* SensorReaderDevice.swift in Sources */,
-				EABD371227A89924005F9EFE /* MessagesUsageDataSample.swift in Sources */,
+				EABD371227A89924005F9EFE /* MessagesUsageData.swift in Sources */,
 				EA28164527346B0B005C26E8 /* SensorDataModel.xcdatamodeld in Sources */,
 				EA28164127334C15005C26E8 /* Utils.swift in Sources */,
 				EA82495726C4F31A00F9CD7C /* ApiUtils.swift in Sources */,
@@ -407,8 +407,8 @@
 				B9BBFDC426CD6D0200B770E4 /* InputFieldView.swift in Sources */,
 				EA9813D027A9906E0049D1B6 /* UploadDataOperation.swift in Sources */,
 				EA82495926C4F33800F9CD7C /* EnrollmentUtils.swift in Sources */,
-				EABD371527A89BFA005F9EFE /* KeyboardMetricsDataSample.swift in Sources */,
-				EABD370D27A883CE005F9EFE /* DeviceUsageDataSample.swift in Sources */,
+				EABD371527A89BFA005F9EFE /* KeyboardMetricsData.swift in Sources */,
+				EABD370D27A883CE005F9EFE /* DeviceUsageData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
