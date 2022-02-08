@@ -2,15 +2,28 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.openlattice.chronicle.mockSensorData</string>
+		<string>com.openlattice.chronicle.uploadData</string>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.openlattice.chronicle</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>chronicle</string>
+			</array>
+		</dict>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
 		<string>processing</string>
 	</array>
-    <key>BGTaskSchedulerPermittedIdentifiers</key>
-    <array>
-        <string>com.openlattice.chronicle.mockSensorData</string>
-        <string>com.openlattice.chronicle.uploadData</string>
-    </array>
 </dict>
 </plist>
