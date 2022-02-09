@@ -58,12 +58,6 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
     
     func sensorReader(_ reader: SRSensorReader, didCompleteFetch fetchRequest: SRFetchRequest) {
         logger.info("successfully fetched sample from \(reader.sensor.rawValue)")
-        
-        Utils.saveLastFetch(
-            device: SensorReaderDevice(device: fetchRequest.device),
-            sensor: Sensor.getSensor(sensor: reader.sensor),
-            lastFetchValue: fetchRequest.to.toCFAbsoluteTime()
-        )
     }
     
     // NOTE: this will be invoked multiple times if the request has multiple samples
@@ -114,6 +108,14 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
             let operation = ImportIntoCoreDataOperation(context: context, data: sensorDataProperties)
             operation.start()
         }
+        
+        // save last fetch
+        
+        Utils.saveLastFetch(
+            device: SensorReaderDevice(device: fetchRequest.device),
+            sensor: Sensor.getSensor(sensor: reader.sensor),
+            lastFetchValue: fetchRequest.to.toCFAbsoluteTime()
+        )
         
         return true
     }
