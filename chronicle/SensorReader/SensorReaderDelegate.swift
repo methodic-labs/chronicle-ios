@@ -44,7 +44,10 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
                 device: SensorReaderDevice(device: device),
                 sensor: Sensor.getSensor(sensor: reader.sensor)
             )
-            logger.info("fetching data for \(reader.sensor.rawValue) from \(request.from.rawValue) to \(request.to.rawValue)")
+            let startDate = Date(timeIntervalSinceReferenceDate: request.from.toCFAbsoluteTime())
+            let endDate  = Date(timeIntervalSinceReferenceDate: request.to.toCFAbsoluteTime())
+            
+            logger.info("fetching data for \(reader.sensor.rawValue) -  start: \(startDate.description), end: \(endDate.description)")
             reader.fetch(request)
         }
     }
@@ -55,6 +58,12 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
     
     func sensorReader(_ reader: SRSensorReader, didCompleteFetch fetchRequest: SRFetchRequest) {
         logger.info("successfully fetched sample from \(reader.sensor.rawValue)")
+        
+        Utils.saveLastFetch(
+            device: SensorReaderDevice(device: fetchRequest.device),
+            sensor: Sensor.getSensor(sensor: reader.sensor),
+            lastFetchValue: fetchRequest.to.toCFAbsoluteTime()
+        )
     }
     
     // NOTE: this will be invoked multiple times if the request has multiple samples
@@ -99,23 +108,13 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         if (sensorDataProperties.isValidSample) {
             guard let context = PersistenceController.shared.newBackgroundContext() else {
                 logger.error("invalid sensor sample: \(sensorDataProperties.toString())")
-                Utils.saveLastFetch(
-                    device: SensorReaderDevice(device: fetchRequest.device),
-                    sensor: Sensor.getSensor(sensor: reader.sensor),
-                    lastFetchValue: fetchRequest.to.toCFAbsoluteTime()
-                )
+                
                 return false
             }
             let operation = ImportIntoCoreDataOperation(context: context, data: sensorDataProperties)
             operation.start()
         }
         
-        // save last fetch
-        Utils.saveLastFetch(
-            device: SensorReaderDevice(device: fetchRequest.device),
-            sensor: Sensor.getSensor(sensor: reader.sensor),
-            lastFetchValue: fetchRequest.to.toCFAbsoluteTime()
-        )
         return true
     }
 }
