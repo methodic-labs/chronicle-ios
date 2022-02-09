@@ -52,6 +52,9 @@ struct ApiUtils {
 
         components.scheme = scheme
         components.host = host
+        components.port = 8090
+        components.scheme = "http"
+        components.host = "192.168.1.64"
         components.path = "\(studyApiBase)/\(enrollment.studyId!)/\(enrollment.participantId)/\(deviceId)/\(upload)/\(sensor)"
 
         return components

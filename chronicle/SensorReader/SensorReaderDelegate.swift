@@ -101,8 +101,11 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         
         if (sensorDataProperties.isValidSample) {
             guard let context = PersistenceController.shared.newBackgroundContext() else {
-                logger.error("invalid sensor sample: \(sensorDataProperties.toString())")
-                
+                Utils.saveLastFetch(
+                    device: SensorReaderDevice(device: fetchRequest.device),
+                    sensor: Sensor.getSensor(sensor: reader.sensor),
+                    lastFetchValue: fetchRequest.to.toCFAbsoluteTime()
+                )
                 return false
             }
             let operation = ImportIntoCoreDataOperation(context: context, data: sensorDataProperties)
@@ -110,7 +113,6 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         }
         
         // save last fetch
-        
         Utils.saveLastFetch(
             device: SensorReaderDevice(device: fetchRequest.device),
             sensor: Sensor.getSensor(sensor: reader.sensor),
