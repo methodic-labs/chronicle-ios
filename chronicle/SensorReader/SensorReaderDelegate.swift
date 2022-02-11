@@ -57,7 +57,7 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
     }
     
     func sensorReader(_ reader: SRSensorReader, didCompleteFetch fetchRequest: SRFetchRequest) {
-        logger.info("successfully fetched sample from \(reader.sensor.rawValue)")
+        logger.info("fetch completed for \(reader.sensor.rawValue)")
     }
     
     // NOTE: this will be invoked multiple times if the request has multiple samples
