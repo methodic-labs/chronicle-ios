@@ -19,11 +19,14 @@ class EnrollmentViewModel: ObservableObject {
     @Published var showEnrollmentSuccess = false
     @Published var enrolling = false
     @Published var isEnrollmentDetailsViewVisible = false //set to true in response to a button click
-
+    @Published var isFetchingSensors = false
+    
     @Published var participantId: String
     @Published var studyId: String
     @Published var organizationId :String
     @Published var deviceId: String
+    @Published var sensors: [Sensor]
+    @Published var sensorsToRemove: [Sensor] = [] ///previously saved sensors that are later removed from study settings
 
     var isEnrolled: Bool {
         settings.object(forKey: UserSettingsKeys.isEnrolled) as? Bool ?? false
@@ -34,6 +37,7 @@ class EnrollmentViewModel: ObservableObject {
         studyId = settings.object(forKey: UserSettingsKeys.studyId) as? String ?? ""
         organizationId = settings.object(forKey: UserSettingsKeys.organizationId) as? String ?? ""
         deviceId = settings.object(forKey: UserSettingsKeys.deviceId) as? String ?? ""
+        sensors = settings.object(forKey: UserSettingsKeys.sensors) as? [Sensor] ?? []
         isEnrollmentDetailsViewVisible = isEnrolled
     }
 
@@ -88,5 +92,25 @@ class EnrollmentViewModel: ObservableObject {
                 self.enrolling = false
             }
         }
+    }
+    
+    func fetchStudySensors() async {
+        /// If device has never fetched any sensors, indicate "Fetching study info" message on UI, when this is executing
+        /// After successful fetch, if study has configured sensors, A sensorkit authorization sheet will be displayed to the user
+        /// prompting to authorize configured sensors.
+        
+        if self.isFetchingSensors {
+            return
+        }
+        
+        if sensors.isEmpty {
+            self.isFetchingSensors = true
+        }
+        let result = await ApiClient.getStudySensors()
+         
+        self.sensorsToRemove = sensors.filter { !result.contains($0)}
+        self.sensors = sensors
+        self.settings.set(Array(result), forKey: UserSettingsKeys.sensors)
+        self.isFetchingSensors = false
     }
 }

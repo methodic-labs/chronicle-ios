@@ -90,8 +90,6 @@ struct TestUtils {
             data = mockMessagesUsageData()
         case .phoneUsage:
             data = mockPhoneUsageData()
-        default:
-            break
         }
         
         return SensorDataProperties(

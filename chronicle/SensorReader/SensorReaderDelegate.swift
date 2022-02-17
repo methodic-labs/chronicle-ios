@@ -36,14 +36,20 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
     }
     
     func sensorReader(_ reader: SRSensorReader, didFetch devices: [SRDevice]) {
+
         devices.forEach { device in
             let request = SRFetchRequest()
             request.device = device
             request.to = SRAbsoluteTime.current()
-            request.from = Utils.getLastFetch(
+            let lastFetch = Utils.getLastFetch(
                 device: SensorReaderDevice(device: device),
                 sensor: Sensor.getSensor(sensor: reader.sensor)
             )
+            guard let lastFetch = lastFetch else {
+                return
+            }
+
+            request.from = lastFetch
             let startDate = Date(timeIntervalSinceReferenceDate: request.from.toCFAbsoluteTime())
             let endDate  = Date(timeIntervalSinceReferenceDate: request.to.toCFAbsoluteTime())
             

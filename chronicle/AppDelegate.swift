@@ -136,22 +136,27 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     // Displays a prompt to request user to authorize sensors
     // If authorization has already been granted, no prompt is displayed
-    func requestSensorReaderAuthorization() {
-        let sensors = SensorReaderDelegate.availableSensors
+    func requestSensorReaderAuthorization(valid: [Sensor], invalid: [Sensor]) {
+        let permittedSensors = Set(valid.map { Sensor.getSRSensor(sensor: $0)}.compactMap { $0 })
+        let invalidSensors = Set(invalid.map { Sensor.getSRSensor(sensor: $0)}.compactMap { $0 })
+        let allSensors = permittedSensors.union(invalidSensors)
         
-        SRSensorReader.requestAuthorization(sensors: sensors ) { (error: Error?) -> Void in
+        SRSensorReader.requestAuthorization(sensors: permittedSensors ) { (error: Error?) -> Void in
             if let error = error {
                 self.logger.info("Authorization failed: \(error.localizedDescription)")
             }
             
-            sensors.forEach { sensor in
+            allSensors.forEach { sensor in
                 let reader = SRSensorReader(sensor: sensor)
                 
                 if reader.authorizationStatus == SRAuthorizationStatus.authorized {
                     reader.delegate = SensorReaderDelegate.shared
-                    reader.startRecording()
-                    
-                    Utils.saveInitialLastFetch(sensor: Sensor.getSensor(sensor: sensor))
+                    if (invalidSensors.contains(sensor)) {
+                        reader.stopRecording()
+                    } else {
+                        reader.startRecording()
+                        Utils.saveInitialLastFetch(sensor: Sensor.getSensor(sensor: sensor))
+                    }
                 }
             }
         }

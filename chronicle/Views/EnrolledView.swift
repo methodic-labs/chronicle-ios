@@ -52,25 +52,16 @@ struct EnrolledView: View {
             }
             .padding(.horizontal)
         }.onAppear {
-            appDelegate.requestSensorReaderAuthorization()
+            Task {
+                await enrollmentViewModel.fetchStudySensors()
+                appDelegate.requestSensorReaderAuthorization(
+                    valid: enrollmentViewModel.sensors,
+                    invalid: enrollmentViewModel.sensorsToRemove
+                )
+            }
         }
     }
     
-//    private func uploadData() {
-//        DispatchQueue.global().async {
-//
-//            // schedule a repeating task to persist locally stored data to server
-//            let startDate = Date().addingTimeInterval(5) // 5 seconds from now
-//
-//            let uploadDataTimer = Timer(fireAt: Date(), interval: 15 * 60, target: appDelegate, selector: #selector(appDelegate.uploadSensorData), userInfo: nil, repeats: false)
-//
-//            let runLoop = RunLoop.main
-//            runLoop.run()
-//
-//            runLoop.add(uploadDataTimer, forMode: RunLoop.Mode.common)
-//        }
-//    }
-
     private func formatDate() -> String {
         guard let lastUploaded = lastUploadDate, let iSODate = ISO8601DateFormatter().date(from: lastUploaded)  else {
             return "Never"

@@ -28,7 +28,7 @@ class ImportIntoCoreDataOperation: Operation {
                 object.id = sensorDataProperties.id
                 object.data = sensorDataProperties.data
                 object.duration = sensorDataProperties.duration
-                object.sensorType = sensorDataProperties.sensor.rawValue
+                object.sensorType = sensorDataProperties.sensor!.rawValue
                 object.timezone = sensorDataProperties.timezone
                 object.writeTimestamp = sensorDataProperties.writeTimestamp
                 object.endDate = sensorDataProperties.endDate

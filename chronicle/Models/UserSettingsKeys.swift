@@ -17,4 +17,5 @@ struct UserSettingsKeys {
     static let propertyTypes = "propertyTypes"
     static let isUploading = "isUploading"
     static let lastFetch = "lastFetch"
+    static let sensors = "sensors"
 }

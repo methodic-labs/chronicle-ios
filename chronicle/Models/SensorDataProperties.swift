@@ -12,7 +12,7 @@ import SensorKit
 // A struct encapsulating the properties of a SensorData
 struct SensorDataProperties {
     let id: UUID = UUID.init()
-    let sensor: Sensor
+    let sensor: Sensor?
     var duration: Double // duration that the sample spans
     let writeTimestamp: Date // when sensor sample was recorded
     let startDate: Date
@@ -22,10 +22,10 @@ struct SensorDataProperties {
     let device: Data?
     
     var isValidSample: Bool {
-        return data != nil
+        return data != nil && sensor != nil
     }
     
-    init(sensor: Sensor, duration: TimeInterval, writeTimeStamp: SRAbsoluteTime, from: SRAbsoluteTime, to: SRAbsoluteTime, data: Data?, device: Data?) {
+    init(sensor: Sensor?, duration: TimeInterval, writeTimeStamp: SRAbsoluteTime, from: SRAbsoluteTime, to: SRAbsoluteTime, data: Data?, device: Data?) {
         
         self.sensor = sensor
         self.duration = duration
@@ -39,7 +39,7 @@ struct SensorDataProperties {
     }
     
     func toString() -> String {
-        return "SensorDataProperties:{sensor: \(sensor), writeTimeStamp: \(writeTimestamp), data: \(String(data: data ?? Data.init(), encoding: .utf8) ?? "")"
+        return "SensorDataProperties:{sensor: \(String(describing: sensor)), writeTimeStamp: \(writeTimestamp), data: \(String(data: data ?? Data.init(), encoding: .utf8) ?? "")"
     }
 }
 

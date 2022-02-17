@@ -13,8 +13,11 @@ struct Utils {
     
     private static var logger = Logger(subsystem: "com.openlattice.chronicle", category: "Utils")
     
-    static func getLastFetch(device: SensorReaderDevice, sensor: Sensor) -> SRAbsoluteTime {
-        
+    static func getLastFetch(device: SensorReaderDevice, sensor: Sensor?) -> SRAbsoluteTime? {
+        guard let sensor = sensor else {
+            return nil
+        }
+
         let lastFetchData = UserDefaults.standard.object(forKey: UserSettingsKeys.lastFetch) as? [String: [String: Double]] ?? [:]
         
         if let valuesBySensor = lastFetchData[sensor.rawValue], let value = valuesBySensor[device.systemName] {
@@ -27,8 +30,11 @@ struct Utils {
         return SRAbsoluteTime.fromCFAbsoluteTime(_cf: absoluteRefTime)
     }
     
-    static func saveLastFetch(device: SensorReaderDevice, sensor: Sensor, lastFetchValue: Double) {
-        
+    static func saveLastFetch(device: SensorReaderDevice, sensor: Sensor?, lastFetchValue: Double) {
+        guard let sensor = sensor else {
+            return
+        }
+
         var lastFetchData = UserDefaults.standard.object(forKey: UserSettingsKeys.lastFetch) as? [String: [String: Double]] ?? [:]
         
         var valuesBySensor = lastFetchData[sensor.rawValue] ?? [:]
@@ -41,7 +47,11 @@ struct Utils {
     
     // saves lastFetch = current date the very first time authorization to use sensor is granted
     
-    static func saveInitialLastFetch(sensor: Sensor) {
+    static func saveInitialLastFetch(sensor: Sensor?) {
+        guard let sensor = sensor else {
+            return
+        }
+
         var lastFetchData = UserDefaults.standard.object(forKey: UserSettingsKeys.lastFetch) as? [String: [String: Double]] ?? [:]
         
         let lastFetch = Date()
