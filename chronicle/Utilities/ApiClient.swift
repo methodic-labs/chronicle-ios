@@ -109,6 +109,32 @@ struct ApiClient {
         
         task.resume()
     }
+    
+    static func getStudySensors() async -> Set<Sensor> {
+        let studyId = UserDefaults.standard.object(forKey: UserSettingsKeys.studyId) as? String ?? ""
+        guard !studyId.isEmpty else {
+            logger.error("invalid studyId")
+            return []
+        }
+        
+        guard let url = ApiUtils.getStudySensorsURl(studyId: studyId) else {
+            logger.error("invalid url")
+            return []
+        }
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(from: url)
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                throw "invalid response"
+            }
+            return try JSONDecoder().decode(Set<Sensor>.self, from: data)
+        }
+        catch {
+            print(error.localizedDescription)
+            return []
+        }
+    }
 }
 
 // throw strings as errors
@@ -117,11 +143,24 @@ extension String: Error {}
 
 // concurrency backward compatibility (<iOS 15.0)
 // ref: https://www.swiftbysundell.com/articles/making-async-system-apis-backward-compatible/
+@available(iOS, deprecated: 15.0, message: "Extension no longer necessary. Use built-in API")
 extension URLSession {
-    @available(iOS, deprecated: 15.0, message: "Extension no longer necessary. Use built-in API")
     func upload(for request: URLRequest, from bodyData: Data) async throws -> (Data, URLResponse) {
         try await withCheckedThrowingContinuation { continuation in
             let task = self.uploadTask(with: request, from: bodyData) { data, response, error in
+                guard let data = data, let response = response else {
+                    let error = error ?? URLError(.badServerResponse)
+                    return continuation.resume(throwing: error)
+                }
+                continuation.resume(returning: (data, response))
+            }
+            task.resume()
+        }
+    }
+    
+    func data(from url: URL) async throws -> (Data, URLResponse) {
+        try await withCheckedThrowingContinuation { continuation in
+            let task = self.dataTask(with: url) { data, response, error in
                 guard let data = data, let response = response else {
                     let error = error ?? URLError(.badServerResponse)
                     return continuation.resume(throwing: error)

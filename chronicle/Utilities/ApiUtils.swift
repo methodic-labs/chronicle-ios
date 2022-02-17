@@ -19,8 +19,10 @@ struct ApiUtils {
     static let iosSensor = "ios-sensor"
     static let study = "study"
     static let participant = "participant"
-    static let sensor = "sensor"
+    static let sensors = "sensors"
     static let upload = "upload"
+    static let settings = "settings"
+    static let ios = "ios"
 
     // returns an optional URLComponent with orgId in the path
     static func makeEnrollDeviceUrlComponents (enrollment: Enrollment, deviceId: String) -> URLComponents? {
@@ -49,14 +51,25 @@ struct ApiUtils {
         guard !deviceId.isEmpty else {
             return nil
         }
+        
+        let studyId = enrollment.studyId!
+        let participantId = enrollment.participantId
+        
 
+        // STUDY_ID_PATH + PARTICIPANT_PATH + PARTICIPANT_ID_PATH + IOS_PATH + SOURCE_DEVICE_ID_PATH
         components.scheme = scheme
         components.host = host
-        components.port = 8090
-        components.scheme = "http"
-        components.host = "192.168.1.64"
-        components.path = "\(studyApiBase)/\(enrollment.studyId!)/\(enrollment.participantId)/\(deviceId)/\(upload)/\(sensor)"
+        components.path = "\(studyApiBase)/\(studyId)/\(participant)/\(participantId)/\(ios)/\(deviceId)"
 
         return components
+    }
+    
+    static func getStudySensorsURl(studyId: String) -> URL? {
+        var components = URLComponents()
+        components.scheme = scheme
+        components.host = host
+        components.path = "\(studyApiBase)/\(studyId)/\(settings)/\(sensors)"
+        
+        return components.url
     }
 }
