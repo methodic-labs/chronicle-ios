@@ -25,7 +25,7 @@ class EnrollmentViewModel: ObservableObject {
     @Published var studyId: String
     @Published var organizationId :String
     @Published var deviceId: String
-    @Published var sensors: [Sensor]
+    @Published var sensors: [Sensor] = []
     @Published var sensorsToRemove: [Sensor] = [] ///previously saved sensors that are later removed from study settings
 
     var isEnrolled: Bool {
@@ -37,7 +37,10 @@ class EnrollmentViewModel: ObservableObject {
         studyId = settings.object(forKey: UserSettingsKeys.studyId) as? String ?? ""
         organizationId = settings.object(forKey: UserSettingsKeys.organizationId) as? String ?? ""
         deviceId = settings.object(forKey: UserSettingsKeys.deviceId) as? String ?? ""
-        sensors = settings.object(forKey: UserSettingsKeys.sensors) as? [Sensor] ?? []
+        let savedSensors = settings.object(forKey: UserSettingsKeys.sensors) as? [String] ?? []
+        if !savedSensors.isEmpty {
+            self.sensors = savedSensors.map { Sensor.init(rawValue: $0)}.compactMap { $0 }
+        }
         isEnrollmentDetailsViewVisible = isEnrolled
     }
 
@@ -108,9 +111,14 @@ class EnrollmentViewModel: ObservableObject {
         }
         let result = await ApiClient.getStudySensors()
          
-        self.sensorsToRemove = sensors.filter { !result.contains($0)}
-        self.sensors = sensors
-        self.settings.set(Array(result), forKey: UserSettingsKeys.sensors)
-        self.isFetchingSensors = false
+        DispatchQueue.main.async {
+            self.sensorsToRemove = self.sensors.filter { !result.contains($0)}
+            self.sensors = Array(result)
+            let arr = Array(result)
+            self.sensors = arr
+            self.settings.set(arr.map { $0.rawValue }, forKey: UserSettingsKeys.sensors)
+            self.isFetchingSensors = false
+            print(self.sensors)
+        }
     }
 }

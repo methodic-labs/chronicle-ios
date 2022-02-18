@@ -15,7 +15,6 @@ struct EnrolledView: View {
     // convenient to read saved value from UserDefaults
     @AppStorage(UserSettingsKeys.lastUploadDate) var lastUploadDate: String?
     @AppStorage(UserSettingsKeys.isUploading) var isUploading: Bool = false
-
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
@@ -47,7 +46,10 @@ struct EnrolledView: View {
                     .foregroundColor(Color.gray)
 
                 if isUploading {
-                    UploadingProgress().padding(.top, 20)
+                    ProgressIndicatorView(text: "Uploading Data...").padding(.top, 20)
+                }
+                else if enrollmentViewModel.isFetchingSensors {
+                    ProgressIndicatorView(text: "Fetching study information...").padding(.top, 20)
                 }
             }
             .padding(.horizontal)
@@ -74,11 +76,12 @@ struct EnrolledView: View {
     }
 }
 
-struct UploadingProgress: View {
+struct ProgressIndicatorView: View {
+    let text: String
     var body: some View {
         HStack {
             Spacer()
-            Text("Uploading Data...")
+            Text(text)
                 .font(.body)
                 .foregroundColor(.gray)
             ProgressView()
@@ -91,6 +94,6 @@ struct UploadingProgress: View {
 struct EnrolledView_Previews: PreviewProvider {
     static var previews: some View {
         EnrolledView(appDelegate: AppDelegate(), enrollmentViewModel: EnrollmentViewModel())
-        UploadingProgress()
+        ProgressIndicatorView(text: "In progress")
     }
 }

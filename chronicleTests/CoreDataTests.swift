@@ -33,7 +33,7 @@ class CoreDataTests: XCTestCase {
         }
         
         // TODO: fix this!!!
-        Sensor.allCases.filter{$0 != .unknown}.forEach {
+        Sensor.allCases.forEach {
             let sample = TestUtils.mockSensorDataSample(sensor: $0)
             XCTAssertTrue(sample.isValidSample)
             
@@ -57,7 +57,7 @@ class CoreDataTests: XCTestCase {
             
             XCTAssertEqual(device, datasource.device)
             XCTAssertEqual(data, datasource.data)
-            XCTAssertEqual(sample.sensor.rawValue, datasource.sensor)
+            XCTAssertEqual(sample.sensor?.rawValue, datasource.sensor)
             XCTAssertEqual(sample.writeTimestamp.toISOFormat(), datasource.dateRecorded)
             XCTAssertEqual(sample.duration, datasource.duration)
             XCTAssertEqual(sample.timezone, datasource.timezone)

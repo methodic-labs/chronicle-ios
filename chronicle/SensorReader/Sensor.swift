@@ -42,7 +42,7 @@ extension Sensor {
         case .keyboardMetrics:
             return .keyboardMetrics
         case .deviceUsage:
-            return .phoneUsageReport
+            return .deviceUsageReport
         case .messagesUsage:
             return .messagesUsageReport
         }

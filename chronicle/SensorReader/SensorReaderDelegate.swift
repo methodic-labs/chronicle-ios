@@ -19,12 +19,15 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
     static var shared = SensorReaderDelegate()
     
     static var availableSensors: Set<SRSensor> {
-        return [
-            .deviceUsageReport,
-            .messagesUsageReport,
-            .phoneUsageReport,
-            .keyboardMetrics
-        ]
+        let savedValues = UserDefaults.standard.object(forKey: UserSettingsKeys.sensors) as? [String] ?? []
+        if (savedValues.isEmpty) {
+            return []
+        }
+        
+        let sensors = savedValues.map { Sensor.init(rawValue: $0) }.compactMap { $0 }
+        
+        return Set(sensors.map { Sensor.getSRSensor(sensor: $0)}.compactMap { $0 })
+        
     }
     
     func sensorReaderWillStartRecording(_ reader: SRSensorReader) {

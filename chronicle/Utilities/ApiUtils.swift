@@ -25,7 +25,7 @@ struct ApiUtils {
     static let ios = "ios"
 
     // returns an optional URLComponent with orgId in the path
-    static func makeEnrollDeviceUrlComponents (enrollment: Enrollment, deviceId: String) -> URLComponents? {
+    static func getEnrollURL (enrollment: Enrollment, deviceId: String) -> URL? {
         guard enrollment.isValid else {
             return nil
         }
@@ -39,10 +39,10 @@ struct ApiUtils {
         components.host = host
         components.path = "\(studyApiBase)/\(enrollment.studyId!)/\(participant)/\(enrollment.participantId)/\(deviceId)/\(enroll)"
 
-        return components
+        return components.url
     }
 
-    static func createSensorDataUploadURLComponents(enrollment: Enrollment, deviceId: String) -> URLComponents? {
+    static func getSensorDataUploadURL(enrollment: Enrollment, deviceId: String) -> URL? {
         var components = URLComponents()
 
         guard enrollment.isValid else {
@@ -61,10 +61,10 @@ struct ApiUtils {
         components.host = host
         components.path = "\(studyApiBase)/\(studyId)/\(participant)/\(participantId)/\(ios)/\(deviceId)"
 
-        return components
+        return components.url
     }
     
-    static func getStudySensorsURl(studyId: String) -> URL? {
+    static func getStudySensorsURL(studyId: String) -> URL? {
         var components = URLComponents()
         components.scheme = scheme
         components.host = host

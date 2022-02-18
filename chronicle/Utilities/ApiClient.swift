@@ -21,11 +21,6 @@ struct ApiClient {
             return
         }
         
-        guard let urlComponents: URLComponents = ApiUtils.makeEnrollDeviceUrlComponents(enrollment: enrollment, deviceId: deviceId) else {
-            onError("invalid url")
-            return
-        }
-        
         // prepare json data
         guard let reqBody = try? JSONEncoder().encode(deviceInformation) else {
             onError("encoding error")
@@ -33,7 +28,7 @@ struct ApiClient {
         }
         
         // configure url request
-        guard let url = urlComponents.url else {
+        guard let url =  ApiUtils.getEnrollURL(enrollment: enrollment, deviceId: deviceId) else {
             onError("Invalid url")
             return
         }
@@ -66,9 +61,7 @@ struct ApiClient {
     // upload SensorData to server
     static func uploadData(sensorData: Data, enrollment: Enrollment, deviceId: String, onCompletion: @escaping() -> Void, onError: @escaping (String) -> Void) {
         
-        let urlComponents: URLComponents? = ApiUtils.createSensorDataUploadURLComponents(enrollment: enrollment, deviceId: deviceId)
-        
-        guard let url = urlComponents?.url else {
+        guard let url = ApiUtils.getSensorDataUploadURL(enrollment: enrollment, deviceId: deviceId) else {
             onError("failed to upload sensor data: invalid url")
             return
         }
@@ -117,7 +110,7 @@ struct ApiClient {
             return []
         }
         
-        guard let url = ApiUtils.getStudySensorsURl(studyId: studyId) else {
+        guard let url = ApiUtils.getStudySensorsURL(studyId: studyId) else {
             logger.error("invalid url")
             return []
         }

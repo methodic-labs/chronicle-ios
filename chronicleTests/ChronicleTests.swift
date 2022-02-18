@@ -15,38 +15,38 @@ class ChronicleTests: XCTestCase {
     let deviceId = UUID().uuidString
     let participantId = "1001"
     
-    func testEnrollmentUrlWithOrg() {
+    func testEnrollmentUrl() {
         let enrollment = Enrollment(participantId: participantId, studyId: studyId, organizationId: organizationId)
-        let urlComponents = ApiUtils.makeEnrollDeviceUrlComponents(enrollment: enrollment, deviceId: deviceId)
+        let url = ApiUtils.getEnrollURL(enrollment: enrollment, deviceId: deviceId)
         
-        XCTAssertNotNil(urlComponents, "should not be nil")
+        XCTAssertNotNil(url, "should not be nil")
         XCTAssertEqual(
-            urlComponents?.path,
+            url?.path,
             "/chronicle/v3/study/\(studyId)/participant/\(participantId)/\(deviceId)/enroll"
         )
-        XCTAssertEqual(urlComponents?.host!, "api.openlattice.com")
-        XCTAssertEqual(urlComponents?.scheme, "https")
+        XCTAssertEqual(url?.host!, "api.openlattice.com")
+        XCTAssertEqual(url?.scheme, "https")
     }
     
     func testInvalidParticipantId() {
         let enrollment = Enrollment(participantId: "", studyId: studyId, organizationId: organizationId)
-        let urlComponents = ApiUtils.makeEnrollDeviceUrlComponents(enrollment: enrollment, deviceId: deviceId)
+        let url = ApiUtils.getEnrollURL(enrollment: enrollment, deviceId: deviceId)
         
-        XCTAssertNil(urlComponents, "Empty participantId should result in nil")
+        XCTAssertNil(url, "Empty participantId should result in nil")
     }
     
     func testInvalidStudyId() {
         let invalidStudyId = "invalid"
         let enrollment = Enrollment(participantId: participantId, studyId: invalidStudyId, organizationId: organizationId)
-        let urlComponents = ApiUtils.makeEnrollDeviceUrlComponents(enrollment: enrollment, deviceId: deviceId)
+        let urlComponents = ApiUtils.getEnrollURL(enrollment: enrollment, deviceId: deviceId)
         
         XCTAssertNil(urlComponents, "\(invalidStudyId) should result in nil")
     }
     
-    func testInvalidOrgId() {
+    func testEnrollmentInvalidOrgId() {
         let invalidOrgId = "orgid"
         let enrollment = Enrollment(participantId: participantId, studyId: studyId, organizationId: invalidOrgId)
-        let urlComponents = ApiUtils.makeEnrollDeviceUrlComponents(enrollment: enrollment, deviceId: deviceId)
+        let urlComponents = ApiUtils.getEnrollURL(enrollment: enrollment, deviceId: deviceId)
         
         XCTAssertNil(urlComponents, "\(invalidOrgId) should result in nil")
     }
