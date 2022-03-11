@@ -16,12 +16,6 @@ struct EnrollmentView: View {
             VStack(alignment: .leading) {
                 AppHeader()
                 InputFieldView(
-                    label: "Organization ID",
-                    placeholder: "Enter your Organization ID",
-                    inputId: $enrollmentViewModel.organizationId,
-                    invalidInput: $enrollmentViewModel.invalidOrganizationId
-                )
-                InputFieldView(
                     label: "Study ID",
                     placeholder: "Enter your Study ID",
                     inputId: $enrollmentViewModel.studyId, invalidInput: $enrollmentViewModel.invalidStudyId

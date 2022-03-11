@@ -11,12 +11,11 @@ import XCTest
 class ChronicleTests: XCTestCase {
     
     let studyId = UUID().uuidString
-    let organizationId = UUID().uuidString
     let deviceId = UUID().uuidString
     let participantId = "1001"
     
     func testEnrollmentUrl() {
-        let enrollment = Enrollment(participantId: participantId, studyId: studyId, organizationId: organizationId)
+        let enrollment = Enrollment(participantId: participantId, studyId: studyId)
         let url = ApiUtils.getEnrollURL(enrollment: enrollment, deviceId: deviceId)
         
         XCTAssertNotNil(url, "should not be nil")
@@ -29,7 +28,7 @@ class ChronicleTests: XCTestCase {
     }
     
     func testInvalidParticipantId() {
-        let enrollment = Enrollment(participantId: "", studyId: studyId, organizationId: organizationId)
+        let enrollment = Enrollment(participantId: "", studyId: studyId)
         let url = ApiUtils.getEnrollURL(enrollment: enrollment, deviceId: deviceId)
         
         XCTAssertNil(url, "Empty participantId should result in nil")
@@ -37,25 +36,17 @@ class ChronicleTests: XCTestCase {
     
     func testInvalidStudyId() {
         let invalidStudyId = "invalid"
-        let enrollment = Enrollment(participantId: participantId, studyId: invalidStudyId, organizationId: organizationId)
+        let enrollment = Enrollment(participantId: participantId, studyId: invalidStudyId)
         let urlComponents = ApiUtils.getEnrollURL(enrollment: enrollment, deviceId: deviceId)
         
         XCTAssertNil(urlComponents, "\(invalidStudyId) should result in nil")
     }
-    
-    func testEnrollmentInvalidOrgId() {
-        let invalidOrgId = "orgid"
-        let enrollment = Enrollment(participantId: participantId, studyId: studyId, organizationId: invalidOrgId)
-        let urlComponents = ApiUtils.getEnrollURL(enrollment: enrollment, deviceId: deviceId)
-        
-        XCTAssertNil(urlComponents, "\(invalidOrgId) should result in nil")
-    }
+
     
     func testUserDefaultsAssignment() {
 
-        EnrollmentUtils.setUserDefaults(organizationId: organizationId, studyId: studyId, participantId: participantId)
+        EnrollmentUtils.setUserDefaults(studyId: studyId, participantId: participantId)
         let defaults = UserDefaults.standard
-        XCTAssertEqual(defaults.string(forKey: "organizationId"), organizationId)
         XCTAssertEqual(defaults.string(forKey: "studyId"), studyId)
         XCTAssertEqual(defaults.string(forKey: "participantId"), participantId)
     }

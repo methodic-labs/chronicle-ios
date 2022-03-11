@@ -19,13 +19,6 @@ struct EnrolledView: View {
         ScrollView {
             VStack(alignment: .leading) {
                 AppHeader()
-                Text("Organization ID:").fontWeight(.bold).padding(.bottom, 5)
-                Text(enrollmentViewModel.organizationId)
-                    .scaledToFit()
-                    .minimumScaleFactor(0.01)
-                    .foregroundColor(Color.gray)
-                    .padding(.bottom)
-                
                 Text("Study ID:").fontWeight(.bold).padding(.bottom, 5)
                 Text(enrollmentViewModel.studyId)
                     .scaledToFit()

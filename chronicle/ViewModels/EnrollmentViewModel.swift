@@ -14,7 +14,6 @@ class EnrollmentViewModel: ObservableObject {
 
     @Published var invalidParticipantId = false
     @Published var invalidStudyId = false
-    @Published var invalidOrganizationId = false
     @Published var showEnrollmentError = false
     @Published var showEnrollmentSuccess = false
     @Published var enrolling = false
@@ -23,7 +22,6 @@ class EnrollmentViewModel: ObservableObject {
     
     @Published var participantId: String
     @Published var studyId: String
-    @Published var organizationId :String
     @Published var deviceId: String
     @Published var sensors: [Sensor] = []
     @Published var sensorsToRemove: [Sensor] = [] ///previously saved sensors that are later removed from study settings
@@ -35,7 +33,6 @@ class EnrollmentViewModel: ObservableObject {
     init() {
         participantId = settings.object(forKey: UserSettingsKeys.participantId) as? String ?? ""
         studyId = settings.object(forKey: UserSettingsKeys.studyId) as? String ?? ""
-        organizationId = settings.object(forKey: UserSettingsKeys.organizationId) as? String ?? ""
         deviceId = settings.object(forKey: UserSettingsKeys.deviceId) as? String ?? ""
         let savedSensors = settings.object(forKey: UserSettingsKeys.sensors) as? [String] ?? []
         if !savedSensors.isEmpty {
@@ -47,7 +44,6 @@ class EnrollmentViewModel: ObservableObject {
     func validateInput(enrollment: Enrollment) {
         invalidStudyId = !enrollment.isValidStudyId
         invalidParticipantId = !enrollment.isValidParticipant
-        invalidOrganizationId = !enrollment.isValidOrgId
     }
 
     // called when "Done" button in EnrollmentSuccessMessage view is clicked
@@ -63,7 +59,7 @@ class EnrollmentViewModel: ObservableObject {
      }
      */
     func enroll() async {
-        let enrollment = Enrollment(participantId: participantId, studyId: studyId, organizationId: organizationId)
+        let enrollment = Enrollment(participantId: participantId, studyId: studyId)
         validateInput(enrollment: enrollment)
 
         guard enrollment.isValid else {
@@ -83,7 +79,6 @@ class EnrollmentViewModel: ObservableObject {
 
                 // save user settings on device
                 self.settings.set(self.participantId, forKey: UserSettingsKeys.participantId)
-                self.settings.set(self.organizationId, forKey: UserSettingsKeys.organizationId)
                 self.settings.set(self.studyId, forKey: UserSettingsKeys.studyId)
                 self.settings.set(true, forKey: UserSettingsKeys.isEnrolled)
                 self.settings.set(deviceId, forKey: UserSettingsKeys.deviceId)

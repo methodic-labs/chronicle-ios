@@ -12,7 +12,6 @@ struct Enrollment {
     
     let participantId: String
     let studyId: UUID?
-    let organizationId: UUID?
     
     var isValidParticipant: Bool {
         !participantId.isEmpty
@@ -22,18 +21,14 @@ struct Enrollment {
         studyId != nil
     }
     
-    var isValidOrgId: Bool {
-        organizationId != nil
-    }
     
     var isValid: Bool {
-        isValidParticipant && isValidStudyId && isValidOrgId
+        isValidParticipant && isValidStudyId
     }
     
-    init(participantId: String, studyId: String, organizationId: String) {
+    init(participantId: String, studyId: String) {
         self.participantId = participantId
         self.studyId = UUID.init(uuidString: studyId)
-        self.organizationId = UUID.init(uuidString: organizationId)
     }
     
     static func getCurrentEnrollment() -> Self {
@@ -41,9 +36,8 @@ struct Enrollment {
         
         let participantId = settings.object(forKey: UserSettingsKeys.participantId) as? String ?? ""
         let studyId = settings.object(forKey: UserSettingsKeys.studyId) as? String ?? ""
-        let organizationId = settings.object(forKey: UserSettingsKeys.organizationId) as? String ?? ""
         
-        return Enrollment(participantId: participantId, studyId: studyId, organizationId: organizationId)
+        return Enrollment(participantId: participantId, studyId: studyId)
     }
 }
 
