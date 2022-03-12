@@ -11,7 +11,7 @@ import Foundation
 class EnrollmentViewModel: ObservableObject {
     /// store key value pairs in user's default database
     let settings = UserDefaults.standard
-
+    
     @Published var invalidParticipantId = false
     @Published var invalidStudyId = false
     @Published var showEnrollmentError = false
@@ -25,11 +25,11 @@ class EnrollmentViewModel: ObservableObject {
     @Published var deviceId: String
     @Published var sensors: [Sensor] = []
     @Published var sensorsToRemove: [Sensor] = [] ///previously saved sensors that are later removed from study settings
-
+    
     var isEnrolled: Bool {
         settings.object(forKey: UserSettingsKeys.isEnrolled) as? Bool ?? false
     }
-
+    
     init() {
         participantId = settings.object(forKey: UserSettingsKeys.participantId) as? String ?? ""
         studyId = settings.object(forKey: UserSettingsKeys.studyId) as? String ?? ""
@@ -40,49 +40,58 @@ class EnrollmentViewModel: ObservableObject {
         }
         isEnrollmentDetailsViewVisible = isEnrolled
     }
-
+    
     func validateInput(enrollment: Enrollment) {
         invalidStudyId = !enrollment.isValidStudyId
         invalidParticipantId = !enrollment.isValidParticipant
     }
-
+    
     // called when "Done" button in EnrollmentSuccessMessage view is clicked
     func onShowEnrollmentDetails() {
         isEnrollmentDetailsViewVisible = true
     }
-
+    
+    func initializeEnrollmentValues(_ enrollment: Enrollment) {
+        guard enrollment.isValid else {
+            return
+        }
+        participantId = enrollment.participantId
+        studyId = enrollment.studyId!.uuidString
+    }
+    
+    
     /** Invoked when the user clicks on "Enroll" button in the UI
-
+     
      sample usage:
      Task {
-        await model.enroll()
+     await model.enroll()
      }
      */
     func enroll() async {
         let enrollment = Enrollment(participantId: participantId, studyId: studyId)
         validateInput(enrollment: enrollment)
-
+        
         guard enrollment.isValid else {
             return
         }
-
+        
         self.enrolling = true
         self.showEnrollmentError = false
-
-
+        
+        
         await ApiClient.enrollDevice(enrollment: enrollment) { deviceId in
             DispatchQueue.main.async {
                 self.showEnrollmentError = false
                 self.showEnrollmentSuccess = true
                 self.enrolling = false
                 self.deviceId = deviceId
-
+                
                 // save user settings on device
                 self.settings.set(self.participantId, forKey: UserSettingsKeys.participantId)
                 self.settings.set(self.studyId, forKey: UserSettingsKeys.studyId)
                 self.settings.set(true, forKey: UserSettingsKeys.isEnrolled)
                 self.settings.set(deviceId, forKey: UserSettingsKeys.deviceId)
-
+                
             }
         } onError: { error in
             DispatchQueue.main.async {
@@ -105,7 +114,7 @@ class EnrollmentViewModel: ObservableObject {
             self.isFetchingSensors = true
         }
         let result = await ApiClient.getStudySensors()
-         
+        
         DispatchQueue.main.async {
             self.sensorsToRemove = self.sensors.filter { !result.contains($0)}
             self.sensors = Array(result)

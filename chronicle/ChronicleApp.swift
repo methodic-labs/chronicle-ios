@@ -22,6 +22,19 @@ struct ChronicleApp: App {
                 EnrollmentSuccessMessage(enrollmentViewModel: viewModel)
             } else {
                 EnrollmentView(enrollmentViewModel: viewModel)
+                    .onOpenURL { url in
+                        guard let components = NSURLComponents(url: url, resolvingAgainstBaseURL: true),
+                              let params = components.queryItems else {
+                                  return
+                              }
+                        if let participantId = params.first(where: { $0.name == "participantId" })?.value,
+                           let studyId = params.first(where: { $0.name == "studyId" })?.value {
+                            let enrollment = Enrollment(participantId: participantId, studyId: studyId)
+                            if (enrollment.isValid) {
+                                viewModel.initializeEnrollmentValues(enrollment)
+                            }
+                        }
+                    }
             }
         }.onChange(of: scenePhase) { phase in
             if phase == .background && viewModel.isEnrolled {
