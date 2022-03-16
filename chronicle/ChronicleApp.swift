@@ -12,16 +12,16 @@ import Foundation
 struct ChronicleApp: App {
     @ObservedObject var viewModel = EnrollmentViewModel()
     @Environment(\.scenePhase) var scenePhase
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
     
     var body: some Scene {
         WindowGroup {
-            if viewModel.isEnrollmentDetailsViewVisible {
-                EnrolledView(appDelegate: appDelegate, enrollmentViewModel: viewModel)
-            } else if viewModel.showEnrollmentSuccess {
-                EnrollmentSuccessMessage(enrollmentViewModel: viewModel)
+            if viewModel.isEnrolled {
+                EnrolledView()
+                    .environmentObject(viewModel)
             } else {
-                EnrollmentView(enrollmentViewModel: viewModel)
+                EnrollmentView()
+                    .environmentObject(viewModel)
                     .onOpenURL { url in
                         guard let components = NSURLComponents(url: url, resolvingAgainstBaseURL: true),
                               let params = components.queryItems else {

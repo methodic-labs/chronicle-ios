@@ -14,6 +14,19 @@ enum Sensor: String, CaseIterable, Codable {
     case phoneUsage
     case messagesUsage
     case keyboardMetrics
+    
+    var localizedDescription: String {
+        switch self {
+        case .phoneUsage:
+            return "Phone Usage"
+        case .deviceUsage:
+            return "Device Usage"
+        case .messagesUsage:
+            return "Messages Usage"
+        case .keyboardMetrics:
+            return "Keyboard Metrics"
+        }
+    }
 }
 
 extension Sensor {

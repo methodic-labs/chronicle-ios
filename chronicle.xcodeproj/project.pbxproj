@@ -15,6 +15,8 @@
 		B9BBFDCC26CD707D00B770E4 /* EnrollmentFailureMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDCB26CD707D00B770E4 /* EnrollmentFailureMessage.swift */; };
 		B9BBFDD026CD9C6C00B770E4 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */; };
 		EA0048E42744344400EBA09F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0048E32744344400EBA09F /* AppDelegate.swift */; };
+		EA07442527DF7AD20008443D /* EnrollmentDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA07442427DF7AD20008443D /* EnrollmentDetailsView.swift */; };
+		EA07442727DF874C0008443D /* SensorListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA07442627DF874C0008443D /* SensorListView.swift */; };
 		EA28163E2733493C005C26E8 /* FullQualifiedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28163D2733493C005C26E8 /* FullQualifiedName.swift */; };
 		EA28163F2733493C005C26E8 /* FullQualifiedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28163D2733493C005C26E8 /* FullQualifiedName.swift */; };
 		EA28164127334C15005C26E8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28164027334C15005C26E8 /* Utils.swift */; };
@@ -22,7 +24,6 @@
 		EA28164A2738BDE6005C26E8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2816492738BDE5005C26E8 /* Persistence.swift */; };
 		EA46D45426C4F850008CE3C0 /* ChronicleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */; };
 		EA63652326C6D6EF005D6DFC /* UserSettingsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */; };
-		EA799C2127A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA799C2027A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist */; };
 		EA799C2227A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA799C2027A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist */; };
 		EA799C2827A2D937006593F8 /* SensorReaderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA799C2727A2D937006593F8 /* SensorReaderDelegate.swift */; };
 		EA799C2B27A32A31006593F8 /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA799C2A27A32A31006593F8 /* Sensor.swift */; };
@@ -74,6 +75,8 @@
 		B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		EA0048E227442F0600EBA09F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		EA0048E32744344400EBA09F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EA07442427DF7AD20008443D /* EnrollmentDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentDetailsView.swift; sourceTree = "<group>"; };
+		EA07442627DF874C0008443D /* SensorListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorListView.swift; sourceTree = "<group>"; };
 		EA28163D2733493C005C26E8 /* FullQualifiedName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullQualifiedName.swift; sourceTree = "<group>"; };
 		EA28164027334C15005C26E8 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		EA28164427346B0B005C26E8 /* SensorDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SensorDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -138,6 +141,8 @@
 				B9BBFDC526CD6D9800B770E4 /* RadioButtonGroup.swift */,
 				B9BBFDC726CD6EC800B770E4 /* EnrollmentSuccessMessage.swift */,
 				B9BBFDCB26CD707D00B770E4 /* EnrollmentFailureMessage.swift */,
+				EA07442427DF7AD20008443D /* EnrollmentDetailsView.swift */,
+				EA07442627DF874C0008443D /* SensorListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -348,7 +353,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA799C2127A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist in Resources */,
 				EA802F3026BA4C0500C494F8 /* Preview Assets.xcassets in Resources */,
 				EA802F2D26BA4C0500C494F8 /* Assets.xcassets in Resources */,
 			);
@@ -389,6 +393,8 @@
 				B9BBFDBF26C648C100B770E4 /* EnrolledView.swift in Sources */,
 				EA9813C427A9508E0049D1B6 /* TestUtils.swift in Sources */,
 				EA9813D227A990AE0049D1B6 /* ImportIntoCoreDataOperation.swift in Sources */,
+				EA07442727DF874C0008443D /* SensorListView.swift in Sources */,
+				EA07442527DF7AD20008443D /* EnrollmentDetailsView.swift in Sources */,
 				EA0048E42744344400EBA09F /* AppDelegate.swift in Sources */,
 				EA28164A2738BDE6005C26E8 /* Persistence.swift in Sources */,
 				EA799C2B27A32A31006593F8 /* Sensor.swift in Sources */,

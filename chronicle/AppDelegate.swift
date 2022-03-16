@@ -14,7 +14,16 @@ import SensorKit
 /*
  The app delegate submits task requests and registers launch handlers for database background tasks
  */
-class AppDelegate: NSObject, UIApplicationDelegate {
+class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
+    
+    @Published var authorizationError: Bool = false
+    @Published var sensorsAuthorized: Bool = false
+    
+    override init() {
+        super.init()
+        self.sensorsAuthorized = UserDefaults.standard.object(forKey: UserSettingsKeys.sensorsAuthorized) as? Bool ?? false
+    }
+    
     let logger = Logger(subsystem: "com.openlattice.chronicle", category: "AppDelegate")
 
     // task identifiers in BGTaskSchedulerPermittedIdentifiers array of Info.Plist
@@ -143,7 +152,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         SRSensorReader.requestAuthorization(sensors: permittedSensors ) { (error: Error?) -> Void in
             if let error = error {
+                self.authorizationError = true
                 self.logger.info("Authorization failed: \(error.localizedDescription)")
+            } else {
+                self.sensorsAuthorized = true
+                UserDefaults.standard.set(true, forKey: UserSettingsKeys.sensorsAuthorized)
             }
             
             allSensors.forEach { sensor in

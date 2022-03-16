@@ -25,10 +25,7 @@ class EnrollmentViewModel: ObservableObject {
     @Published var deviceId: String
     @Published var sensors: [Sensor] = []
     @Published var sensorsToRemove: [Sensor] = [] ///previously saved sensors that are later removed from study settings
-    
-    var isEnrolled: Bool {
-        settings.object(forKey: UserSettingsKeys.isEnrolled) as? Bool ?? false
-    }
+    @Published var isEnrolled  = false
     
     init() {
         participantId = settings.object(forKey: UserSettingsKeys.participantId) as? String ?? ""
@@ -38,7 +35,7 @@ class EnrollmentViewModel: ObservableObject {
         if !savedSensors.isEmpty {
             self.sensors = savedSensors.map { Sensor.init(rawValue: $0)}.compactMap { $0 }
         }
-        isEnrollmentDetailsViewVisible = isEnrolled
+        isEnrolled = Enrollment(participantId: participantId, studyId: studyId).isValid
     }
     
     func validateInput(enrollment: Enrollment) {
@@ -57,6 +54,10 @@ class EnrollmentViewModel: ObservableObject {
         }
         participantId = enrollment.participantId
         studyId = enrollment.studyId!.uuidString
+    }
+    
+    func setDeviceEnrolled() {
+        self.isEnrolled = true
     }
     
     

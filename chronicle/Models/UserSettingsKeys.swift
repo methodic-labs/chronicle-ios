@@ -18,4 +18,5 @@ struct UserSettingsKeys {
     static let isUploading = "isUploading"
     static let lastFetch = "lastFetch"
     static let sensors = "sensors"
+    static let sensorsAuthorized = "sensorsAuthorized"
 }
