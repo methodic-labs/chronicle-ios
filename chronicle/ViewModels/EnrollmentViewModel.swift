@@ -123,7 +123,6 @@ class EnrollmentViewModel: ObservableObject {
             self.sensors = arr
             self.settings.set(arr.map { $0.rawValue }, forKey: UserSettingsKeys.sensors)
             self.isFetchingSensors = false
-            print(self.sensors)
         }
     }
 }

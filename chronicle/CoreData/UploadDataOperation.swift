@@ -13,15 +13,17 @@ import OSLog
 class UploadDataOperation: Operation {
     private let logger = Logger(subsystem: "com.openlattice.chronicle", category: "UploadDataOperation")
 
-    private let context: NSManagedObjectContext
+    private let bgContext: NSManagedObjectContext
+    private let viewContext: NSManagedObjectContext
 
     private let fetchLimit = 50
 
     private var uploading = false
     private var hasMoreData = false
 
-    init(context: NSManagedObjectContext) {
-        self.context = context
+    init(bgContext: NSManagedObjectContext, viewContext: NSManagedObjectContext) {
+        self.bgContext = bgContext
+        self.viewContext = viewContext
     }
 
     override func start() {
@@ -46,14 +48,14 @@ class UploadDataOperation: Operation {
         }
 
         // try fetching
-        context.performAndWait {
+        bgContext.performAndWait {
             do {
                 while hasMoreData {
                     let fetchRequest: NSFetchRequest<SensorData>
                     fetchRequest = SensorData.fetchRequest()
                     fetchRequest.fetchLimit = fetchLimit
 
-                    let objects = try context.fetch(fetchRequest)
+                    let objects = try bgContext.fetch(fetchRequest)
 
                     // no data available. signal operation to terminate
                     if objects.isEmpty {
@@ -83,10 +85,21 @@ class UploadDataOperation: Operation {
 
                     ApiClient.uploadData(sensorData: data, enrollment: enrollment, deviceId: deviceId) {
                         self.logger.info("successfully uploaded \(objects.count) to server")
-                        objects.forEach (self.context.delete) // delete uploaded data from local db
-                        try? self.context.save()
+                        
+                        // save upload stats
+                        let uploadDate = Date()
+                        let stats = Dictionary(grouping: objects, by: { $0.sensorType }).compactMapValues { values in
+                            UploadStatEvent(timestamp: uploadDate, sensorType: (values.first?.sensorType)!, samples: values.count)
+                        }
+                        let statObjects = UploadHistory(context: self.viewContext)
+                        statObjects.timestamp = uploadDate
+                        statObjects.data = try? JSONEncoder().encode(stats)
+                        try? self.viewContext.save()
+                        
+                        objects.forEach (self.bgContext.delete) // delete uploaded data from local db
+                        try? self.bgContext.save()
                         // record last successful upload
-                        UserDefaults.standard.set(Date().toISOFormat(), forKey: UserSettingsKeys.lastUploadDate)
+                        UserDefaults.standard.set(uploadDate.toISOFormat(), forKey: UserSettingsKeys.lastUploadDate)
                         self.uploading = false
                         UserDefaults.standard.set(false, forKey: UserSettingsKeys.isUploading)
                     } onError: { error in

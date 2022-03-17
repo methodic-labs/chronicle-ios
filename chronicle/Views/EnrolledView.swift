@@ -11,6 +11,14 @@ struct EnrolledView: View {
     
     @EnvironmentObject var viewModel: EnrollmentViewModel
     @EnvironmentObject var appDelegate: AppDelegate
+    @Environment(\.managedObjectContext) private var viewContext
+    
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \UploadHistory.timestamp, ascending: true)],
+        animation: .default)
+    private var uploadHistoryItems: FetchedResults<UploadHistory>
+    
+    private var recentUploadItemsCount = 5
     
     var body: some View {
         
@@ -20,8 +28,33 @@ struct EnrolledView: View {
                     EnrollmentDetailsView()
                     if (!appDelegate.sensorsAuthorized) {
                         SensorListView()
-                    } else {
-                        Text("Show upload history here!!!")
+                    } else if (!uploadHistoryItems.isEmpty) {
+                        Section(header: Text("Recent Uploads")) {
+                            ForEach(uploadHistoryItems.prefix(recentUploadItemsCount)) { item in
+                                NavigationLink (destination: UploadStatItemView(timestamp: item.timestamp!, data: item.data!)) {
+                                    Text(item.timestamp!, formatter: dateFormatter)
+                                }
+                            }
+                            
+                            if (uploadHistoryItems.count > recentUploadItemsCount) {
+                                HStack {
+                                    Spacer()
+                                    
+                                    Button {
+                                        
+                                    } label: {
+                                        Text("View More")
+                                            .foregroundColor(.white)
+                                            .padding([.bottom, .top], 10)
+                                            .padding([.leading, .trailing], 20)
+                                            
+                                    }
+                                    .background(Color.primaryPurple)
+                                    .cornerRadius(8)
+                                }
+                                .padding([.top, .bottom], 10)
+                            }
+                        }
                     }
                     
                 }.listStyle(.insetGrouped)
@@ -51,6 +84,15 @@ struct ProgressIndicatorView: View {
         }
     }
 }
+
+
+private let dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .short
+    formatter.timeStyle = .medium
+    return formatter
+}()
+
 
 struct EnrolledView_Previews: PreviewProvider {
     static var previews: some View {

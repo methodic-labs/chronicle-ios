@@ -10,15 +10,19 @@ import Foundation
 
 @main
 struct ChronicleApp: App {
+    let persistenceController = PersistenceController.shared
+    
     @ObservedObject var viewModel = EnrollmentViewModel()
     @Environment(\.scenePhase) var scenePhase
     @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
+    
     
     var body: some Scene {
         WindowGroup {
             if viewModel.isEnrolled {
                 EnrolledView()
                     .environmentObject(viewModel)
+                    .environment(\.managedObjectContext, persistenceController.persistentContainer!.viewContext)
             } else {
                 EnrollmentView()
                     .environmentObject(viewModel)

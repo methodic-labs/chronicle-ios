@@ -63,14 +63,18 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 1
 
-        guard let context = PersistenceController.shared.newBackgroundContext() else {
+        guard let bgContext = PersistenceController.shared.newBackgroundContext() else {
             logger.error("unable to execute upload task")
             task.setTaskCompleted(success: false)
             return
         }
+        
+        guard let viewContext = PersistenceController.shared.persistentContainer?.viewContext else {
+            return
+        }
 
         // operation to fetch data from database and upload to server
-        let uploadDataOperation = UploadDataOperation(context: context)
+        let uploadDataOperation = UploadDataOperation(bgContext: bgContext, viewContext: viewContext)
 
         // expiration handler to cancel operation
         task.expirationHandler = {
@@ -110,15 +114,19 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
             }
 
             // create backround context
-            guard let context = PersistenceController.shared.newBackgroundContext() else {
-                self.logger.info("unable to execute upload task")
+            guard let bgContext = PersistenceController.shared.newBackgroundContext() else {
+                self.logger.info("unable to create upload task")
                 UIApplication.shared.endBackgroundTask(self.uploadBackgroundTaskId!)
                 self.uploadBackgroundTaskId = UIBackgroundTaskIdentifier.invalid
                 return
             }
+            
+            guard let viewContext = PersistenceController.shared.persistentContainer?.viewContext else {
+                return
+            }
 
             // operation to upload data
-            let uploadOperation = UploadDataOperation(context: context)
+            let uploadOperation = UploadDataOperation(bgContext: bgContext, viewContext: viewContext)
             uploadOperation.completionBlock = {
 
                 // terminate the task
@@ -163,6 +171,9 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
                 let reader = SRSensorReader(sensor: sensor)
                 
                 if reader.authorizationStatus == SRAuthorizationStatus.authorized {
+                    self.sensorsAuthorized = true
+                    UserDefaults.standard.set(true, forKey: UserSettingsKeys.sensorsAuthorized)
+                    
                     reader.delegate = SensorReaderDelegate.shared
                     if (invalidSensors.contains(sensor)) {
                         reader.stopRecording()

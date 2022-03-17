@@ -51,7 +51,7 @@ extension Sensor {
     static func getSRSensor(sensor: Self) -> SRSensor? {
         switch (sensor) {
         case .phoneUsage:
-            return .keyboardMetrics
+            return .phoneUsageReport
         case .keyboardMetrics:
             return .keyboardMetrics
         case .deviceUsage:

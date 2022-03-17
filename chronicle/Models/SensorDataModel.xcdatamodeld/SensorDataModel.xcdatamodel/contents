@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="20G314" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E230" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="SensorData" representedClassName="SensorData" syncable="YES" codeGenerationType="class">
         <attribute name="data" attributeType="Binary"/>
         <attribute name="device" optional="YES" attributeType="Binary"/>
@@ -11,7 +11,12 @@
         <attribute name="timezone" attributeType="String"/>
         <attribute name="writeTimestamp" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
+    <entity name="UploadHistory" representedClassName="UploadHistory" syncable="YES" codeGenerationType="class">
+        <attribute name="data" attributeType="Binary"/>
+        <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
     <elements>
         <element name="SensorData" positionX="-63" positionY="-18" width="128" height="164"/>
+        <element name="UploadHistory" positionX="-63" positionY="54" width="128" height="59"/>
     </elements>
 </model>
