@@ -14,7 +14,7 @@ struct EnrolledView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \UploadHistory.timestamp, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \UploadHistory.timestamp, ascending: false)],
         animation: .default)
     private var uploadHistoryItems: FetchedResults<UploadHistory>
     

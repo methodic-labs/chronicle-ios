@@ -13,11 +13,10 @@ struct UploadStatItemView: View {
     var stats: [UploadStatEvent]
     
     init(timestamp :Date, data: Data) {
-        let dict = try? JSONDecoder().decode([String: UploadStatEvent].self, from: data)
-        self.stats = Array(dict!.values)
+        let dict = try? JSONDecoder().decode([String?: UploadStatEvent].self, from: data)
+        let emptyDict = Dictionary<String?, UploadStatEvent>()
+        self.stats = Array(dict?.values ?? emptyDict.values)
         self.timestamp = timestamp
-        
-        print(stats)
     }
     
     var body: some View {
@@ -52,7 +51,7 @@ struct CardView: View {
                 .fill()
                 .foregroundColor(.white)
             shape
-                .stroke(Color.black.opacity(0.4), lineWidth: 1)
+                .stroke(Color.gray, lineWidth: 1)
                 
             VStack(alignment: .leading, spacing: 3) {
                 HStack {
