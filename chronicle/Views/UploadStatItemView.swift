@@ -20,16 +20,16 @@ struct UploadStatItemView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("\(timestamp, formatter: dateFormatter) Upload")
-                .fontWeight(.bold)
+        VStack(alignment: .leading, spacing: 5) {
+            Text("\(timestamp, formatter: dateFormatter) Upload Details")
+                .padding()
+            List {
                 ForEach(stats) { item in
                     CardView(content: item)
                         .aspectRatio(contentMode: .fit)
-                        
                 }
-            Spacer()
-        }.padding()
+            }.listStyle(.insetGrouped)
+        }
     }
     
     private let dateFormatter: DateFormatter = {
@@ -45,31 +45,19 @@ struct UploadStatItemView: View {
 struct CardView: View {
     var content: UploadStatEvent
     var body: some View {
-        ZStack {
-            let shape = RoundedRectangle(cornerRadius: 10)
-            shape
-                .fill()
-                .foregroundColor(.white)
-            shape
-                .stroke(Color.gray, lineWidth: 1)
-                
-            VStack(alignment: .leading, spacing: 3) {
-                HStack {
-                    Text("Data Type:")
-                        .fontWeight(.semibold)
-                        .padding(.trailing, 1)
-                    Text("\(Sensor.init(rawValue: content.sensorType)!.localizedDescription)")
-                    Spacer()
-                }
-                HStack {
-            
-                    Text("Samples: ")
-                        .fontWeight(.semibold)
-                        .padding(.trailing, 1)
-                    Text("\(content.samples)")
-                }
-            }.padding([.trailing, .leading], 10)
-        }
+        VStack(alignment: .leading, spacing: 3) {
+            HStack(spacing: 5) {
+                Text("Data Type:")
+                    .fontWeight(.semibold)
+                Text("\(Sensor.init(rawValue: content.sensorType)!.localizedDescription)")
+                Spacer()
+            }
+            HStack (spacing: 5) {
+                Text("Samples:")
+                    .fontWeight(.semibold)
+                Text("\(content.samples)")
+            }
+        }.padding(10)
     }
 }
 

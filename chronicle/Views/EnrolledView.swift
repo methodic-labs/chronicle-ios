@@ -20,6 +20,10 @@ struct EnrolledView: View {
     
     private var recentUploadItemsCount = 5
     
+    init() {
+        Theme.navigationBarStyle()
+    }
+    
     var body: some View {
         
         NavigationView {

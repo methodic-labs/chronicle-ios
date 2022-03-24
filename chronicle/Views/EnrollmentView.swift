@@ -11,6 +11,10 @@ struct EnrollmentView: View {
     
     @EnvironmentObject var viewModel: EnrollmentViewModel
     
+    init() {
+        Theme.navigationBarStyle()
+    }
+    
     var body: some View {
         NavigationView {
             Form {

@@ -20,6 +20,7 @@
 		EA14F42327E360FF009A9B91 /* UploadStatEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14F42227E360FE009A9B91 /* UploadStatEvent.swift */; };
 		EA14F42527E36EA8009A9B91 /* UploadStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14F42427E36EA8009A9B91 /* UploadStatView.swift */; };
 		EA14F42727E3725C009A9B91 /* UploadStatItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14F42627E3725C009A9B91 /* UploadStatItemView.swift */; };
+		EA15E84A27ECB19100FCDD95 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA15E84927ECB19100FCDD95 /* Theme.swift */; };
 		EA28163E2733493C005C26E8 /* FullQualifiedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28163D2733493C005C26E8 /* FullQualifiedName.swift */; };
 		EA28163F2733493C005C26E8 /* FullQualifiedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28163D2733493C005C26E8 /* FullQualifiedName.swift */; };
 		EA28164127334C15005C26E8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28164027334C15005C26E8 /* Utils.swift */; };
@@ -83,6 +84,7 @@
 		EA14F42227E360FE009A9B91 /* UploadStatEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadStatEvent.swift; sourceTree = "<group>"; };
 		EA14F42427E36EA8009A9B91 /* UploadStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadStatView.swift; sourceTree = "<group>"; };
 		EA14F42627E3725C009A9B91 /* UploadStatItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadStatItemView.swift; sourceTree = "<group>"; };
+		EA15E84927ECB19100FCDD95 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		EA28163D2733493C005C26E8 /* FullQualifiedName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullQualifiedName.swift; sourceTree = "<group>"; };
 		EA28164027334C15005C26E8 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		EA28164427346B0B005C26E8 /* SensorDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SensorDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				EA07442627DF874C0008443D /* SensorListView.swift */,
 				EA14F42427E36EA8009A9B91 /* UploadStatView.swift */,
 				EA14F42627E3725C009A9B91 /* UploadStatItemView.swift */,
+				EA15E84927ECB19100FCDD95 /* Theme.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				EA63652326C6D6EF005D6DFC /* UserSettingsKeys.swift in Sources */,
 				EA82494F26C4F28E00F9CD7C /* Enrollment.swift in Sources */,
 				B9BBFDC426CD6D0200B770E4 /* InputFieldView.swift in Sources */,
+				EA15E84A27ECB19100FCDD95 /* Theme.swift in Sources */,
 				EA9813D027A9906E0049D1B6 /* UploadDataOperation.swift in Sources */,
 				EA82495926C4F33800F9CD7C /* EnrollmentUtils.swift in Sources */,
 				EABD371527A89BFA005F9EFE /* KeyboardMetricsData.swift in Sources */,
