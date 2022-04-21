@@ -17,7 +17,7 @@ class Theme {
         navigationAppearance.backgroundColor = UIColor(.primaryPurple)
         let textAttributes: [NSAttributedString.Key : Any ] = [
             .foregroundColor: UIColor.white,
-            .font: UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.bold)
+//            .font: UIFont.systemFont(weight: UIFont.Weight.bold)
         ]
         navigationAppearance.titleTextAttributes = textAttributes
         navigationAppearance.largeTitleTextAttributes = textAttributes

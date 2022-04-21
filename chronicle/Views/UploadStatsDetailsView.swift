@@ -1,5 +1,5 @@
 //
-//  UploadStatItemView.swift
+//  UploadStatsDetailsView.swift
 //  chronicle
 //
 //  Created by Alfonce Nzioka on 3/17/22.
@@ -8,36 +8,34 @@
 
 import SwiftUI
 
-struct UploadStatItemView: View {
-    var timestamp: Date
+struct UploadStatsDetailsView: View {
     var stats: [UploadStatEvent]
     
-    init(timestamp :Date, data: Data) {
+    init(data: Data) {
         let dict = try? JSONDecoder().decode([String?: UploadStatEvent].self, from: data)
         let emptyDict = Dictionary<String?, UploadStatEvent>()
         self.stats = Array(dict?.values ?? emptyDict.values)
-        self.timestamp = timestamp
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
-            Text("\(timestamp, formatter: dateFormatter) Upload Details")
-                .padding()
-            List {
-                ForEach(stats) { item in
-                    CardView(content: item)
-                        .aspectRatio(contentMode: .fit)
+        VStack () {
+            ForEach(stats) { item in
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text("\(Sensor.init(rawValue: item.sensorType)!.localizedDescription)")
+                        Spacer()
+                    }
+                    HStack {
+                        Text("\(item.samples) samples")
+                            .foregroundColor(.black.opacity(0.5))
+                        Spacer()
+                    }
                 }
-            }.listStyle(.insetGrouped)
+                .padding(.bottom, 10)
+            }
         }
+        .background(Color.black.opacity(0.08))
     }
-    
-    private let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .medium
-        return formatter
-    }()
 }
 
 
@@ -65,8 +63,6 @@ struct CardView: View {
 
 struct UploadStatItemView_Previews: PreviewProvider {
     static var previews: some View {
-        UploadStatItemView(
-            timestamp: Date(), data: try! JSONEncoder().encode(UploadStatEvent.preview)
-        )
+        UploadStatsDetailsView(data: try! JSONEncoder().encode(UploadStatEvent.preview))
     }
 }

@@ -19,8 +19,9 @@
 		EA07442727DF874C0008443D /* SensorListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA07442627DF874C0008443D /* SensorListView.swift */; };
 		EA14F42327E360FF009A9B91 /* UploadStatEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14F42227E360FE009A9B91 /* UploadStatEvent.swift */; };
 		EA14F42527E36EA8009A9B91 /* UploadStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14F42427E36EA8009A9B91 /* UploadStatView.swift */; };
-		EA14F42727E3725C009A9B91 /* UploadStatItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14F42627E3725C009A9B91 /* UploadStatItemView.swift */; };
+		EA14F42727E3725C009A9B91 /* UploadStatsDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14F42627E3725C009A9B91 /* UploadStatsDetailsView.swift */; };
 		EA15E84A27ECB19100FCDD95 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA15E84927ECB19100FCDD95 /* Theme.swift */; };
+		EA1B95E328110B7D0019AD37 /* CollapsibleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1B95E228110B7D0019AD37 /* CollapsibleView.swift */; };
 		EA28163E2733493C005C26E8 /* FullQualifiedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28163D2733493C005C26E8 /* FullQualifiedName.swift */; };
 		EA28163F2733493C005C26E8 /* FullQualifiedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28163D2733493C005C26E8 /* FullQualifiedName.swift */; };
 		EA28164127334C15005C26E8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28164027334C15005C26E8 /* Utils.swift */; };
@@ -83,8 +84,9 @@
 		EA07442627DF874C0008443D /* SensorListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorListView.swift; sourceTree = "<group>"; };
 		EA14F42227E360FE009A9B91 /* UploadStatEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadStatEvent.swift; sourceTree = "<group>"; };
 		EA14F42427E36EA8009A9B91 /* UploadStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadStatView.swift; sourceTree = "<group>"; };
-		EA14F42627E3725C009A9B91 /* UploadStatItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadStatItemView.swift; sourceTree = "<group>"; };
+		EA14F42627E3725C009A9B91 /* UploadStatsDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadStatsDetailsView.swift; sourceTree = "<group>"; };
 		EA15E84927ECB19100FCDD95 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		EA1B95E228110B7D0019AD37 /* CollapsibleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleView.swift; sourceTree = "<group>"; };
 		EA28163D2733493C005C26E8 /* FullQualifiedName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullQualifiedName.swift; sourceTree = "<group>"; };
 		EA28164027334C15005C26E8 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		EA28164427346B0B005C26E8 /* SensorDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SensorDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -152,8 +154,9 @@
 				EA07442427DF7AD20008443D /* EnrollmentDetailsView.swift */,
 				EA07442627DF874C0008443D /* SensorListView.swift */,
 				EA14F42427E36EA8009A9B91 /* UploadStatView.swift */,
-				EA14F42627E3725C009A9B91 /* UploadStatItemView.swift */,
+				EA14F42627E3725C009A9B91 /* UploadStatsDetailsView.swift */,
 				EA15E84927ECB19100FCDD95 /* Theme.swift */,
+				EA1B95E228110B7D0019AD37 /* CollapsibleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 				EA07442527DF7AD20008443D /* EnrollmentDetailsView.swift in Sources */,
 				EA0048E42744344400EBA09F /* AppDelegate.swift in Sources */,
 				EA28164A2738BDE6005C26E8 /* Persistence.swift in Sources */,
+				EA1B95E328110B7D0019AD37 /* CollapsibleView.swift in Sources */,
 				EA799C2B27A32A31006593F8 /* Sensor.swift in Sources */,
 				EA9813D427A990F80049D1B6 /* DateUtils.swift in Sources */,
 				EA82495326C4F2D500F9CD7C /* EnrollmentViewModel.swift in Sources */,
@@ -420,7 +424,7 @@
 				EA28164527346B0B005C26E8 /* SensorDataModel.xcdatamodeld in Sources */,
 				EA28164127334C15005C26E8 /* Utils.swift in Sources */,
 				EA82495726C4F31A00F9CD7C /* ApiUtils.swift in Sources */,
-				EA14F42727E3725C009A9B91 /* UploadStatItemView.swift in Sources */,
+				EA14F42727E3725C009A9B91 /* UploadStatsDetailsView.swift in Sources */,
 				EA28163E2733493C005C26E8 /* FullQualifiedName.swift in Sources */,
 				EA802F2926BA4C0400C494F8 /* ChronicleApp.swift in Sources */,
 				EA63652326C6D6EF005D6DFC /* UserSettingsKeys.swift in Sources */,
