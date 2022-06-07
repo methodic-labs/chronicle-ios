@@ -69,7 +69,7 @@ struct SensorDataConverter {
                     }
                     
                     if (bundleIdentifier == nil) {
-                        bundleIdentifier = $0.reportApplicationIdentifier // only available in iOS15.0+
+                        bundleIdentifier = $0.reportApplicationIdentifier // only available in iOS 15.0+
                     }
                 }
                 appUsageArr.append(AppUsage(usageTime: $0.usageTime, textInputSessions: textInput, bundleIdentifier: bundleIdentifier ?? ""))
