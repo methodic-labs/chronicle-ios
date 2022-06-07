@@ -52,7 +52,7 @@ struct SensorDataConverter {
     }
     
     static func getDeviceUsageData(sample: SRDeviceUsageReport, timestamp: SRAbsoluteTime, request: SRFetchRequest) -> SensorDataProperties {
-
+        
         // application usage
         var appUsage: [String: [AppUsage]] = [:]
         
@@ -60,16 +60,19 @@ struct SensorDataConverter {
             let key = category.localizedString()
             
             var appUsageArr: [AppUsage] = []
-            appUsages.filter {
-                $0.bundleIdentifier != nil
-            }.forEach {
+            appUsages.forEach {
                 var textInput: [String: Double] = [:]
+                var bundleIdentifier = $0.bundleIdentifier
                 if #available(iOS 15.0, *) {
                     textInput = $0.textInputSessions.reduce(into: [String: Double]()) { result, session in
                         result[session.sessionType.toLocalizedString()] = session.duration
                     }
+                    
+                    if (bundleIdentifier == nil) {
+                        bundleIdentifier = $0.reportApplicationIdentifier // only available in iOS15.0+
+                    }
                 }
-                appUsageArr.append(AppUsage(usageTime: $0.usageTime, textInputSessions: textInput, bundleIdentifier: $0.bundleIdentifier!)) // safe to force unwrap optional since we already filtered out entries where bundleIdenfier = nil
+                appUsageArr.append(AppUsage(usageTime: $0.usageTime, textInputSessions: textInput, bundleIdentifier: bundleIdentifier ?? ""))
             }
             appUsage[key] = appUsageArr
         }
@@ -90,7 +93,7 @@ struct SensorDataConverter {
             appUsage: appUsage,
             webUsage: webUsage
         )
-                
+        
         return SensorDataProperties(
             sensor: Sensor.getSensor(sensor: .deviceUsageReport),
             duration: sample.duration,
@@ -122,7 +125,7 @@ struct SensorDataConverter {
                 .positive,
                 .sad
             ]
-
+            
             wordCountBySentiment = sentiments.reduce(into: [String: Int]()) {
                 $0[$1.toLocalizedString()] = sample.wordCount(for: $1)
             }.filter {
