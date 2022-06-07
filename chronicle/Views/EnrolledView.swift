@@ -8,85 +8,83 @@
 import SwiftUI
 
 struct EnrolledView: View {
-
-    let appDelegate: AppDelegate
-    var enrollmentViewModel: EnrollmentViewModel
-
-    // convenient to read saved value from UserDefaults
-    @AppStorage(UserSettingsKeys.lastUploadDate) var lastUploadDate: String?
-    @AppStorage(UserSettingsKeys.isUploading) var isUploading: Bool = false
-
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading) {
-                AppHeader()
-                Text("Organization ID:").fontWeight(.bold).padding(.bottom, 5)
-                Text(enrollmentViewModel.organizationId)
-                    .scaledToFit()
-                    .minimumScaleFactor(0.01)
-                    .foregroundColor(Color.gray)
-                    .padding(.bottom)
-                
-                Text("Study ID:").fontWeight(.bold).padding(.bottom, 5)
-                Text(enrollmentViewModel.studyId)
-                    .scaledToFit()
-                    .minimumScaleFactor(0.01)
-                    .foregroundColor(Color.gray)
-                    .padding(.bottom)
-                
-                Text("Participant ID:").fontWeight(.bold).padding(.bottom, 5)
-                Text(enrollmentViewModel.participantId)
-                    .scaledToFit()
-                    .minimumScaleFactor(0.01)
-                    .foregroundColor(Color.gray)
-                    .padding(.bottom)
-                
-                
-                Text("Last Upload:").fontWeight(.bold).padding(.bottom, 5)
-                Text(formatDate())
-                    .foregroundColor(Color.gray)
-
-                if isUploading {
-                    UploadingProgress().padding(.top, 20)
-                }
-            }
-            .padding(.horizontal)
-        }.onAppear {
-            // run in a background queue
-            DispatchQueue.global().async {
-
-                // schedule a repeating task to create fake sensor data and save to database
-                let startDate = Date().addingTimeInterval(5) // 5 seconds from now
-
-                let mockDataTimer = Timer(fireAt: startDate, interval: 15 * 60, target: appDelegate, selector: #selector(appDelegate.mockSensorData), userInfo: nil, repeats: true)
-                let uploadDataTimer = Timer(fireAt: startDate.addingTimeInterval(5), interval: 15 * 60, target: appDelegate, selector: #selector(appDelegate.uploadSensorData), userInfo: nil, repeats: true)
-
-                let runLoop = RunLoop.main
-                runLoop.run()
-
-                runLoop.add(mockDataTimer, forMode: RunLoop.Mode.common)
-                runLoop.add(uploadDataTimer, forMode: RunLoop.Mode.common)
-            }
-        }
+    
+    @EnvironmentObject var viewModel: EnrollmentViewModel
+    @EnvironmentObject var appDelegate: AppDelegate
+    @Environment(\.managedObjectContext) private var viewContext
+    
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \UploadHistory.timestamp, ascending: false)],
+        animation: .default)
+    private var uploadHistoryItems: FetchedResults<UploadHistory>
+    
+    private var recentUploadItemsCount = 100
+    
+    init() {
+        Theme.navigationBarStyle()
     }
-
-    private func formatDate() -> String {
-        guard let lastUploaded = lastUploadDate, let iSODate = ISO8601DateFormatter().date(from: lastUploaded)  else {
-            return "Never"
+    
+    var body: some View {
+        
+        NavigationView {
+            VStack(alignment: .leading) {
+                List {
+                    EnrollmentDetailsView()
+                    if (!appDelegate.sensorsAuthorized) {
+                        SensorListView()
+                    }
+                    // TODO: show upload history
+//                    } else if (!uploadHistoryItems.isEmpty) {
+//                        Section(header: Text("Recent Uploads")) {
+//                            ForEach(uploadHistoryItems.prefix(recentUploadItemsCount)) { item in
+//                                CollapsibleView(
+//                                    label: { Text(item.timestamp!, formatter: dateFormatter)},
+//                                    content: {
+//                                        UploadStatsDetailsView(data: item.data!)
+//                                    }
+//                                )
+//                            }
+//
+//                            if (uploadHistoryItems.count > recentUploadItemsCount) {
+//                                HStack {
+//                                    Spacer()
+//
+//                                    Button {
+//
+//                                    } label: {
+//                                        Text("View More")
+//                                            .foregroundColor(.white)
+//                                            .padding([.bottom, .top], 10)
+//                                            .padding([.leading, .trailing], 20)
+//
+//                                    }
+//                                    .background(Color.primaryPurple)
+//                                    .cornerRadius(8)
+//                                }
+//                                .padding([.top, .bottom], 10)
+//                            }
+//                        }
+//                    }
+                    
+                }.listStyle(.insetGrouped)
+            }
+            .navigationTitle("Chronicle")
+            .navigationBarTitleDisplayMode(.inline)
         }
-
-        let dateFormatter = DateFormatter()
-        dateFormatter.setLocalizedDateFormatFromTemplate("MMM dd yyy jj:mm:ss")
-
-        return dateFormatter.string(from: iSODate)
+        .onAppear {
+            Task {
+                await viewModel.fetchStudySensors()
+            }
+        }
     }
 }
 
-struct UploadingProgress: View {
+struct ProgressIndicatorView: View {
+    let text: String
     var body: some View {
         HStack {
             Spacer()
-            Text("Uploading Data...")
+            Text(text)
                 .font(.body)
                 .foregroundColor(.gray)
             ProgressView()
@@ -96,9 +94,18 @@ struct UploadingProgress: View {
     }
 }
 
+
+private let dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .short
+    formatter.timeStyle = .medium
+    return formatter
+}()
+
+
 struct EnrolledView_Previews: PreviewProvider {
     static var previews: some View {
-        EnrolledView(appDelegate: AppDelegate(), enrollmentViewModel: EnrollmentViewModel())
-        UploadingProgress()
+        EnrolledView()
+        ProgressIndicatorView(text: "In progress")
     }
 }

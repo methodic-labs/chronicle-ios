@@ -21,11 +21,6 @@ struct ApiClient {
             return
         }
         
-        guard let urlComponents: URLComponents = ApiUtils.makeEnrollDeviceUrlComponents(enrollment: enrollment, deviceId: deviceId) else {
-            onError("invalid url")
-            return
-        }
-        
         // prepare json data
         guard let reqBody = try? JSONEncoder().encode(deviceInformation) else {
             onError("encoding error")
@@ -33,7 +28,7 @@ struct ApiClient {
         }
         
         // configure url request
-        guard let url = urlComponents.url else {
+        guard let url =  ApiUtils.getEnrollURL(enrollment: enrollment, deviceId: deviceId) else {
             onError("Invalid url")
             return
         }
@@ -64,11 +59,9 @@ struct ApiClient {
     }
     
     // upload SensorData to server
-    static func uploadData(sensorData: Data, count: Int, enrollment: Enrollment, deviceId: String, onCompletion: @escaping() -> Void, onError: @escaping (String) -> Void) {
+    static func uploadData(sensorData: Data, enrollment: Enrollment, deviceId: String, onCompletion: @escaping() -> Void, onError: @escaping (String) -> Void) {
         
-        let urlComponents: URLComponents? = ApiUtils.createSensorDataUploadURLComponents(enrollment: enrollment, deviceId: deviceId)
-        
-        guard let url = urlComponents?.url else {
+        guard let url = ApiUtils.getSensorDataUploadURL(enrollment: enrollment, deviceId: deviceId) else {
             onError("failed to upload sensor data: invalid url")
             return
         }
@@ -100,8 +93,8 @@ struct ApiClient {
                 return
             }
             
-            if (written != count) {
-                onError("expected to persist \(count) objects on server but persisted \(written)")
+            if (written == 0) {
+                onError("no data uploaded to server")
                 return
             }
             onCompletion()
@@ -110,41 +103,30 @@ struct ApiClient {
         task.resume()
     }
     
-    
-    static func getPropertyTypeIds() async -> [FullQualifiedName: UUID]? {
-        // get locally stored value
-        let result = UserDefaults.standard.object(forKey: UserSettingsKeys.propertyTypes) as? [String: String] ?? [:]
-        if (result.count == FullQualifiedName.fqns.count) {
-            print("Returning locally stored FQNS")
-            return Utils.toFqnUUIDMap(result)
+    static func getStudySensors() async -> Set<Sensor> {
+        let studyId = UserDefaults.standard.object(forKey: UserSettingsKeys.studyId) as? String ?? ""
+        guard !studyId.isEmpty else {
+            logger.error("invalid studyId")
+            return []
         }
         
-        let urlComponents: URLComponents = ApiUtils.getPropertyTypeIdsUrlComponents()
-        
-        guard let reqBody = try? JSONEncoder().encode(FullQualifiedName.fqns) else {
-            return nil
+        guard let url = ApiUtils.getStudySensorsURL(studyId: studyId) else {
+            logger.error("invalid url")
+            return []
         }
         
-        guard let url = urlComponents.url else {
-            return nil
+        do {
+            let (data, response) = try await URLSession.shared.data(from: url)
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                throw "invalid response"
+            }
+            return try JSONDecoder().decode(Set<Sensor>.self, from: data)
         }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        guard let (data, response ) = try? await URLSession.shared.upload(for: request, from: reqBody),
-              let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else {
-                  return nil
-              }
-        
-        guard let decoded = try? JSONDecoder().decode([String: String].self, from: data) else {
-            return nil
+        catch {
+            print(error.localizedDescription)
+            return []
         }
-        UserDefaults.standard.set(decoded, forKey: UserSettingsKeys.propertyTypes)
-        
-        return Utils.toFqnUUIDMap(decoded)
     }
 }
 
@@ -154,11 +136,24 @@ extension String: Error {}
 
 // concurrency backward compatibility (<iOS 15.0)
 // ref: https://www.swiftbysundell.com/articles/making-async-system-apis-backward-compatible/
+@available(iOS, deprecated: 15.0, message: "Extension no longer necessary. Use built-in API")
 extension URLSession {
-    @available(iOS, deprecated: 15.0, message: "Extension no longer necessary. Use built-in API")
     func upload(for request: URLRequest, from bodyData: Data) async throws -> (Data, URLResponse) {
         try await withCheckedThrowingContinuation { continuation in
             let task = self.uploadTask(with: request, from: bodyData) { data, response, error in
+                guard let data = data, let response = response else {
+                    let error = error ?? URLError(.badServerResponse)
+                    return continuation.resume(throwing: error)
+                }
+                continuation.resume(returning: (data, response))
+            }
+            task.resume()
+        }
+    }
+    
+    func data(from url: URL) async throws -> (Data, URLResponse) {
+        try await withCheckedThrowingContinuation { continuation in
+            let task = self.dataTask(with: url) { data, response, error in
                 guard let data = data, let response = response else {
                     let error = error ?? URLError(.badServerResponse)
                     return continuation.resume(throwing: error)

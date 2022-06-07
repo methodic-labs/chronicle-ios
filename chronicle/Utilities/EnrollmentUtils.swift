@@ -27,9 +27,8 @@ struct EnrollmentUtils {
         return IOSDevice(model: model, localizedModel: localizedModel, version: version, deviceId: deviceId, name: name, systemName: systemName)
     }
     
-    static func setUserDefaults(organizationId: String, studyId: String, participantId: String) {
+    static func setUserDefaults(studyId: String, participantId: String) {
         let defaults = UserDefaults.standard
-        defaults.set(organizationId, forKey: "organizationId")
         defaults.set(studyId, forKey: "studyId")
         defaults.set(participantId, forKey: "participantId")
     }

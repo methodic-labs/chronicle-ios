@@ -15,17 +15,24 @@
 		B9BBFDCC26CD707D00B770E4 /* EnrollmentFailureMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDCB26CD707D00B770E4 /* EnrollmentFailureMessage.swift */; };
 		B9BBFDD026CD9C6C00B770E4 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */; };
 		EA0048E42744344400EBA09F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0048E32744344400EBA09F /* AppDelegate.swift */; };
-		EA0048E6274440EF00EBA09F /* Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0048E5274440EF00EBA09F /* Operations.swift */; };
-		EA0048E82744472F00EBA09F /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0048E72744472F00EBA09F /* Mocks.swift */; };
+		EA07442527DF7AD20008443D /* EnrollmentDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA07442427DF7AD20008443D /* EnrollmentDetailsView.swift */; };
+		EA07442727DF874C0008443D /* SensorListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA07442627DF874C0008443D /* SensorListView.swift */; };
+		EA14F42327E360FF009A9B91 /* UploadStatEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14F42227E360FE009A9B91 /* UploadStatEvent.swift */; };
+		EA14F42527E36EA8009A9B91 /* UploadStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14F42427E36EA8009A9B91 /* UploadStatView.swift */; };
+		EA14F42727E3725C009A9B91 /* UploadStatsDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14F42627E3725C009A9B91 /* UploadStatsDetailsView.swift */; };
+		EA15E84A27ECB19100FCDD95 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA15E84927ECB19100FCDD95 /* Theme.swift */; };
+		EA1B95E328110B7D0019AD37 /* CollapsibleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1B95E228110B7D0019AD37 /* CollapsibleView.swift */; };
 		EA28163E2733493C005C26E8 /* FullQualifiedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28163D2733493C005C26E8 /* FullQualifiedName.swift */; };
 		EA28163F2733493C005C26E8 /* FullQualifiedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28163D2733493C005C26E8 /* FullQualifiedName.swift */; };
 		EA28164127334C15005C26E8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28164027334C15005C26E8 /* Utils.swift */; };
-		EA28164227334C15005C26E8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28164027334C15005C26E8 /* Utils.swift */; };
 		EA28164527346B0B005C26E8 /* SensorDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA28164327346B0B005C26E8 /* SensorDataModel.xcdatamodeld */; };
-		EA28164627346B0C005C26E8 /* SensorDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA28164327346B0B005C26E8 /* SensorDataModel.xcdatamodeld */; };
 		EA28164A2738BDE6005C26E8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2816492738BDE5005C26E8 /* Persistence.swift */; };
 		EA46D45426C4F850008CE3C0 /* ChronicleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */; };
 		EA63652326C6D6EF005D6DFC /* UserSettingsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */; };
+		EA799C2227A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA799C2027A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist */; };
+		EA799C2827A2D937006593F8 /* SensorReaderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA799C2727A2D937006593F8 /* SensorReaderDelegate.swift */; };
+		EA799C2B27A32A31006593F8 /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA799C2A27A32A31006593F8 /* Sensor.swift */; };
+		EA799C2D27A33FE9006593F8 /* SensorDataConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA799C2C27A33FE9006593F8 /* SensorDataConverter.swift */; };
 		EA802F2926BA4C0400C494F8 /* ChronicleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA802F2826BA4C0400C494F8 /* ChronicleApp.swift */; };
 		EA802F2B26BA4C0400C494F8 /* EnrollmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA802F2A26BA4C0400C494F8 /* EnrollmentView.swift */; };
 		EA802F2D26BA4C0500C494F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA802F2C26BA4C0500C494F8 /* Assets.xcassets */; };
@@ -36,6 +43,21 @@
 		EA82495526C4F2F900F9CD7C /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82495426C4F2F900F9CD7C /* ApiClient.swift */; };
 		EA82495726C4F31A00F9CD7C /* ApiUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82495626C4F31A00F9CD7C /* ApiUtils.swift */; };
 		EA82495926C4F33800F9CD7C /* EnrollmentUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA82495826C4F33800F9CD7C /* EnrollmentUtils.swift */; };
+		EA9813C027A940490049D1B6 /* CoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9813BF27A940490049D1B6 /* CoreDataTests.swift */; };
+		EA9813C427A9508E0049D1B6 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9813C127A9464C0049D1B6 /* TestUtils.swift */; };
+		EA9813C627A95D550049D1B6 /* Datasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9813C527A95D550049D1B6 /* Datasource.swift */; };
+		EA9813C827A984840049D1B6 /* SensorReaderDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9813C727A984840049D1B6 /* SensorReaderDevice.swift */; };
+		EA9813D027A9906E0049D1B6 /* UploadDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9813CF27A9906E0049D1B6 /* UploadDataOperation.swift */; };
+		EA9813D227A990AE0049D1B6 /* ImportIntoCoreDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9813D127A990AE0049D1B6 /* ImportIntoCoreDataOperation.swift */; };
+		EA9813D427A990F80049D1B6 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9813D327A990F80049D1B6 /* DateUtils.swift */; };
+		EABD370D27A883CE005F9EFE /* DeviceUsageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD370C27A883CD005F9EFE /* DeviceUsageData.swift */; };
+		EABD370F27A897D1005F9EFE /* PhoneUsageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD370E27A897D1005F9EFE /* PhoneUsageData.swift */; };
+		EABD371027A897D1005F9EFE /* PhoneUsageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD370E27A897D1005F9EFE /* PhoneUsageData.swift */; };
+		EABD371227A89924005F9EFE /* MessagesUsageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD371127A89924005F9EFE /* MessagesUsageData.swift */; };
+		EABD371327A89924005F9EFE /* MessagesUsageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD371127A89924005F9EFE /* MessagesUsageData.swift */; };
+		EABD371527A89BFA005F9EFE /* KeyboardMetricsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD371427A89BFA005F9EFE /* KeyboardMetricsData.swift */; };
+		EABD371627A89BFA005F9EFE /* KeyboardMetricsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD371427A89BFA005F9EFE /* KeyboardMetricsData.swift */; };
+		EAEA218727A49298001964CE /* SensorDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEA218627A49298001964CE /* SensorDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,15 +80,24 @@
 		B9BBFDCF26CD9C6C00B770E4 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		EA0048E227442F0600EBA09F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		EA0048E32744344400EBA09F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EA0048E5274440EF00EBA09F /* Operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operations.swift; sourceTree = "<group>"; };
-		EA0048E72744472F00EBA09F /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
+		EA07442427DF7AD20008443D /* EnrollmentDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentDetailsView.swift; sourceTree = "<group>"; };
+		EA07442627DF874C0008443D /* SensorListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorListView.swift; sourceTree = "<group>"; };
+		EA14F42227E360FE009A9B91 /* UploadStatEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadStatEvent.swift; sourceTree = "<group>"; };
+		EA14F42427E36EA8009A9B91 /* UploadStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadStatView.swift; sourceTree = "<group>"; };
+		EA14F42627E3725C009A9B91 /* UploadStatsDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadStatsDetailsView.swift; sourceTree = "<group>"; };
+		EA15E84927ECB19100FCDD95 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		EA1B95E228110B7D0019AD37 /* CollapsibleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleView.swift; sourceTree = "<group>"; };
 		EA28163D2733493C005C26E8 /* FullQualifiedName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullQualifiedName.swift; sourceTree = "<group>"; };
 		EA28164027334C15005C26E8 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		EA28164427346B0B005C26E8 /* SensorDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SensorDataModel.xcdatamodel; sourceTree = "<group>"; };
 		EA2816492738BDE5005C26E8 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		EA46D44826C4F745008CE3C0 /* chronicleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chronicleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChronicleTests.swift; path = chronicleTests/ChronicleTests.swift; sourceTree = "<group>"; };
+		EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChronicleTests.swift; sourceTree = "<group>"; };
 		EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsKeys.swift; sourceTree = "<group>"; };
+		EA799C2027A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = CustomCodeSigningEntitlements.plist; sourceTree = "<group>"; };
+		EA799C2727A2D937006593F8 /* SensorReaderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorReaderDelegate.swift; sourceTree = "<group>"; };
+		EA799C2A27A32A31006593F8 /* Sensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
+		EA799C2C27A33FE9006593F8 /* SensorDataConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDataConverter.swift; sourceTree = "<group>"; };
 		EA802F2526BA4C0400C494F8 /* chronicle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chronicle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA802F2826BA4C0400C494F8 /* ChronicleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChronicleApp.swift; sourceTree = "<group>"; };
 		EA802F2A26BA4C0400C494F8 /* EnrollmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentView.swift; sourceTree = "<group>"; };
@@ -78,6 +109,18 @@
 		EA82495426C4F2F900F9CD7C /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 		EA82495626C4F31A00F9CD7C /* ApiUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiUtils.swift; sourceTree = "<group>"; };
 		EA82495826C4F33800F9CD7C /* EnrollmentUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentUtils.swift; sourceTree = "<group>"; };
+		EA9813BF27A940490049D1B6 /* CoreDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTests.swift; sourceTree = "<group>"; };
+		EA9813C127A9464C0049D1B6 /* TestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
+		EA9813C527A95D550049D1B6 /* Datasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Datasource.swift; sourceTree = "<group>"; };
+		EA9813C727A984840049D1B6 /* SensorReaderDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorReaderDevice.swift; sourceTree = "<group>"; };
+		EA9813CF27A9906E0049D1B6 /* UploadDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadDataOperation.swift; sourceTree = "<group>"; };
+		EA9813D127A990AE0049D1B6 /* ImportIntoCoreDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportIntoCoreDataOperation.swift; sourceTree = "<group>"; };
+		EA9813D327A990F80049D1B6 /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
+		EABD370C27A883CD005F9EFE /* DeviceUsageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUsageData.swift; sourceTree = "<group>"; };
+		EABD370E27A897D1005F9EFE /* PhoneUsageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneUsageData.swift; sourceTree = "<group>"; };
+		EABD371127A89924005F9EFE /* MessagesUsageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesUsageData.swift; sourceTree = "<group>"; };
+		EABD371427A89BFA005F9EFE /* KeyboardMetricsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardMetricsData.swift; sourceTree = "<group>"; };
+		EAEA218627A49298001964CE /* SensorDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDataProperties.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +151,12 @@
 				B9BBFDC526CD6D9800B770E4 /* RadioButtonGroup.swift */,
 				B9BBFDC726CD6EC800B770E4 /* EnrollmentSuccessMessage.swift */,
 				B9BBFDCB26CD707D00B770E4 /* EnrollmentFailureMessage.swift */,
+				EA07442427DF7AD20008443D /* EnrollmentDetailsView.swift */,
+				EA07442627DF874C0008443D /* SensorListView.swift */,
+				EA14F42427E36EA8009A9B91 /* UploadStatView.swift */,
+				EA14F42627E3725C009A9B91 /* UploadStatsDetailsView.swift */,
+				EA15E84927ECB19100FCDD95 /* Theme.swift */,
+				EA1B95E228110B7D0019AD37 /* CollapsibleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -115,14 +164,26 @@
 		EA46D44926C4F745008CE3C0 /* chronicleTests */ = {
 			isa = PBXGroup;
 			children = (
+				EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */,
+				EA9813BF27A940490049D1B6 /* CoreDataTests.swift */,
 			);
 			path = chronicleTests;
+			sourceTree = "<group>";
+		};
+		EA799C2627A2D89B006593F8 /* SensorReader */ = {
+			isa = PBXGroup;
+			children = (
+				EA799C2727A2D937006593F8 /* SensorReaderDelegate.swift */,
+				EA799C2A27A32A31006593F8 /* Sensor.swift */,
+				EA799C2C27A33FE9006593F8 /* SensorDataConverter.swift */,
+			);
+			path = SensorReader;
 			sourceTree = "<group>";
 		};
 		EA802F1C26BA4C0400C494F8 = {
 			isa = PBXGroup;
 			children = (
-				EA46D45326C4F850008CE3C0 /* ChronicleTests.swift */,
+				EA799C2027A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist */,
 				EA802F2726BA4C0400C494F8 /* chronicle */,
 				EA46D44926C4F745008CE3C0 /* chronicleTests */,
 				EA802F2626BA4C0400C494F8 /* Products */,
@@ -141,6 +202,8 @@
 		EA802F2726BA4C0400C494F8 /* chronicle */ = {
 			isa = PBXGroup;
 			children = (
+				EA9813CE27A9904A0049D1B6 /* CoreData */,
+				EA799C2627A2D89B006593F8 /* SensorReader */,
 				EA0048E227442F0600EBA09F /* Info.plist */,
 				B9BBFDC026CD6AFC00B770E4 /* Views */,
 				EA82494926C4F14100F9CD7C /* Utilities */,
@@ -166,13 +229,19 @@
 		EA82494726C4F12500F9CD7C /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				EA2816492738BDE5005C26E8 /* Persistence.swift */,
 				EA28164327346B0B005C26E8 /* SensorDataModel.xcdatamodeld */,
 				EA82494C26C4F27500F9CD7C /* IOSDevice.swift */,
 				EA82494E26C4F28E00F9CD7C /* Enrollment.swift */,
 				EA63652226C6D6EF005D6DFC /* UserSettingsKeys.swift */,
-				EA0048E5274440EF00EBA09F /* Operations.swift */,
 				EA28163D2733493C005C26E8 /* FullQualifiedName.swift */,
+				EAEA218627A49298001964CE /* SensorDataProperties.swift */,
+				EABD370C27A883CD005F9EFE /* DeviceUsageData.swift */,
+				EABD370E27A897D1005F9EFE /* PhoneUsageData.swift */,
+				EABD371127A89924005F9EFE /* MessagesUsageData.swift */,
+				EABD371427A89BFA005F9EFE /* KeyboardMetricsData.swift */,
+				EA9813C527A95D550049D1B6 /* Datasource.swift */,
+				EA9813C727A984840049D1B6 /* SensorReaderDevice.swift */,
+				EA14F42227E360FE009A9B91 /* UploadStatEvent.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -188,13 +257,24 @@
 		EA82494926C4F14100F9CD7C /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				EA9813C127A9464C0049D1B6 /* TestUtils.swift */,
 				EA82495426C4F2F900F9CD7C /* ApiClient.swift */,
 				EA82495626C4F31A00F9CD7C /* ApiUtils.swift */,
 				EA82495826C4F33800F9CD7C /* EnrollmentUtils.swift */,
-				EA0048E72744472F00EBA09F /* Mocks.swift */,
 				EA28164027334C15005C26E8 /* Utils.swift */,
+				EA9813D327A990F80049D1B6 /* DateUtils.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		EA9813CE27A9904A0049D1B6 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				EA2816492738BDE5005C26E8 /* Persistence.swift */,
+				EA9813CF27A9906E0049D1B6 /* UploadDataOperation.swift */,
+				EA9813D127A990AE0049D1B6 /* ImportIntoCoreDataOperation.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,6 +324,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1300;
 				LastUpgradeCheck = 1320;
+				ORGANIZATIONNAME = "OpenLattice, Inc.";
 				TargetAttributes = {
 					EA46D44726C4F745008CE3C0 = {
 						CreatedOnToolsVersion = 13.0;
@@ -279,6 +360,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA799C2227A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,10 +380,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EABD371327A89924005F9EFE /* MessagesUsageData.swift in Sources */,
+				EABD371627A89BFA005F9EFE /* KeyboardMetricsData.swift in Sources */,
 				EA28163F2733493C005C26E8 /* FullQualifiedName.swift in Sources */,
 				EA46D45426C4F850008CE3C0 /* ChronicleTests.swift in Sources */,
-				EA28164627346B0C005C26E8 /* SensorDataModel.xcdatamodeld in Sources */,
-				EA28164227334C15005C26E8 /* Utils.swift in Sources */,
+				EA9813C027A940490049D1B6 /* CoreDataTests.swift in Sources */,
+				EABD371027A897D1005F9EFE /* PhoneUsageData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,26 +396,45 @@
 				EA82495526C4F2F900F9CD7C /* ApiClient.swift in Sources */,
 				B9BBFDC226CD6B1100B770E4 /* AppHeader.swift in Sources */,
 				B9BBFDCC26CD707D00B770E4 /* EnrollmentFailureMessage.swift in Sources */,
-				EA0048E6274440EF00EBA09F /* Operations.swift in Sources */,
+				EA799C2827A2D937006593F8 /* SensorReaderDelegate.swift in Sources */,
 				B9BBFDD026CD9C6C00B770E4 /* Colors.swift in Sources */,
 				B9BBFDC626CD6D9800B770E4 /* RadioButtonGroup.swift in Sources */,
 				B9BBFDC826CD6EC800B770E4 /* EnrollmentSuccessMessage.swift in Sources */,
 				EA82494D26C4F27500F9CD7C /* IOSDevice.swift in Sources */,
 				EA802F2B26BA4C0400C494F8 /* EnrollmentView.swift in Sources */,
+				EA9813C627A95D550049D1B6 /* Datasource.swift in Sources */,
+				EABD370F27A897D1005F9EFE /* PhoneUsageData.swift in Sources */,
+				EAEA218727A49298001964CE /* SensorDataProperties.swift in Sources */,
 				B9BBFDBF26C648C100B770E4 /* EnrolledView.swift in Sources */,
+				EA9813C427A9508E0049D1B6 /* TestUtils.swift in Sources */,
+				EA14F42527E36EA8009A9B91 /* UploadStatView.swift in Sources */,
+				EA9813D227A990AE0049D1B6 /* ImportIntoCoreDataOperation.swift in Sources */,
+				EA14F42327E360FF009A9B91 /* UploadStatEvent.swift in Sources */,
+				EA07442727DF874C0008443D /* SensorListView.swift in Sources */,
+				EA07442527DF7AD20008443D /* EnrollmentDetailsView.swift in Sources */,
 				EA0048E42744344400EBA09F /* AppDelegate.swift in Sources */,
 				EA28164A2738BDE6005C26E8 /* Persistence.swift in Sources */,
-				EA0048E82744472F00EBA09F /* Mocks.swift in Sources */,
+				EA1B95E328110B7D0019AD37 /* CollapsibleView.swift in Sources */,
+				EA799C2B27A32A31006593F8 /* Sensor.swift in Sources */,
+				EA9813D427A990F80049D1B6 /* DateUtils.swift in Sources */,
 				EA82495326C4F2D500F9CD7C /* EnrollmentViewModel.swift in Sources */,
+				EA799C2D27A33FE9006593F8 /* SensorDataConverter.swift in Sources */,
+				EA9813C827A984840049D1B6 /* SensorReaderDevice.swift in Sources */,
+				EABD371227A89924005F9EFE /* MessagesUsageData.swift in Sources */,
 				EA28164527346B0B005C26E8 /* SensorDataModel.xcdatamodeld in Sources */,
 				EA28164127334C15005C26E8 /* Utils.swift in Sources */,
 				EA82495726C4F31A00F9CD7C /* ApiUtils.swift in Sources */,
+				EA14F42727E3725C009A9B91 /* UploadStatsDetailsView.swift in Sources */,
 				EA28163E2733493C005C26E8 /* FullQualifiedName.swift in Sources */,
 				EA802F2926BA4C0400C494F8 /* ChronicleApp.swift in Sources */,
 				EA63652326C6D6EF005D6DFC /* UserSettingsKeys.swift in Sources */,
 				EA82494F26C4F28E00F9CD7C /* Enrollment.swift in Sources */,
 				B9BBFDC426CD6D0200B770E4 /* InputFieldView.swift in Sources */,
+				EA15E84A27ECB19100FCDD95 /* Theme.swift in Sources */,
+				EA9813D027A9906E0049D1B6 /* UploadDataOperation.swift in Sources */,
 				EA82495926C4F33800F9CD7C /* EnrollmentUtils.swift in Sources */,
+				EABD371527A89BFA005F9EFE /* KeyboardMetricsData.swift in Sources */,
+				EABD370D27A883CE005F9EFE /* DeviceUsageData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -518,13 +621,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphoneos*]" = CustomCodeSigningEntitlements.plist;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"chronicle/Preview Content\"";
 				DEVELOPMENT_TEAM = 28UYMG34TU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = chronicle/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Chronicle;
+				INFOPLIST_KEY_NSSensorKitPrivacyPolicyURL = "https://openlattice.com/#/privacy/";
+				INFOPLIST_KEY_NSSensorKitUsageDescription = "This is my app's SensorKit usage description.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -538,6 +646,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.openlattice.chronicle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Chronicle Research - Dev";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -549,13 +658,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphoneos*]" = CustomCodeSigningEntitlements.plist;
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"chronicle/Preview Content\"";
 				DEVELOPMENT_TEAM = 28UYMG34TU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = chronicle/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Chronicle;
+				INFOPLIST_KEY_NSSensorKitPrivacyPolicyURL = "https://openlattice.com/#/privacy/";
+				INFOPLIST_KEY_NSSensorKitUsageDescription = "This is my app's SensorKit usage description.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -569,6 +683,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.openlattice.chronicle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Chronicle Ad Hoc Distribution 1.0";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

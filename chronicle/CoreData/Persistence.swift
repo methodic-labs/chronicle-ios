@@ -18,9 +18,17 @@ class PersistenceController {
     
     // logging
     let logger = Logger(subsystem: "com.openlattice.chronicle", category: "PersistenceController")
+    let inMemory: Bool
     
     // shared instance to provide access to core data
     static let shared = PersistenceController()
+    
+    // only use this for testing
+    static let preview = PersistenceController(inMemory: true)
+    
+    init(inMemory: Bool = false) {
+        self.inMemory = inMemory
+    }
     
     lazy var persistentContainer: NSPersistentContainer? = {
         let container = NSPersistentContainer(name: "SensorDataModel")
@@ -32,6 +40,11 @@ class PersistenceController {
                 self.logger.error("Unresolved error: \(error), \(error.userInfo)")
                 loadError = true
             }
+        }
+        
+        // create an in-memory persistent store
+        if inMemory {
+            container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
         
         if loadError {
@@ -49,6 +62,7 @@ class PersistenceController {
         }
         
         let taskContext = persistentContainer!.newBackgroundContext()
+        
         taskContext.automaticallyMergesChangesFromParent = true
         return taskContext
     }

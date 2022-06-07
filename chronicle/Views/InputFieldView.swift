@@ -16,7 +16,7 @@ struct InputFieldView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(label)
-                .fontWeight(.bold)
+                .fontWeight(.semibold)
             ZStack {
                 RoundedRectangle(cornerRadius: 8).strokeBorder(lineWidth: 0.3).foregroundColor(Color(invalidInput ? .red : .gray)).frame(minHeight: 40, maxHeight: 40)
                 TextField(placeholder, text: $inputId)
