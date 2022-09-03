@@ -10,8 +10,6 @@
 	<array>
 		<string>device-usage</string>
 		<string>messages-usage</string>
-		<string>phone-usage</string>
-		<string>keyboard-metrics</string>
 	</array>
 </dict>
 </plist>
