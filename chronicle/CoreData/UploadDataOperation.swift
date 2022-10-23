@@ -9,6 +9,7 @@
 import Foundation
 import CoreData
 import OSLog
+import FirebaseAnalytics
 
 class UploadDataOperation: Operation {
     private let logger = Logger(subsystem: "com.openlattice.chronicle", category: "UploadDataOperation")
@@ -83,7 +84,12 @@ class UploadDataOperation: Operation {
                     self.uploading = true
                     UserDefaults.standard.set(true, forKey: UserSettingsKeys.isUploading)
 
+                    var eventLogParams = enrollment.toDict() // { participantId: xx, studyId: xx }
+                    
                     ApiClient.uploadData(sensorData: data, enrollment: enrollment, deviceId: deviceId) {
+                        eventLogParams.merge(["upload_size_bytes": data.count.description]) { (current, _) in current }
+                        Analytics.logEvent(FirebaseAnalyticsEvent.uploadData.rawValue, parameters: eventLogParams)
+                        
                         self.logger.info("successfully uploaded \(objects.count) to server")
                         
                         // save upload stats
@@ -103,6 +109,9 @@ class UploadDataOperation: Operation {
                         self.uploading = false
                         UserDefaults.standard.set(false, forKey: UserSettingsKeys.isUploading)
                     } onError: { error in
+                        eventLogParams.merge(["upload_error": error.debugDescription]) {(current, _) in current}
+                        Analytics.logEvent(FirebaseAnalyticsEvent.uploadDataFailure.rawValue, parameters: eventLogParams)
+                        
                         self.logger.error("error uploading to server: \(error)")
 
                         // signal operation to terminate

@@ -9,6 +9,7 @@
 import Foundation
 import SensorKit
 import OSLog
+import FirebaseAnalytics
 
 /**
   This class responds to sensor-related events
@@ -39,7 +40,10 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
     }
     
     func sensorReader(_ reader: SRSensorReader, didFetch devices: [SRDevice]) {
-
+        var eventLogParams = Enrollment.getCurrentEnrollment().toDict()
+        eventLogParams.merge(["devices": devices.description]) { (current, _) in current }
+        Analytics.logEvent(FirebaseAnalyticsEvent.didFetchSensorDevices.rawValue, parameters: eventLogParams)
+        
         devices.forEach { device in
             let request = SRFetchRequest()
             request.device = device
@@ -71,7 +75,9 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
     
     // NOTE: this will be invoked multiple times if the request has multiple samples
     func sensorReader(_ reader: SRSensorReader, fetching fetchRequest: SRFetchRequest, didFetchResult result: SRFetchResult<AnyObject>) -> Bool {
-        
+        let eventLogParams = Enrollment.getCurrentEnrollment().toDict()
+        Analytics.logEvent(FirebaseAnalyticsEvent.didFetchSensorSample.rawValue, parameters: eventLogParams)
+
         let sensor = reader.sensor
         let timestamp = result.timestamp
         let sample = result.sample

@@ -10,6 +10,8 @@ import UIKit
 import BackgroundTasks
 import OSLog
 import SensorKit
+import FirebaseCore
+import FirebaseAnalytics
 
 /*
  The app delegate submits task requests and registers launch handlers for database background tasks
@@ -45,11 +47,17 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
             self.handleFetchSensorSamples(task: task as! BGAppRefreshTask)
         }
         
+        // Initialize firebase
+        FirebaseApp.configure()
+        
         return true
     }
     
     // task handler to fetch data from sensor kit when app is in background
     func handleFetchSensorSamples(task: BGAppRefreshTask) {
+        let enrollment = Enrollment.getCurrentEnrollment()
+        Analytics.logEvent(FirebaseAnalyticsEvent.backgroundStartFetch.rawValue, parameters: enrollment.toDict())
+        
         scheduleAppRefreshTask(delay: 15 * 60, taskIdentifer: fetchSamplesTaskIdentifer)
         
         fetchSensorSamples()
@@ -58,6 +66,9 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     }
 
     func handleUploadDataTask(task: BGAppRefreshTask) {
+        let enrollment = Enrollment.getCurrentEnrollment()
+        Analytics.logEvent(FirebaseAnalyticsEvent.backgroundStartUpload.rawValue, parameters: enrollment.toDict())
+        
         scheduleAppRefreshTask(delay: 15 * 60, taskIdentifer: uploadDataTaskIdentifier) // execute after 15 min
         
         let queue = OperationQueue()
