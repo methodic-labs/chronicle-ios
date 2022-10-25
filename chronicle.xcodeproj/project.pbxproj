@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		081CC58128E56A5E00A9DDB5 /* SensorKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B0C27C28DBBFEA007FF4FC /* SensorKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		B9BBFDBF26C648C100B770E4 /* EnrolledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDBE26C648C100B770E4 /* EnrolledView.swift */; };
 		B9BBFDC226CD6B1100B770E4 /* AppHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDC126CD6B1100B770E4 /* AppHeader.swift */; };
 		B9BBFDC426CD6D0200B770E4 /* InputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDC326CD6D0200B770E4 /* InputFieldView.swift */; };
@@ -71,6 +72,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		081CC58528E99D9B00A9DDB5 /* new.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = new.gpx; path = ../../../Downloads/new.gpx; sourceTree = "<group>"; };
+		08B0C27C28DBBFEA007FF4FC /* SensorKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SensorKit.framework; path = System/Library/Frameworks/SensorKit.framework; sourceTree = SDKROOT; };
 		B9BBFDBE26C648C100B770E4 /* EnrolledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrolledView.swift; sourceTree = "<group>"; };
 		B9BBFDC126CD6B1100B770E4 /* AppHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHeader.swift; sourceTree = "<group>"; };
 		B9BBFDC326CD6D0200B770E4 /* InputFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldView.swift; sourceTree = "<group>"; };
@@ -135,12 +138,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				081CC58128E56A5E00A9DDB5 /* SensorKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08B0C27B28DBBFEA007FF4FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				08B0C27C28DBBFEA007FF4FC /* SensorKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B9BBFDC026CD6AFC00B770E4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -183,10 +195,12 @@
 		EA802F1C26BA4C0400C494F8 = {
 			isa = PBXGroup;
 			children = (
+				081CC58528E99D9B00A9DDB5 /* new.gpx */,
 				EA799C2027A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist */,
 				EA802F2726BA4C0400C494F8 /* chronicle */,
 				EA46D44926C4F745008CE3C0 /* chronicleTests */,
 				EA802F2626BA4C0400C494F8 /* Products */,
+				08B0C27B28DBBFEA007FF4FC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -622,8 +636,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				"CODE_SIGN_ENTITLEMENTS[sdk=iphoneos*]" = CustomCodeSigningEntitlements.plist;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"chronicle/Preview Content\"";
 				DEVELOPMENT_TEAM = T646XVW64T;
@@ -646,7 +660,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.methodic.chronicle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Chronicle Dev Profile";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -659,8 +673,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				"CODE_SIGN_ENTITLEMENTS[sdk=iphoneos*]" = CustomCodeSigningEntitlements.plist;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"chronicle/Preview Content\"";
 				DEVELOPMENT_TEAM = T646XVW64T;
@@ -683,7 +697,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.methodic.chronicle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Chronicle Distribution Profile";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
