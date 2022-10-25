@@ -11,7 +11,7 @@ import Foundation
 struct ApiUtils {
 
     static let scheme = "https"
-    static var host = "api.openlattice.com"
+    static var host = "api.getmethodic.com"
     static let studyApiBase = "/chronicle/v3/study"
     
     // path constants
