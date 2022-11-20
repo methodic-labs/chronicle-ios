@@ -39,5 +39,12 @@ struct Enrollment {
         
         return Enrollment(participantId: participantId, studyId: studyId)
     }
+    
+    func toDict() -> [String: String] {
+        return [
+            UserSettingsKeys.studyId: self.studyId?.uuidString ?? "",
+            UserSettingsKeys.participantId: self.participantId
+        ]
+    }
 }
 

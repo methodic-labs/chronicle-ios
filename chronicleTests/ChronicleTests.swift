@@ -23,7 +23,7 @@ class ChronicleTests: XCTestCase {
             url?.path,
             "/chronicle/v3/study/\(studyId)/participant/\(participantId)/\(deviceId)/enroll"
         )
-        XCTAssertEqual(url?.host!, "api.openlattice.com")
+        XCTAssertEqual(url?.host!, "api.getmethodic.com")
         XCTAssertEqual(url?.scheme, "https")
     }
     
