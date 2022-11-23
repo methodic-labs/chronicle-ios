@@ -41,11 +41,6 @@ struct ChronicleApp: App {
                     }
             }
         }.onChange(of: scenePhase) { phase in
-            if phase == .background && viewModel.isEnrolled {
-                appDelegate.scheduleAppRefreshTask(taskIdentifer: appDelegate.uploadDataTaskIdentifier)
-                appDelegate.scheduleAppRefreshTask(taskIdentifer: appDelegate.fetchSamplesTaskIdentifer)
-            }
-            
             if phase == .active && viewModel.isEnrolled {
                 appDelegate.uploadSensorData()
                 appDelegate.fetchSensorSamples()

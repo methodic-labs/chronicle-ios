@@ -33,38 +33,9 @@ struct EnrolledView: View {
                     if (!appDelegate.sensorsAuthorized) {
                         SensorListView()
                     }
-                    // TODO: show upload history
-//                    } else if (!uploadHistoryItems.isEmpty) {
-//                        Section(header: Text("Recent Uploads")) {
-//                            ForEach(uploadHistoryItems.prefix(recentUploadItemsCount)) { item in
-//                                CollapsibleView(
-//                                    label: { Text(item.timestamp!, formatter: dateFormatter)},
-//                                    content: {
-//                                        UploadStatsDetailsView(data: item.data!)
-//                                    }
-//                                )
-//                            }
-//
-//                            if (uploadHistoryItems.count > recentUploadItemsCount) {
-//                                HStack {
-//                                    Spacer()
-//
-//                                    Button {
-//
-//                                    } label: {
-//                                        Text("View More")
-//                                            .foregroundColor(.white)
-//                                            .padding([.bottom, .top], 10)
-//                                            .padding([.leading, .trailing], 20)
-//
-//                                    }
-//                                    .background(Color.primaryPurple)
-//                                    .cornerRadius(8)
-//                                }
-//                                .padding([.top, .bottom], 10)
-//                            }
-//                        }
-//                    }
+                    if (!appDelegate.healthKitAuthorized) {
+                        HealthKitAuthorizationView()
+                    }
                     
                 }.listStyle(.insetGrouped)
             }

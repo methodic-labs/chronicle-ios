@@ -10,6 +10,7 @@ import UIKit
 import BackgroundTasks
 import OSLog
 import SensorKit
+import HealthKit
 import FirebaseCore
 import FirebaseAnalytics
 
@@ -17,89 +18,68 @@ import FirebaseAnalytics
  The app delegate submits task requests and registers launch handlers for database background tasks
  */
 class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
-    
+
     @Published var authorizationError: Bool = false
     @Published var sensorsAuthorized: Bool = false
+    @Published var healthKitAuthorized: Bool = false
+    var healthStore: HKHealthStore?
     
     override init() {
         super.init()
         self.sensorsAuthorized = UserDefaults.standard.object(forKey: UserSettingsKeys.sensorsAuthorized) as? Bool ?? false
     }
-    
-    let logger = Logger(subsystem: "com.openlattice.chronicle", category: "AppDelegate")
 
-    // task identifiers in BGTaskSchedulerPermittedIdentifiers array of Info.Plist
-    let fetchSamplesTaskIdentifer = "com.openlattice.chronicle.fetchSensorSamples"
-    let uploadDataTaskIdentifier = "com.openlattice.chronicle.uploadData"
+    let logger = Logger(subsystem: "com.openlattice.chronicle", category: "AppDelegate")
 
     var uploadBackgroundTaskId: UIBackgroundTaskIdentifier?
     var importDataTaskId: UIBackgroundTaskIdentifier? = nil
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
 
-        // register handlers for background tasks
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: uploadDataTaskIdentifier, using: nil) { task in
-            // Downncast parameter to background refresh task
-            self.handleUploadDataTask(task: task as! BGAppRefreshTask)
-        }
-        
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: fetchSamplesTaskIdentifer, using: nil) { task in
-            self.handleFetchSensorSamples(task: task as! BGAppRefreshTask)
-        }
-        
         // Initialize firebase
         FirebaseApp.configure()
+
+        // Configure HealthKit
+        if !HKHealthStore.isHealthDataAvailable() {
+            return true
+        }
+        let healthStore = HKHealthStore()
+
+        let stepCountType = HKObjectType.quantityType(forIdentifier: .stepCount)!
+
+        // check step count authorization status
+        healthStore.getRequestStatusForAuthorization(toShare: [stepCountType], read: [stepCountType]) { (status, errorOrNil) in
+            if status == HKAuthorizationRequestStatus.unnecessary {
+                self.healthKitAuthorized = true
+            }
+        }
+
+        // Configure Healthkit to wake up the app when step count data samples are available.
+        let frequency = HKUpdateFrequency.hourly //available options: hourly, daily, weekly
+        healthStore.enableBackgroundDelivery(for: stepCountType, frequency: frequency) { (success, errorOrNil) in
+            if let error = errorOrNil {
+                self.logger.error("Error enabling Healthkit background deliver for step count updates: \(error.localizedDescription)")
+            }
+        }
+
+        // Create an long-running query to monitor HealthKit store for step count updates
+        let query = HKObserverQuery(sampleType: stepCountType, predicate: nil) { (query, completionHandler, errorOrNil) in
+            if let error = errorOrNil {
+                self.logger.error("Unable to instantiate step count observer query: \(error.localizedDescription)")
+                return
+            }
         
+            // log this event
+
+            self.fetchSensorSamples()
+            self.uploadSensorData()
+
+            completionHandler() // Required if background delivery is enabled
+        }
+
+        healthStore.execute(query)
+
         return true
-    }
-    
-    // task handler to fetch data from sensor kit when app is in background
-    func handleFetchSensorSamples(task: BGAppRefreshTask) {
-        let enrollment = Enrollment.getCurrentEnrollment()
-        Analytics.logEvent(FirebaseAnalyticsEvent.backgroundStartFetch.rawValue, parameters: enrollment.toDict())
-        
-        scheduleAppRefreshTask(delay: 15 * 60, taskIdentifer: fetchSamplesTaskIdentifer)
-        
-        fetchSensorSamples()
-        
-        task.setTaskCompleted(success: true)
-    }
-
-    func handleUploadDataTask(task: BGAppRefreshTask) {
-        let enrollment = Enrollment.getCurrentEnrollment()
-        Analytics.logEvent(FirebaseAnalyticsEvent.backgroundStartUpload.rawValue, parameters: enrollment.toDict())
-        
-        scheduleAppRefreshTask(delay: 15 * 60, taskIdentifer: uploadDataTaskIdentifier) // execute after 15 min
-        
-        let queue = OperationQueue()
-        queue.maxConcurrentOperationCount = 1
-
-        guard let bgContext = PersistenceController.shared.newBackgroundContext() else {
-            logger.error("unable to execute upload task")
-            task.setTaskCompleted(success: false)
-            return
-        }
-        
-        guard let viewContext = PersistenceController.shared.persistentContainer?.viewContext else {
-            return
-        }
-
-        // operation to fetch data from database and upload to server
-        let uploadDataOperation = UploadDataOperation(bgContext: bgContext, viewContext: viewContext)
-
-        // expiration handler to cancel operation
-        task.expirationHandler = {
-            queue.cancelAllOperations()
-        }
-
-        // inform system that task is complete
-        uploadDataOperation.completionBlock = {
-            task.setTaskCompleted(success: !uploadDataOperation.isCancelled)
-        }
-
-        // start operation
-        queue.addOperation(uploadDataOperation)
-
     }
 
     // called when app moves to background to schedule task handled by handleUploadDataTask
@@ -131,7 +111,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
                 self.uploadBackgroundTaskId = UIBackgroundTaskIdentifier.invalid
                 return
             }
-            
+
             guard let viewContext = PersistenceController.shared.persistentContainer?.viewContext else {
                 return
             }
@@ -149,27 +129,27 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         }
 
     }
-    
+
     func fetchSensorSamples() {
         let sensors = SensorReaderDelegate.availableSensors
         sensors.forEach { sensor in
             let reader = SRSensorReader(sensor: sensor)
             reader.delegate = SensorReaderDelegate.shared
-            
+
             if reader.authorizationStatus == SRAuthorizationStatus.authorized {
                 reader.startRecording()
                 reader.fetchDevices()
             }
         }
     }
-    
+
     // Displays a prompt to request user to authorize sensors
     // If authorization has already been granted, no prompt is displayed
     func requestSensorReaderAuthorization(valid: [Sensor], invalid: [Sensor]) {
         let permittedSensors = Set(valid.map { Sensor.getSRSensor(sensor: $0)}.compactMap { $0 })
         let invalidSensors = Set(invalid.map { Sensor.getSRSensor(sensor: $0)}.compactMap { $0 })
         let allSensors = permittedSensors.union(invalidSensors)
-        
+
         SRSensorReader.requestAuthorization(sensors: permittedSensors ) { (error: Error?) -> Void in
             if let error = error {
                 self.authorizationError = true
@@ -178,20 +158,37 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
                 self.sensorsAuthorized = true
                 UserDefaults.standard.set(true, forKey: UserSettingsKeys.sensorsAuthorized)
             }
-            
+
             allSensors.forEach { sensor in
                 let reader = SRSensorReader(sensor: sensor)
-                
+
                 if reader.authorizationStatus == SRAuthorizationStatus.authorized {
                     self.sensorsAuthorized = true
                     UserDefaults.standard.set(true, forKey: UserSettingsKeys.sensorsAuthorized)
-                    
+
                     reader.delegate = SensorReaderDelegate.shared
                     if (invalidSensors.contains(sensor)) {
                         reader.stopRecording()
                     } else {
                         reader.startRecording()
                         Utils.saveInitialLastFetch(sensor: Sensor.getSensor(sensor: sensor))
+                    }
+                }
+            }
+        }
+    }
+
+    func requestHealthKitAuthorization() {
+        if HKHealthStore.isHealthDataAvailable() {
+            let healthStore = HKHealthStore()
+
+            let types = Set([HKObjectType.quantityType(forIdentifier: .stepCount)!])
+
+            // request authorization
+            healthStore.requestAuthorization(toShare: types, read: types) { (success, error) in
+                if (success) {
+                    DispatchQueue.main.async {
+                        self.healthKitAuthorized = true
                     }
                 }
             }

@@ -20,10 +20,7 @@
 		EA07442527DF7AD20008443D /* EnrollmentDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA07442427DF7AD20008443D /* EnrollmentDetailsView.swift */; };
 		EA07442727DF874C0008443D /* SensorListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA07442627DF874C0008443D /* SensorListView.swift */; };
 		EA14F42327E360FF009A9B91 /* UploadStatEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14F42227E360FE009A9B91 /* UploadStatEvent.swift */; };
-		EA14F42527E36EA8009A9B91 /* UploadStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14F42427E36EA8009A9B91 /* UploadStatView.swift */; };
-		EA14F42727E3725C009A9B91 /* UploadStatsDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14F42627E3725C009A9B91 /* UploadStatsDetailsView.swift */; };
 		EA15E84A27ECB19100FCDD95 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA15E84927ECB19100FCDD95 /* Theme.swift */; };
-		EA1B95E328110B7D0019AD37 /* CollapsibleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1B95E228110B7D0019AD37 /* CollapsibleView.swift */; };
 		EA28163E2733493C005C26E8 /* FullQualifiedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28163D2733493C005C26E8 /* FullQualifiedName.swift */; };
 		EA28163F2733493C005C26E8 /* FullQualifiedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28163D2733493C005C26E8 /* FullQualifiedName.swift */; };
 		EA28164127334C15005C26E8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA28164027334C15005C26E8 /* Utils.swift */; };
@@ -55,6 +52,7 @@
 		EAB5FB6B2905620C001DA252 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EAB5FB6A2905620C001DA252 /* FirebaseAnalytics */; };
 		EAB5FB6D2905620C001DA252 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = EAB5FB6C2905620C001DA252 /* FirebaseCrashlytics */; };
 		EAB5FB71290568C1001DA252 /* FirebaseAnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB5FB70290568C1001DA252 /* FirebaseAnalyticsEvent.swift */; };
+		EAAA9B062929502E002D57F9 /* HealthKitAuthorizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAA9B052929502E002D57F9 /* HealthKitAuthorizationView.swift */; };
 		EABD370D27A883CE005F9EFE /* DeviceUsageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD370C27A883CD005F9EFE /* DeviceUsageData.swift */; };
 		EABD370F27A897D1005F9EFE /* PhoneUsageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD370E27A897D1005F9EFE /* PhoneUsageData.swift */; };
 		EABD371027A897D1005F9EFE /* PhoneUsageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABD370E27A897D1005F9EFE /* PhoneUsageData.swift */; };
@@ -91,10 +89,7 @@
 		EA07442427DF7AD20008443D /* EnrollmentDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentDetailsView.swift; sourceTree = "<group>"; };
 		EA07442627DF874C0008443D /* SensorListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorListView.swift; sourceTree = "<group>"; };
 		EA14F42227E360FE009A9B91 /* UploadStatEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadStatEvent.swift; sourceTree = "<group>"; };
-		EA14F42427E36EA8009A9B91 /* UploadStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadStatView.swift; sourceTree = "<group>"; };
-		EA14F42627E3725C009A9B91 /* UploadStatsDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadStatsDetailsView.swift; sourceTree = "<group>"; };
 		EA15E84927ECB19100FCDD95 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
-		EA1B95E228110B7D0019AD37 /* CollapsibleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleView.swift; sourceTree = "<group>"; };
 		EA28163D2733493C005C26E8 /* FullQualifiedName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullQualifiedName.swift; sourceTree = "<group>"; };
 		EA28164027334C15005C26E8 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		EA28164427346B0B005C26E8 /* SensorDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SensorDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -125,6 +120,7 @@
 		EA9813D127A990AE0049D1B6 /* ImportIntoCoreDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportIntoCoreDataOperation.swift; sourceTree = "<group>"; };
 		EA9813D327A990F80049D1B6 /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		EAB5FB70290568C1001DA252 /* FirebaseAnalyticsEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsEvent.swift; sourceTree = "<group>"; };
+		EAAA9B052929502E002D57F9 /* HealthKitAuthorizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitAuthorizationView.swift; sourceTree = "<group>"; };
 		EABD370C27A883CD005F9EFE /* DeviceUsageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUsageData.swift; sourceTree = "<group>"; };
 		EABD370E27A897D1005F9EFE /* PhoneUsageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneUsageData.swift; sourceTree = "<group>"; };
 		EABD371127A89924005F9EFE /* MessagesUsageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesUsageData.swift; sourceTree = "<group>"; };
@@ -173,10 +169,8 @@
 				B9BBFDCB26CD707D00B770E4 /* EnrollmentFailureMessage.swift */,
 				EA07442427DF7AD20008443D /* EnrollmentDetailsView.swift */,
 				EA07442627DF874C0008443D /* SensorListView.swift */,
-				EA14F42427E36EA8009A9B91 /* UploadStatView.swift */,
-				EA14F42627E3725C009A9B91 /* UploadStatsDetailsView.swift */,
 				EA15E84927ECB19100FCDD95 /* Theme.swift */,
-				EA1B95E228110B7D0019AD37 /* CollapsibleView.swift */,
+				EAAA9B052929502E002D57F9 /* HealthKitAuthorizationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -439,24 +433,22 @@
 				EAEA218727A49298001964CE /* SensorDataProperties.swift in Sources */,
 				B9BBFDBF26C648C100B770E4 /* EnrolledView.swift in Sources */,
 				EA9813C427A9508E0049D1B6 /* TestUtils.swift in Sources */,
-				EA14F42527E36EA8009A9B91 /* UploadStatView.swift in Sources */,
 				EA9813D227A990AE0049D1B6 /* ImportIntoCoreDataOperation.swift in Sources */,
 				EA14F42327E360FF009A9B91 /* UploadStatEvent.swift in Sources */,
 				EA07442727DF874C0008443D /* SensorListView.swift in Sources */,
 				EA07442527DF7AD20008443D /* EnrollmentDetailsView.swift in Sources */,
 				EA0048E42744344400EBA09F /* AppDelegate.swift in Sources */,
 				EA28164A2738BDE6005C26E8 /* Persistence.swift in Sources */,
-				EA1B95E328110B7D0019AD37 /* CollapsibleView.swift in Sources */,
 				EA799C2B27A32A31006593F8 /* Sensor.swift in Sources */,
 				EA9813D427A990F80049D1B6 /* DateUtils.swift in Sources */,
 				EA82495326C4F2D500F9CD7C /* EnrollmentViewModel.swift in Sources */,
 				EA799C2D27A33FE9006593F8 /* SensorDataConverter.swift in Sources */,
 				EA9813C827A984840049D1B6 /* SensorReaderDevice.swift in Sources */,
 				EABD371227A89924005F9EFE /* MessagesUsageData.swift in Sources */,
+				EAAA9B062929502E002D57F9 /* HealthKitAuthorizationView.swift in Sources */,
 				EA28164527346B0B005C26E8 /* SensorDataModel.xcdatamodeld in Sources */,
 				EA28164127334C15005C26E8 /* Utils.swift in Sources */,
 				EA82495726C4F31A00F9CD7C /* ApiUtils.swift in Sources */,
-				EA14F42727E3725C009A9B91 /* UploadStatsDetailsView.swift in Sources */,
 				EA28163E2733493C005C26E8 /* FullQualifiedName.swift in Sources */,
 				EA802F2926BA4C0400C494F8 /* ChronicleApp.swift in Sources */,
 				EA63652326C6D6EF005D6DFC /* UserSettingsKeys.swift in Sources */,
