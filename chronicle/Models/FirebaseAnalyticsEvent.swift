@@ -16,4 +16,5 @@ enum FirebaseAnalyticsEvent: String {
     case didFetchSensorSample // SensorReaderDelegate didFetchResult callback
     case uploadData // successfully persist data to server
     case uploadDataFailure
+    case didAppWakeUpForBackgroundFetch
 }

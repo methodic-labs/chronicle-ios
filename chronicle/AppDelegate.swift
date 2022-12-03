@@ -36,16 +36,8 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     var importDataTaskId: UIBackgroundTaskIdentifier? = nil
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-
-        // register handlers for background tasks
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: uploadDataTaskIdentifier, using: nil) { task in
-            // Downncast parameter to background refresh task
-            self.handleUploadDataTask(task: task as! BGAppRefreshTask)
-        }
         
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: fetchSamplesTaskIdentifer, using: nil) { task in
-            self.handleFetchSensorSamples(task: task as! BGAppRefreshTask)
-        }
+        application.setMinimumBackgroundFetchInterval(15 * 60) // wake up app for background fetch every 15 minutes
         
         // Initialize firebase
         FirebaseApp.configure()
@@ -53,66 +45,21 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         return true
     }
     
-    // task handler to fetch data from sensor kit when app is in background
-    func handleFetchSensorSamples(task: BGAppRefreshTask) {
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         let enrollment = Enrollment.getCurrentEnrollment()
-        Analytics.logEvent(FirebaseAnalyticsEvent.backgroundStartFetch.rawValue, parameters: enrollment.toDict())
-        
-        scheduleAppRefreshTask(delay: 15 * 60, taskIdentifer: fetchSamplesTaskIdentifer)
+        guard enrollment.isValid else {
+            completionHandler(UIBackgroundFetchResult.noData)
+            return
+        }
         
         fetchSensorSamples()
+        uploadSensorData()
+
+        Analytics.logEvent(FirebaseAnalyticsEvent.didAppWakeUpForBackgroundFetch.rawValue, parameters: enrollment.toDict())
         
-        task.setTaskCompleted(success: true)
+        completionHandler(UIBackgroundFetchResult.newData)
     }
-
-    func handleUploadDataTask(task: BGAppRefreshTask) {
-        let enrollment = Enrollment.getCurrentEnrollment()
-        Analytics.logEvent(FirebaseAnalyticsEvent.backgroundStartUpload.rawValue, parameters: enrollment.toDict())
-        
-        scheduleAppRefreshTask(delay: 15 * 60, taskIdentifer: uploadDataTaskIdentifier) // execute after 15 min
-        
-        let queue = OperationQueue()
-        queue.maxConcurrentOperationCount = 1
-
-        guard let bgContext = PersistenceController.shared.newBackgroundContext() else {
-            logger.error("unable to execute upload task")
-            task.setTaskCompleted(success: false)
-            return
-        }
-        
-        guard let viewContext = PersistenceController.shared.persistentContainer?.viewContext else {
-            return
-        }
-
-        // operation to fetch data from database and upload to server
-        let uploadDataOperation = UploadDataOperation(bgContext: bgContext, viewContext: viewContext)
-
-        // expiration handler to cancel operation
-        task.expirationHandler = {
-            queue.cancelAllOperations()
-        }
-
-        // inform system that task is complete
-        uploadDataOperation.completionBlock = {
-            task.setTaskCompleted(success: !uploadDataOperation.isCancelled)
-        }
-
-        // start operation
-        queue.addOperation(uploadDataOperation)
-
-    }
-
-    // called when app moves to background to schedule task handled by handleUploadDataTask
-    func scheduleAppRefreshTask(delay: Double = 0, taskIdentifer: String) {
-        let request = BGAppRefreshTaskRequest(identifier: taskIdentifer)
-        request.earliestBeginDate = Date(timeIntervalSinceNow: delay) // no earlier than 15 min from now
-
-        do {
-            try BGTaskScheduler.shared.submit(request)
-        } catch {
-            logger.info("could not schedule task to upload data: \(error.localizedDescription)")
-        }
-    }
+    
 
     // Attempts to upload locally stored data to server
     @objc func uploadSensorData() {
