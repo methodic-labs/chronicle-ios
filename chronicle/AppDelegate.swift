@@ -69,7 +69,8 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
                 return
             }
         
-            // log this event
+            let enrollment = Enrollment.getCurrentEnrollment()
+            Analytics.logEvent(FirebaseAnalyticsEvent.didHealthKitStepCountObserverFire.rawValue, parameters: enrollment.toDict())
 
             self.fetchSensorSamples()
             self.uploadSensorData()
@@ -80,18 +81,6 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         healthStore.execute(query)
 
         return true
-    }
-
-    // called when app moves to background to schedule task handled by handleUploadDataTask
-    func scheduleAppRefreshTask(delay: Double = 0, taskIdentifer: String) {
-        let request = BGAppRefreshTaskRequest(identifier: taskIdentifer)
-        request.earliestBeginDate = Date(timeIntervalSinceNow: delay) // no earlier than 15 min from now
-
-        do {
-            try BGTaskScheduler.shared.submit(request)
-        } catch {
-            logger.info("could not schedule task to upload data: \(error.localizedDescription)")
-        }
     }
 
     // Attempts to upload locally stored data to server
