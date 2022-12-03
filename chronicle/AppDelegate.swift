@@ -37,7 +37,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
-        application.setMinimumBackgroundFetchInterval(15 * 60) // wake up app for background fetch every 15 minutes
+        application.setMinimumBackgroundFetchInterval(900) // wake up app for background fetch every 15 minutes
         
         // Initialize firebase
         FirebaseApp.configure()
@@ -47,20 +47,14 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         let enrollment = Enrollment.getCurrentEnrollment()
-        guard enrollment.isValid else {
-            completionHandler(UIBackgroundFetchResult.noData)
-            return
-        }
+        Analytics.logEvent(FirebaseAnalyticsEvent.didAppWakeUpForBackgroundFetch.rawValue, parameters: enrollment.toDict())
         
         fetchSensorSamples()
         uploadSensorData()
 
-        Analytics.logEvent(FirebaseAnalyticsEvent.didAppWakeUpForBackgroundFetch.rawValue, parameters: enrollment.toDict())
-        
         completionHandler(UIBackgroundFetchResult.newData)
     }
     
-
     // Attempts to upload locally stored data to server
     @objc func uploadSensorData() {
         //perform on a background queue
