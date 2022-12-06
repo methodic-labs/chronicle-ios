@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		081CC58128E56A5E00A9DDB5 /* SensorKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B0C27C28DBBFEA007FF4FC /* SensorKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		081CC5892908973300A9DDB5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 081CC5882908973300A9DDB5 /* GoogleService-Info.plist */; };
 		B9BBFDBF26C648C100B770E4 /* EnrolledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDBE26C648C100B770E4 /* EnrolledView.swift */; };
 		B9BBFDC226CD6B1100B770E4 /* AppHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDC126CD6B1100B770E4 /* AppHeader.swift */; };
 		B9BBFDC426CD6D0200B770E4 /* InputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BBFDC326CD6D0200B770E4 /* InputFieldView.swift */; };
@@ -75,7 +74,6 @@
 
 /* Begin PBXFileReference section */
 		081CC58528E99D9B00A9DDB5 /* new.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = new.gpx; path = ../../../Downloads/new.gpx; sourceTree = "<group>"; };
-		081CC5882908973300A9DDB5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08B0C27C28DBBFEA007FF4FC /* SensorKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SensorKit.framework; path = System/Library/Frameworks/SensorKit.framework; sourceTree = SDKROOT; };
 		B9BBFDBE26C648C100B770E4 /* EnrolledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrolledView.swift; sourceTree = "<group>"; };
 		B9BBFDC126CD6B1100B770E4 /* AppHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHeader.swift; sourceTree = "<group>"; };
@@ -197,7 +195,6 @@
 		EA802F1C26BA4C0400C494F8 = {
 			isa = PBXGroup;
 			children = (
-				081CC5882908973300A9DDB5 /* GoogleService-Info.plist */,
 				081CC58528E99D9B00A9DDB5 /* new.gpx */,
 				EA799C2027A2C8AB006593F8 /* CustomCodeSigningEntitlements.plist */,
 				EA802F2726BA4C0400C494F8 /* chronicle */,
@@ -395,7 +392,6 @@
 			files = (
 				EA802F3026BA4C0500C494F8 /* Preview Assets.xcassets in Resources */,
 				EA802F2D26BA4C0500C494F8 /* Assets.xcassets in Resources */,
-				081CC5892908973300A9DDB5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
