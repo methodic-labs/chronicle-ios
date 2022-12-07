@@ -38,6 +38,8 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
 
         // Initialize firebase
         FirebaseApp.configure()
+        
+        application.setMinimumBackgroundFetchInterval(15 * 60) // background refresh every 15 minutes
 
         // Configure HealthKit
         if !HKHealthStore.isHealthDataAvailable() {
@@ -81,6 +83,16 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         healthStore.execute(query)
 
         return true
+    }
+    
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        let enrollment = Enrollment.getCurrentEnrollment()
+        Analytics.logEvent(FirebaseAnalyticsEvent.didAppWakeUpForBackgroundFetch.rawValue, parameters: enrollment.toDict())
+        
+        self.fetchSensorSamples()
+        self.uploadSensorData()
+        
+        completionHandler(UIBackgroundFetchResult.newData)
     }
 
     // Attempts to upload locally stored data to server

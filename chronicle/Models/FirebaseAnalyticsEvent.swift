@@ -17,4 +17,6 @@ enum FirebaseAnalyticsEvent: String {
     case uploadData // successfully persist data to server
     case uploadDataFailure
     case didHealthKitStepCountObserverFire //
+    case didAppWakeUpForBackgroundFetch
+    case didFetchFromCoreData
 }
