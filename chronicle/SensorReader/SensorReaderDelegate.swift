@@ -75,12 +75,17 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
     
     // NOTE: this will be invoked multiple times if the request has multiple samples
     func sensorReader(_ reader: SRSensorReader, fetching fetchRequest: SRFetchRequest, didFetchResult result: SRFetchResult<AnyObject>) -> Bool {
-        let eventLogParams = Enrollment.getCurrentEnrollment().toDict()
-        Analytics.logEvent(FirebaseAnalyticsEvent.didFetchSensorSample.rawValue, parameters: eventLogParams)
-
         let sensor = reader.sensor
         let timestamp = result.timestamp
         let sample = result.sample
+        
+        var eventLogParams = [
+            "sensor": sensor.rawValue,
+            "timestamp": Date(timeIntervalSinceReferenceDate: timestamp.toCFAbsoluteTime()).toISOFormat()
+        ]
+        let enrollment = Enrollment.getCurrentEnrollment()
+        eventLogParams.merge(enrollment.toDict()) { (_, new) in new }
+        Analytics.logEvent(FirebaseAnalyticsEvent.didFetchSensorSample.rawValue, parameters: eventLogParams)
                 
         var sensorDataProperties: SensorDataProperties
 

@@ -57,6 +57,10 @@ class UploadDataOperation: Operation {
                     fetchRequest.fetchLimit = fetchLimit
 
                     let objects = try bgContext.fetch(fetchRequest)
+                    
+                    var params = enrollment.toDict()
+                    params.merge(["count": objects.count.description]) { (new, _) in new }
+                    Analytics.logEvent(FirebaseAnalyticsEvent.didFetchFromCoreData.rawValue, parameters: params)
 
                     // no data available. signal operation to terminate
                     if objects.isEmpty {

@@ -12,7 +12,6 @@ struct SensorListView: View {
     @EnvironmentObject var viewModel: EnrollmentViewModel
     @EnvironmentObject var appDelegate: AppDelegate
     
-    var objects = ["alfonce", "nzioka", "what"]
     let bulletPoint: String = "\u{2022}"
     
     var body: some View {
@@ -32,7 +31,7 @@ struct SensorListView: View {
                     ForEach(viewModel.sensors, id: \.self) { sensor in
                         Text("\(bulletPoint) \(sensor.localizedDescription)")
                             .padding(.bottom, 5)
-                            .foregroundColor(.black)
+                            .foregroundColor(.gray)
                     }
                     
                     HStack {

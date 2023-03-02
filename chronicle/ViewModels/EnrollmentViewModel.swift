@@ -112,7 +112,9 @@ class EnrollmentViewModel: ObservableObject {
         }
         
         if sensors.isEmpty {
-            self.isFetchingSensors = true
+            DispatchQueue.main.async {
+                self.isFetchingSensors = true
+            }
         }
         let result = await ApiClient.getStudySensors()
         

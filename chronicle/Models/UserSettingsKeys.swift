@@ -19,4 +19,5 @@ struct UserSettingsKeys {
     static let lastFetch = "lastFetch"
     static let sensors = "sensors"
     static let sensorsAuthorized = "sensorsAuthorized"
+    static let healthKitAuthorized = "healthKitAuthorized"
 }
