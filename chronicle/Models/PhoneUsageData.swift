@@ -3,7 +3,7 @@
 //  chronicle
 //
 //  Created by Alfonce Nzioka on 1/31/22.
-//  Copyright © 2022 OpenLattice, Inc. All rights reserved.
+//  Copyright © 2022 Methodic, Inc. All rights reserved.
 //
 
 import Foundation
