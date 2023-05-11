@@ -654,8 +654,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = chronicle/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Chronicle;
-				INFOPLIST_KEY_NSSensorKitPrivacyPolicyURL = "https://openlattice.com/#/privacy/";
-				INFOPLIST_KEY_NSSensorKitUsageDescription = "This is my app's SensorKit usage description.";
+				INFOPLIST_KEY_NSSensorKitPrivacyPolicyURL = "https://getmethodic.com/privacy";
+				INFOPLIST_KEY_NSSensorKitUsageDescription = "SensorKit data is covered by our standard privacy policy and we do not share it with any third parties other than researchers running your study.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -691,8 +691,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = chronicle/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Chronicle;
-				INFOPLIST_KEY_NSSensorKitPrivacyPolicyURL = "https://openlattice.com/#/privacy/";
-				INFOPLIST_KEY_NSSensorKitUsageDescription = "This is my app's SensorKit usage description.";
+				INFOPLIST_KEY_NSSensorKitPrivacyPolicyURL = "https://getmethodic.com/privacy";
+				INFOPLIST_KEY_NSSensorKitUsageDescription = "SensorKit data is covered by our standard privacy policy and we do not share it with any third parties other than researchers running your study.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
