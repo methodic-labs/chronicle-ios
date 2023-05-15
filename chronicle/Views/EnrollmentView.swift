@@ -7,6 +7,17 @@
 
 import SwiftUI
 
+struct DeviceSpecificErrors {
+    static let IS_IPAD = UIDevice.current.userInterfaceIdiom == .pad
+    static let iPadFailureMesssage = """
+    iPad devices do not support SensorKit and cannot be enrolled in a study.
+    """
+    static let iOSFailureMessage = """
+    Failed to enroll device. Please double check that the Study ID and the Participant ID are correct. If the problem persists, please contact your study administrator.
+    """
+    static let failureMessage = DeviceSpecificErrors.IS_IPAD ? iPadFailureMesssage : iOSFailureMessage
+}
+
 struct EnrollmentView: View {
     
     @EnvironmentObject var viewModel: EnrollmentViewModel
@@ -15,7 +26,7 @@ struct EnrollmentView: View {
         Theme.navigationBarStyle()
     }
     
-    var body: some View {
+        var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("Device Enrollment")) {
@@ -68,7 +79,7 @@ struct EnrollmentView: View {
             .alert(isPresented: $viewModel.showEnrollmentError) {
                 Alert(
                     title: Text("Device Enrollment Failed"),
-                    message: Text("Failed to enroll device. Please double check that the Study ID and the Participant ID are correct. If the problem persists, please contact your study administrator."),
+                    message: Text(DeviceSpecificErrors.failureMessage),
                     dismissButton: .default(Text("OK")))
             }
             .navigationTitle("Chronicle")
