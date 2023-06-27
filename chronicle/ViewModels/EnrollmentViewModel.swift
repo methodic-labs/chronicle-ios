@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// Generic state manager for views. Handles intents and sets up binding for various properties
 class EnrollmentViewModel: ObservableObject {
@@ -72,7 +73,12 @@ class EnrollmentViewModel: ObservableObject {
         let enrollment = Enrollment(participantId: participantId, studyId: studyId)
         validateInput(enrollment: enrollment)
         
-        guard enrollment.isValid else {
+        guard !DeviceSpecificErrors.IS_IPAD else {
+            self.showEnrollmentError = true
+            return
+        }
+        
+        guard enrollment.isValid  else {
             return
         }
         
