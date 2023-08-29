@@ -165,8 +165,6 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
 
                 if reader.authorizationStatus == SRAuthorizationStatus.authorized {
                     self.sensorsAuthorized = true
-                    UserDefaults.standard.set(true, forKey: UserSettingsKeys.sensorsAuthorized)
-
                     reader.delegate = SensorReaderDelegate.shared
                     if (invalidSensors.contains(sensor)) {
                         reader.stopRecording()
@@ -174,8 +172,17 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
                         reader.startRecording()
                         Utils.saveInitialLastFetch(sensor: Sensor.getSensor(sensor: sensor))
                     }
+                } else {
+                    self.sensorsAuthorized = false
                 }
             }
+            
+            //set sensor authorized as well the current date as the enrolled data for sensors.
+            UserDefaults.standard.set(self.sensorsAuthorized, forKey: UserSettingsKeys.sensorsAuthorized)
+            //We do this after initializing sensorkit recording so that we know that at least 24 hours have passed since enrollment
+            //before we submit first fetch request.
+            Thread.sleep(forTimeInterval: 0.25)
+            UserDefaults.standard.set(Date(), forKey: UserSettingsKeys.enrolledDate)
         }
     }
 
