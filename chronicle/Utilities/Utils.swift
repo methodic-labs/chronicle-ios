@@ -26,7 +26,7 @@ struct Utils {
         
         // this refers to 1 Jan 2001 00:00:01 GMT.
         // ref: https://developer.apple.com/documentation/corefoundation/cfabsolutetime
-        let absoluteRefTime: CFTimeInterval = UserDefaults.standard.object(forKey: UserSettingsKeys.enrolledDate) as! Date.timeIntervalSinceReferenceDate
+        let absoluteRefTime: CFTimeInterval = (UserDefaults.standard.object(forKey: UserSettingsKeys.enrolledDate) as! Date).timeIntervalSinceReferenceDate
         return SRAbsoluteTime.fromCFAbsoluteTime(_cf: absoluteRefTime)
     }
     
