@@ -1,0 +1,47 @@
+body {
+  font-family: arial, sans-serif;
+  font-size: 14px;
+  margin: 0;
+  padding: 20px;
+}
+
+.title {
+  font-weight: normal;
+  font-size: 24px;
+  margin: 0;
+}
+
+.content {
+  text-align: center;
+}
+
+.content h2 {
+  margin-bottom: 5px;
+  margin-top: 0;
+}
+.content p {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.content .install-button {
+  background-color: #8620f3;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  text-transform: capitalize;
+  margin: 0;
+  margin-top: 16px;
+  padding: 6px 16px;
+  border-radius: 4px;
+}
+
+.content .instructions {
+  font-size: 16px;
+  margin-top: 16px;
+}
