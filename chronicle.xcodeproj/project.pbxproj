@@ -654,6 +654,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = chronicle/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Chronicle;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSSensorKitPrivacyPolicyURL = "https://getmethodic.com/privacy";
 				INFOPLIST_KEY_NSSensorKitUsageDescription = "SensorKit data is covered by our standard privacy policy and we do not share it with any third parties other than researchers running your study.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -666,7 +667,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.methodic.chronicle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -691,6 +692,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = chronicle/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Chronicle;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSSensorKitPrivacyPolicyURL = "https://getmethodic.com/privacy";
 				INFOPLIST_KEY_NSSensorKitUsageDescription = "SensorKit data is covered by our standard privacy policy and we do not share it with any third parties other than researchers running your study.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -703,8 +705,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.methodic.chronicle;
+				MARKETING_VERSION = 1.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.getmethodic.chronicle.cafe.gdw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

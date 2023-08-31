@@ -44,8 +44,8 @@
 		<string>processing</string>
 	</array>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Chronicle would like read your step data in order to work in the background</string>
+	<string>Chronicle would like read your step data in order to read sensors in the background</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>Chronicle would like to write step data in order to for sensors to work properly</string>
+	<string>Chronicle would like to write step data in order to work withs sensors in the background</string>
 </dict>
 </plist>

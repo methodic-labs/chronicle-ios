@@ -12,6 +12,7 @@ struct UserSettingsKeys {
     static let studyId = "studyId"
     static let participantId = "participantId"
     static let isEnrolled = "isEnrolled"
+    static let enrolledDate = "enrolledDate"
     static let lastUploadDate = "lastUploadDate"
     static let deviceId = "deviceId"
     static let propertyTypes = "propertyTypes"
