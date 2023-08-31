@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.openlattice.chronicle.fetchSensorSamples</string>
+		<string>com.openlattice.chronicle.uploadData</string>
+	</array>
+	<key>NSSensorKitUsageDetail</key>
+	<dict>
+		<key>SRSensorUsageDeviceUsage</key>
+		<dict>
+			<key>Description</key>
+			<string>Chronicle collects device usage data for the study in which this device is enrolled. This data is used by the researchers running your study to understand how the participant uses the device by calculating things such as the hourly and daily averages of pickups, total usage time, and hourly/daily app usage time by app category. A device can only be enrolled in one study at a time. To unenroll a device from a study, simply uninstall the application.</string>
+			<key>Required</key>
+			<true/>
+		</dict>
+		<key>SRSensorUsageKeyboardMetrics</key>
+		<dict>
+			<key>Description</key>
+			<string>Chronicle collects keyboad metrics data for the study in which this device is enrolled. This data is used by the researchers running your study to understand the participant use of the keyboard such as number of emojis and sentiment of completed words. A device can only be enrolled in one study at a time. To unenroll a device from a study, simply uninstall the application.</string>
+			<key>Required</key>
+			<true/>
+		</dict>
+		<key>SRSensorUsageMessageUsage</key>
+		<dict>
+			<key>Description</key>
+			<string>Chronicle collects message usage data for the study in which this device is enrolled. This data is used by the researchers running your study to understand participant’s frequency of text messaging and to understand the number of different people the participant is communicating with on a daily basis. A device can only be enrolled in one study at a time. To unenroll a device from a study, simply uninstall the application.</string>
+			<key>Required</key>
+			<true/>
+		</dict>
+		<key>SRSensorUsagePhoneUsage</key>
+		<dict>
+			<key>Description</key>
+			<string>Chronicle collects phone usage data for the study in which this device is enrolled. This data is used by the researchers running your study to understand participant’s frequency of phone calls and to understand the number of different people the participant is communicating with on a daily basis. A device can only be enrolled in one study at a time. To unenroll a device from a study, simply uninstall the application.</string>
+			<key>Required</key>
+			<true/>
+		</dict>
+	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>processing</string>
+	</array>
+</dict>
+</plist>
