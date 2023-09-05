@@ -16,7 +16,7 @@
 	<array>
 		<string>device-usage</string>
 		<string>phone-usage</string>
-		<string>message-usage</string>
+		<string>messages-usage</string>
 	</array>
 </dict>
 </plist>
