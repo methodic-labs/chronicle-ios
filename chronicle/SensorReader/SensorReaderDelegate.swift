@@ -41,7 +41,10 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
     
     func sensorReader(_ reader: SRSensorReader, didFetch devices: [SRDevice]) {
         let enrolledDate = UserDefaults.standard.object(forKey: UserSettingsKeys.enrolledDate) as? Date ?? Date()
+        
         let hoursElapsedSinceEnrollment = Calendar.current.dateComponents([.hour], from: enrolledDate, to: Date()).hour ?? 0
+        
+      
         //Don't submit any fetch requests until at least 24 hours have passed since enrollment
         //as SensorKit holds values for 24 hours to allow user to delete them.
         if( hoursElapsedSinceEnrollment < 24) {
@@ -49,7 +52,7 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         }
         
         var eventLogParams = Enrollment.getCurrentEnrollment().toDict()
-        eventLogParams.merge(["devices": devices.description, "houseElapsedSinceEnrollment" : String(hoursElapsedSinceEnrollment)]) { (current, _) in current }
+        eventLogParams.merge(["devices": devices.description, "hoursElapsedSinceEnrollment" : String(hoursElapsedSinceEnrollment)]) { (current, _) in current }
         
         Analytics.logEvent(FirebaseAnalyticsEvent.didFetchSensorDevices.rawValue, parameters: eventLogParams)
         
@@ -57,7 +60,7 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         devices.forEach { device in
             let request = SRFetchRequest()
             request.device = device
-            //Should only request data that is onlder than 24 hours.
+            //Should only request data that is older than 24 hours.
             //Since last fetch gets set to request.to, it will always be at leat 24 hours in the past next
             //time this code runs. So you will always have a window, even if it is small, of data to pull.
             request.to = SRAbsoluteTime.init(SRAbsoluteTime.current().rawValue - twentyFourHoursInSeconds.rawValue)
