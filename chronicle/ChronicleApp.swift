@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Foundation
+import OSLog
 
 @main
 struct ChronicleApp: App {
@@ -16,6 +17,7 @@ struct ChronicleApp: App {
     @Environment(\.scenePhase) var scenePhase
     @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
     
+    let logger = Logger(subsystem: "com.openlattice.chronicle", category: "AppDelegate")
     
     var body: some Scene {
         WindowGroup {
@@ -42,6 +44,16 @@ struct ChronicleApp: App {
             }
         }.onChange(of: scenePhase) { phase in
             if phase == .active && viewModel.isEnrolled {
+                let enrolledDate = UserDefaults.standard.object(forKey: UserSettingsKeys.enrolledDate) as? Date
+                
+                //This will only happen if phone is updated after being enrolled. This will make sure we don't miss any data from
+                //added sensors at the risk of missing data that falls off the query window.
+                if enrolledDate == nil {
+                    logger.info("Missing data from upgrade detected. Setting enrollment date to now.")
+                    let fourWeeksAgo = Calendar.current.date(byAdding: .day, value: 28
+                                                             , to: Date())!
+                    UserDefaults.standard.set(fourWeeksAgo,forKey: UserSettingsKeys.enrolledDate)
+                }
                 appDelegate.uploadSensorData()
                 appDelegate.fetchSensorSamples()
             }
