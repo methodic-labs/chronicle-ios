@@ -43,13 +43,14 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         let enrolledDate = UserDefaults.standard.object(forKey: UserSettingsKeys.enrolledDate) as? Date ?? Date()
         
         let hoursElapsedSinceEnrollment = Calendar.current.dateComponents([.hour], from: enrolledDate, to: Date()).hour ?? 0
-        
+        let secondsSinceEnrollment = Calendar.current.dateComponents([.second], from: enrolledDate, to: Date()).second ?? 0
+        let enrollmentAbsoluteTime = SRAbsoluteTime.init(SRAbsoluteTime.current().rawValue - Double(secondsSinceEnrollment))
       
         //Don't submit any fetch requests until at least 24 hours have passed since enrollment
         //as SensorKit holds values for 24 hours to allow user to delete them.
-        if( hoursElapsedSinceEnrollment < 24) {
-            return
-        }
+//        if( hoursElapsedSinceEnrollment < 24) {
+//            return
+//        }
         
         var eventLogParams = Enrollment.getCurrentEnrollment().toDict()
         eventLogParams.merge(["devices": devices.description, "hoursElapsedSinceEnrollment" : String(hoursElapsedSinceEnrollment)]) { (current, _) in current }
@@ -63,17 +64,22 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
             //Should only request data that is older than 24 hours.
             //Since last fetch gets set to request.to, it will always be at leat 24 hours in the past next
             //time this code runs. So you will always have a window, even if it is small, of data to pull.
-            request.to = SRAbsoluteTime.init(SRAbsoluteTime.current().rawValue - twentyFourHoursInSeconds.rawValue)
+            //request.to = SRAbsoluteTime.init(SRAbsoluteTime.current().rawValue - twentyFourHoursInSeconds.rawValue)
+            request.to = SRAbsoluteTime.current()
             
-            let lastFetch = Utils.getLastFetch(
-                device: SensorReaderDevice(device: device),
-                sensor: Sensor.getSensor(sensor: reader.sensor)
-            )
-            guard let lastFetch = lastFetch else {
-                return
-            }
+            //let lastFetch = Utils.getLastFetch(
+            //    device: SensorReaderDevice(device: device),
+            //    sensor: Sensor.getSensor(sensor: reader.sensor)
+            //)
+            //
+            //guard let lastFetch = lastFetch else {
+            //    return
+            //}
 
-            request.from = lastFetch
+            let nineDaysAgo = request.to.rawValue - 9*twentyFourHoursInSeconds.rawValue
+            
+            //Get 1 week ago as long as it is after enrollment, but before last fetch.
+            request.from = SRAbsoluteTime.init(max(nineDaysAgo, enrollmentAbsoluteTime.rawValue));
             let startDate = Date(timeIntervalSinceReferenceDate: request.from.toCFAbsoluteTime())
             let endDate  = Date(timeIntervalSinceReferenceDate: request.to.toCFAbsoluteTime())
             
