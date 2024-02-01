@@ -12,6 +12,9 @@ struct EnrollmentDetailsView: View {
     @EnvironmentObject var viewModel: EnrollmentViewModel
     // convenient to read saved value from UserDefaults
     @AppStorage(UserSettingsKeys.lastUploadDate) var lastUploadDate: String?
+    @AppStorage(UserSettingsKeys.lastRecordedDate) var lastRecordedDate: String?
+    @AppStorage(UserSettingsKeys.lastRecordedDateUploaded) var lastRecordedDateUploaded: String?
+    @AppStorage(UserSettingsKeys.itemsRemaining) var itemsRemaining: Int = 0
     @AppStorage(UserSettingsKeys.isUploading) var isUploading: Bool = false
 
     var body: some View {
@@ -27,8 +30,27 @@ struct EnrollmentDetailsView: View {
                     .minimumScaleFactor(0.01)
                     .foregroundColor(Color.gray)
                     .padding(.bottom)
+                
+                Text("Local Last Recorded Date:").fontWeight(.medium).padding(.bottom,3)
+                Text(formatDate(date: lastRecordedDate))
+                    .minimumScaleFactor(0.01)
+                    .foregroundColor(Color.gray)
+                    .padding(.bottom)
+                
+                Text("Local Items Stored").fontWeight(.medium).padding(.bottom,3)
+                Text(String(itemsRemaining))
+                    .minimumScaleFactor(0.01)
+                    .foregroundColor(Color.gray)
+                    .padding(.bottom)
+                
+                Text("Last Recorded Date Uploaded:").fontWeight(.medium).padding(.bottom,3)
+                Text(formatDate(date: lastRecordedDateUploaded))
+                    .minimumScaleFactor(0.01)
+                    .foregroundColor(Color.gray)
+                    .padding(.bottom)
+                
                 Text("Last Upload:").fontWeight(.medium).padding(.bottom,3)
-                Text(formatDate())
+                Text(formatDate(date: lastUploadDate))
                     .foregroundColor(Color.gray)
 
                 if isUploading {
@@ -38,15 +60,22 @@ struct EnrollmentDetailsView: View {
             .padding([.top, .bottom], 10)
         }
     }
-    
-    private func formatDate() -> String {
-        guard let lastUploaded = lastUploadDate, let iSODate = ISO8601DateFormatter().date(from: lastUploaded)  else {
+//    
+//    private func lastRecordedDate() -> String {
+//        return formatDate(date: lastRecordedDate)
+//    }
+//    
+//    private func lastUploadDate() -> String {
+//        return formatDate(date: lastUploadDate)
+//    }
+    private func formatDate(date : String?) -> String {
+        guard let date = date, let iSODate = ISO8601DateFormatter().date(from: date)  else {
             return "Never"
         }
-
+        
         let dateFormatter = DateFormatter()
         dateFormatter.setLocalizedDateFormatFromTemplate("MMM dd yyy jj:mm:ss")
-
+        
         return dateFormatter.string(from: iSODate)
     }
 }

@@ -70,7 +70,7 @@ struct ApiClient {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let task = URLSession.shared.uploadTask(with: request, from: sensorData) { data, response, error in
+    let task = URLSession.shared.uploadTask(with: request, from: sensorData) { data, response, error in
             if let error = error {
                 onError(error.localizedDescription)
                 return
