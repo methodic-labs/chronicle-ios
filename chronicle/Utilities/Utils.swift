@@ -13,7 +13,7 @@ struct Utils {
     
     private static var logger = Logger(subsystem: "com.openlattice.chronicle", category: "Utils")
     
-    static func getLastFetch(device: SensorReaderDevice, sensor: Sensor?) -> SRAbsoluteTime? {
+static func getLastFetch(device: SensorReaderDevice, sensor: Sensor?) -> SRAbsoluteTime? {
         guard let sensor = sensor else {
             return nil
         }
@@ -44,7 +44,7 @@ struct Utils {
         UserDefaults.standard.set(lastFetchData, forKey: UserSettingsKeys.lastFetch)
     }
 
-    
+
     // saves lastFetch = current date the very first time authorization to use sensor is granted
     
     static func saveInitialLastFetch(sensor: Sensor?) {
