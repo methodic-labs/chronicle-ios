@@ -47,16 +47,20 @@ class UploadDataOperation: Operation {
             logger.error("unable to retrieve enrollment details")
             return
         }
-
+        
         // try fetching
         bgContext.performAndWait {
             do {
                 while hasMoreData {
                     let fetchRequest: NSFetchRequest<SensorData>
+                    let countRequest: NSFetchRequest<SensorData>
                     fetchRequest = SensorData.fetchRequest()
+                    countRequest = SensorData.fetchRequest()
+                
                     fetchRequest.fetchLimit = fetchLimit
-
+                    
                     let objects = try bgContext.fetch(fetchRequest)
+                    let itemsRemaining = try bgContext.count(for: countRequest)
                     
                     var params = enrollment.toDict()
                     params.merge(["count": objects.count.description]) { (new, _) in new }
@@ -76,7 +80,8 @@ class UploadDataOperation: Operation {
                     if isCancelled {
                         break
                     }
-
+                    
+                    
                     // transform to Data
                     let data = Datasource.encodeArray(arr: objects)
                     guard let data = data else {
@@ -91,25 +96,29 @@ class UploadDataOperation: Operation {
                     var eventLogParams = enrollment.toDict() // { participantId: xx, studyId: xx }
                     
                     ApiClient.uploadData(sensorData: data, enrollment: enrollment, deviceId: deviceId) {
+//                        let uploadContext = NSManagedObjectContext(NSManagedObjectContext.ConcurrencyType.privateQueue)
+//                        let objects = objectIds.map { try self.bgContext.existingObject(with: $0)}
                         eventLogParams.merge(["upload_size_bytes": data.count.description]) { (current, _) in current }
                         Analytics.logEvent(FirebaseAnalyticsEvent.uploadData.rawValue, parameters: eventLogParams)
-                        
-                        self.logger.info("successfully uploaded \(objects.count) to server")
+//                        let objectIds = objects.map { $0.objectID }
+                        self.logger.info("Successfully uploaded \(objects.count) to server")
                         
                         // save upload stats
                         let uploadDate = Date()
                         let stats = Dictionary(grouping: objects, by: { $0.sensorType }).compactMapValues { values in
-                            UploadStatEvent(timestamp: uploadDate, sensorType: (values.first?.sensorType)!, samples: values.count)
+                            UploadStatEvent(timestamp: uploadDate, sensorType: (values.first?.sensorType )!, samples: values.count)
                         }
                         let statObjects = UploadHistory(context: self.viewContext)
                         statObjects.timestamp = uploadDate
                         statObjects.data = try? JSONEncoder().encode(stats)
                         try? self.viewContext.save()
-                        
+                        let latestRecordedDate = objects.max {a,b in a.writeTimestamp! < b.writeTimestamp! }?.writeTimestamp
                         objects.forEach (self.bgContext.delete) // delete uploaded data from local db
                         try? self.bgContext.save()
                         // record last successful upload
                         UserDefaults.standard.set(uploadDate.toISOFormat(), forKey: UserSettingsKeys.lastUploadDate)
+                        UserDefaults.standard.set(latestRecordedDate?.toISOFormat() ?? "", forKey:UserSettingsKeys.lastRecordedDateUploaded)
+                        UserDefaults.standard.set(itemsRemaining - objects.count, forKey:UserSettingsKeys.itemsRemaining)
                         self.uploading = false
                         UserDefaults.standard.set(false, forKey: UserSettingsKeys.isUploading)
                     } onError: { error in

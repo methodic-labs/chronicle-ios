@@ -141,13 +141,17 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
             logger.error("sensor \(sensor.rawValue) is not supported")
             return false
         }
-        
+        let lastFetch = Utils.getLastFetch(
+            device: SensorReaderDevice(device: fetchRequest.device),
+            sensor: Sensor.getSensor(sensor: reader.sensor))
+        let maybeLatestFetch = SRAbsoluteTime.fromCFAbsoluteTime(_cf: timestamp.toCFAbsoluteTime());
+        let latestFetch = max(lastFetch?.rawValue ?? 0.0, maybeLatestFetch.rawValue )
         if (sensorDataProperties.isValidSample) {
             guard let context = PersistenceController.shared.newBackgroundContext() else {
                 Utils.saveLastFetch(
                     device: SensorReaderDevice(device: fetchRequest.device),
                     sensor: Sensor.getSensor(sensor: reader.sensor),
-                    lastFetchValue: fetchRequest.to.toCFAbsoluteTime()
+                    lastFetchValue: latestFetch
                 )
                 return false
             }
@@ -159,9 +163,9 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         Utils.saveLastFetch(
             device: SensorReaderDevice(device: fetchRequest.device),
             sensor: Sensor.getSensor(sensor: reader.sensor),
-            lastFetchValue: fetchRequest.to.toCFAbsoluteTime()
+            lastFetchValue: latestFetch
         )
-        
+        UserDefaults.standard.set(Date(timeIntervalSinceReferenceDate: SRAbsoluteTime(latestFetch).toCFAbsoluteTime()).toISOFormat(), forKey:UserSettingsKeys.lastRecordedDate)
         return true
     }
 }
