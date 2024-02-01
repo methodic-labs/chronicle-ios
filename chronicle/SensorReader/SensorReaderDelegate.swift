@@ -101,11 +101,13 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         let sensor = reader.sensor
         let timestamp = result.timestamp
         let sample = result.sample
+        let timestampIso = Date(timeIntervalSinceReferenceDate: timestamp.toCFAbsoluteTime()).toISOFormat()
         
         var eventLogParams = [
             "sensor": sensor.rawValue,
-            "timestamp": Date(timeIntervalSinceReferenceDate: timestamp.toCFAbsoluteTime()).toISOFormat()
+            "timestamp": timestampIso
         ]
+        
         let enrollment = Enrollment.getCurrentEnrollment()
         eventLogParams.merge(enrollment.toDict()) { (_, new) in new }
         Analytics.logEvent(FirebaseAnalyticsEvent.didFetchSensorSample.rawValue, parameters: eventLogParams)
@@ -141,11 +143,12 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
             logger.error("sensor \(sensor.rawValue) is not supported")
             return false
         }
+        
         let lastFetch = Utils.getLastFetch(
             device: SensorReaderDevice(device: fetchRequest.device),
             sensor: Sensor.getSensor(sensor: reader.sensor))
-        let maybeLatestFetch = SRAbsoluteTime.fromCFAbsoluteTime(_cf: timestamp.toCFAbsoluteTime());
-        let latestFetch = max(lastFetch?.rawValue ?? 0.0, maybeLatestFetch.rawValue )
+        
+        let latestFetch = max(lastFetch?.rawValue ?? 0.0, timestamp.rawValue )
         if (sensorDataProperties.isValidSample) {
             guard let context = PersistenceController.shared.newBackgroundContext() else {
                 Utils.saveLastFetch(

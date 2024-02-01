@@ -17,7 +17,7 @@ class UploadDataOperation: Operation {
     private let bgContext: NSManagedObjectContext
     private let viewContext: NSManagedObjectContext
 
-    private let fetchLimit = 50
+    private let fetchLimit = 100
 
     private var uploading = false
     private var hasMoreData = false
@@ -140,7 +140,7 @@ class UploadDataOperation: Operation {
 
                     // wait until the current upload attempt complete, and try again if there is more data
                     while self.uploading {
-                        Thread.sleep(forTimeInterval: 5)
+                        Thread.sleep(forTimeInterval: 2)
                     }
                 }
 
