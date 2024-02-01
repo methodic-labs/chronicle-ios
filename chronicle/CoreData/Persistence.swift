@@ -60,7 +60,7 @@ class PersistenceController {
             logger.error("persistent container not initialized")
             return nil
         }
-        
+    
         let taskContext = persistentContainer!.newBackgroundContext()
         
         taskContext.automaticallyMergesChangesFromParent = true
