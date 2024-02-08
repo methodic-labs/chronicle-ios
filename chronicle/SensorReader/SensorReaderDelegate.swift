@@ -143,7 +143,7 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
             logger.error("sensor \(sensor.rawValue) is not supported")
             return false
         }
-        
+
         let lastFetch = Utils.getLastFetch(
             device: SensorReaderDevice(device: fetchRequest.device),
             sensor: Sensor.getSensor(sensor: reader.sensor))
