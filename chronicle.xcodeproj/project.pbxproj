@@ -697,7 +697,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.9;
-				PRODUCT_BUNDLE_IDENTIFIER = com.methodic.chronicle;
+				PRODUCT_BUNDLE_IDENTIFIER = com.getmethodic.chronicle.osu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -737,7 +737,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.9;
-				PRODUCT_BUNDLE_IDENTIFIER = com.methodic.chronicle;
+				PRODUCT_BUNDLE_IDENTIFIER = com.getmethodic.chronicle.osu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
