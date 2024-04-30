@@ -16,7 +16,7 @@ import FirebaseAnalytics
  */
 class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
     private let logger = Logger(subsystem: "com.openlattice.chronicle", category: "SensorReader")
-    
+    private let twentyFourHoursInSeconds: SRAbsoluteTime = SRAbsoluteTime.init(24.0*60*60)
     static var shared = SensorReaderDelegate()
     
     static var availableSensors: Set<SRSensor> {
@@ -48,24 +48,24 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
       
         //Don't submit any fetch requests until at least 24 hours have passed since enrollment
         //as SensorKit holds values for 24 hours to allow user to delete them.
-//        if( hoursElapsedSinceEnrollment < 24) {
-//            return
-//        }
+        if( hoursElapsedSinceEnrollment < 24) {
+            return
+        }
         
         var eventLogParams = Enrollment.getCurrentEnrollment().toDict()
         eventLogParams.merge(["devices": devices.description, "hoursElapsedSinceEnrollment" : String(hoursElapsedSinceEnrollment)]) { (current, _) in current }
         
         Analytics.logEvent(FirebaseAnalyticsEvent.didFetchSensorDevices.rawValue, parameters: eventLogParams)
         
-        let twentyFourHoursInSeconds: SRAbsoluteTime = SRAbsoluteTime.init(24.0*60*60)
+        
         devices.forEach { device in
             let request = SRFetchRequest()
             request.device = device
             //Should only request data that is older than 24 hours.
             //Since last fetch gets set to request.to, it will always be at leat 24 hours in the past next
             //time this code runs. So you will always have a window, even if it is small, of data to pull.
-            //request.to = SRAbsoluteTime.init(SRAbsoluteTime.current().rawValue - twentyFourHoursInSeconds.rawValue)
-            request.to = SRAbsoluteTime.current()
+            request.to = SRAbsoluteTime.init(SRAbsoluteTime.current().rawValue - twentyFourHoursInSeconds.rawValue)
+            
             
             //let lastFetch = Utils.getLastFetch(
             //    device: SensorReaderDevice(device: device),
@@ -76,15 +76,18 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
             //    return
             //}
 
-            let nineDaysAgo = request.to.rawValue - 9*twentyFourHoursInSeconds.rawValue
+            let sevenDaysAgo = request.to.rawValue - 7*twentyFourHoursInSeconds.rawValue
             
-            //Get 1 week ago as long as it is after enrollment, but before last fetch.
-            request.from = SRAbsoluteTime.init(max(nineDaysAgo, enrollmentAbsoluteTime.rawValue));
+            //Get up to 1 week ago as long as it is 24 hours after enrollment
+            request.from = SRAbsoluteTime.init(max(sevenDaysAgo, enrollmentAbsoluteTime.rawValue));
             let startDate = Date(timeIntervalSinceReferenceDate: request.from.toCFAbsoluteTime())
             let endDate  = Date(timeIntervalSinceReferenceDate: request.to.toCFAbsoluteTime())
             
             logger.info("fetching data for \(reader.sensor.rawValue) -  start: \(startDate.description), end: \(endDate.description)")
             reader.fetch(request)
+            
+            let timestampIso = Date(timeIntervalSinceReferenceDate: SRAbsoluteTime.current().toCFAbsoluteTime()).toISOFormat()
+            UserDefaults.standard.set(timestampIso, forKey:UserSettingsKeys.lastFetchSubmitted)
         }
     }
     
@@ -103,6 +106,8 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         let sample = result.sample
         let timestampIso = Date(timeIntervalSinceReferenceDate: timestamp.toCFAbsoluteTime()).toISOFormat()
         
+        UserDefaults.standard.set(timestampIso, forKey:UserSettingsKeys.lastReport)
+        
         var eventLogParams = [
             "sensor": sensor.rawValue,
             "timestamp": timestampIso
@@ -113,7 +118,7 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         Analytics.logEvent(FirebaseAnalyticsEvent.didFetchSensorSample.rawValue, parameters: eventLogParams)
                 
         var sensorDataProperties: SensorDataProperties
-
+        
         switch sensor {
         case .phoneUsageReport:
             sensorDataProperties = SensorDataConverter.getPhoneUsageData(
