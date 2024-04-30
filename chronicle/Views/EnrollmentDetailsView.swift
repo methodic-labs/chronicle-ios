@@ -14,6 +14,8 @@ struct EnrollmentDetailsView: View {
     @AppStorage(UserSettingsKeys.lastUploadDate) var lastUploadDate: String?
     @AppStorage(UserSettingsKeys.lastRecordedDate) var lastRecordedDate: String?
     @AppStorage(UserSettingsKeys.lastRecordedDateUploaded) var lastRecordedDateUploaded: String?
+    @AppStorage(UserSettingsKeys.lastReport) var lastReport: String?
+    @AppStorage(UserSettingsKeys.lastFetchSubmitted) var lastFetchSubmitted: String?
     @AppStorage(UserSettingsKeys.itemsRemaining) var itemsRemaining: Int = 0
     @AppStorage(UserSettingsKeys.isUploading) var isUploading: Bool = false
 
@@ -30,7 +32,16 @@ struct EnrollmentDetailsView: View {
                     .minimumScaleFactor(0.01)
                     .foregroundColor(Color.gray)
                     .padding(.bottom)
-                
+                Text("Last Fetch Submitted to SensorKit:").fontWeight(.medium).padding(.bottom,3)
+                Text(formatDate(date: lastFetchSubmitted))
+                    .minimumScaleFactor(0.01)
+                    .foregroundColor(Color.gray)
+                    .padding(.bottom)
+                Text("Last Invoke Date from SensorKit:").fontWeight(.medium).padding(.bottom,3)
+                Text(formatDate(date: lastReport))
+                    .minimumScaleFactor(0.01)
+                    .foregroundColor(Color.gray)
+                    .padding(.bottom)
                 Text("Local Last Recorded Date:").fontWeight(.medium).padding(.bottom,3)
                 Text(formatDate(date: lastRecordedDate))
                     .minimumScaleFactor(0.01)

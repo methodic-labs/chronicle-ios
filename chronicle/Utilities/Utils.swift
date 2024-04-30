@@ -21,6 +21,15 @@ static func getLastFetch(device: SensorReaderDevice, sensor: Sensor?) -> SRAbsol
         let lastFetchData = UserDefaults.standard.object(forKey: UserSettingsKeys.lastFetch) as? [String: [String: Double]] ?? [:]
         
         if let valuesBySensor = lastFetchData[sensor.rawValue], let value = valuesBySensor[device.systemName] {
+            
+            if let lastReport = UserDefaults.standard.object(forKey: UserSettingsKeys.lastReport) {
+                
+            } else {
+                let lR = Date(timeIntervalSinceReferenceDate: value).toISOFormat()
+                UserDefaults.standard.set(lR, forKey:UserSettingsKeys.lastReport)
+                lR
+            }
+            
             return SRAbsoluteTime.fromCFAbsoluteTime(_cf: value)
         }
         
@@ -40,7 +49,7 @@ static func getLastFetch(device: SensorReaderDevice, sensor: Sensor?) -> SRAbsol
         var valuesBySensor = lastFetchData[sensor.rawValue] ?? [:]
         valuesBySensor[device.systemName] = lastFetchValue
         lastFetchData[sensor.rawValue] = valuesBySensor
-        
+
         UserDefaults.standard.set(lastFetchData, forKey: UserSettingsKeys.lastFetch)
     }
 
