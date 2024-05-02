@@ -14,6 +14,7 @@
 	<true/>
 	<key>com.apple.developer.sensorkit.reader.allow</key>
 	<array>
+		<string>phone-usage</string>
 		<string>device-usage</string>
 	</array>
 </dict>
