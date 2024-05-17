@@ -14,6 +14,8 @@ enum FirebaseAnalyticsEvent: String {
     case backgroundStartUpload // backround refresh handler for uploading data
     case didFetchSensorDevices // SensorReaderDelegate didFetch callback
     case didFetchSensorSample // SensorReaderDelegate didFetchResult callback
+    case fetchSensorSampleFailedUnknownType // failed while fetching sensor samples
+    case fetchSensorSampleFailedPersistenceController // failed while fetching sensor samples
     case uploadData // successfully persist data to server
     case uploadDataFailure
     case didHealthKitStepCountObserverFire //
