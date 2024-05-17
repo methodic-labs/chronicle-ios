@@ -76,7 +76,7 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
             //    return
             //}
 
-            let sevenDaysAgo = request.to.rawValue - 7*twentyFourHoursInSeconds.rawValue
+            let sevenDaysAgo = request.to.rawValue - 2*twentyFourHoursInSeconds.rawValue
             
             //Get up to 1 week ago as long as it is 24 hours after enrollment
             request.from = SRAbsoluteTime.init(max(sevenDaysAgo, enrollmentAbsoluteTime.rawValue));
@@ -146,7 +146,7 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
             )
         default:
             logger.error("sensor \(sensor.rawValue) is not supported")
-            return false
+            return true
         }
 
         let lastFetch = Utils.getLastFetch(
@@ -161,7 +161,7 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
                     sensor: Sensor.getSensor(sensor: reader.sensor),
                     lastFetchValue: latestFetch
                 )
-                return false
+                return true
             }
             let operation = ImportIntoCoreDataOperation(context: context, data: sensorDataProperties)
             operation.start()
