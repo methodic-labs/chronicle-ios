@@ -682,7 +682,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = chronicle/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Chronicle (EMBRACE)";
+				INFOPLIST_KEY_CFBundleDisplayName = "Chronicle for Research";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Chronicle would like read your step data in order to read sensors in the background";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Chronicle would like to write step data in order to work with sensors in the background";
@@ -724,7 +724,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = chronicle/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Chronicle (EMBRACE)";
+				INFOPLIST_KEY_CFBundleDisplayName = "Chronicle for Research";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Chronicle would like read your step data in order to read sensors in the background";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Chronicle would like to write step data in order to work with sensors in the background";
