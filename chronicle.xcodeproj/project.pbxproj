@@ -682,7 +682,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = chronicle/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Chronicle for Research";
+				INFOPLIST_KEY_CFBundleDisplayName = "Chronicle (Embrace)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Chronicle would like read your step data in order to read sensors in the background";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Chronicle would like to write step data in order to work with sensors in the background";
@@ -702,9 +702,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.getmethodic.chronicle.parkview.embrace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -725,7 +725,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = chronicle/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Chronicle for Research";
+				INFOPLIST_KEY_CFBundleDisplayName = "Chronicle (Embrace)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Chronicle would like read your step data in order to read sensors in the background";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Chronicle would like to write step data in order to work with sensors in the background";
@@ -745,9 +745,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.getmethodic.chronicle.parkview.embrace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
