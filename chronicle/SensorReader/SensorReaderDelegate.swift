@@ -84,7 +84,13 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
             let endDate  = Date(timeIntervalSinceReferenceDate: request.to.toCFAbsoluteTime())
             
             logger.info("fetching data for \(reader.sensor.rawValue) -  start: \(startDate.description), end: \(endDate.description)")
+            
             reader.fetch(request)
+            
+            var eventLogParams = Enrollment.getCurrentEnrollment().toDict()
+            eventLogParams.merge(["device": device.description, "startDate": startDate.toISOFormat(), "endDate": endDate.toISOFormat(), "hoursElapsedSinceEnrollment" : String(hoursElapsedSinceEnrollment)]) { (current, _) in current }
+            
+            Analytics.logEvent(FirebaseAnalyticsEvent.didFetchSensorDevices.rawValue, parameters: eventLogParams)
             
             let timestampIso = Date(timeIntervalSinceReferenceDate: SRAbsoluteTime.current().toCFAbsoluteTime()).toISOFormat()
             UserDefaults.standard.set(timestampIso, forKey:UserSettingsKeys.lastFetchSubmitted)
@@ -104,13 +110,16 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         let sensor = reader.sensor
         let timestamp = result.timestamp
         let sample = result.sample
+        let lastReport = SRAbsoluteTime.current();
+        let lastReportIso = Date(timeIntervalSinceReferenceDate: lastReport.toCFAbsoluteTime()).toISOFormat()
         let timestampIso = Date(timeIntervalSinceReferenceDate: timestamp.toCFAbsoluteTime()).toISOFormat()
         
-        UserDefaults.standard.set(timestampIso, forKey:UserSettingsKeys.lastReport)
+        UserDefaults.standard.set(lastReportIso, forKey:UserSettingsKeys.lastReport)
         
         var eventLogParams = [
             "sensor": sensor.rawValue,
-            "timestamp": timestampIso
+            "timestamp": timestampIso,
+            "reportTime": lastReportIso
         ]
         
         let enrollment = Enrollment.getCurrentEnrollment()
@@ -146,7 +155,8 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
             )
         default:
             logger.error("sensor \(sensor.rawValue) is not supported")
-            return false
+            Analytics.logEvent(FirebaseAnalyticsEvent.fetchSensorSampleFailedUnknownType.rawValue, parameters: eventLogParams)
+            return true
         }
 
         let lastFetch = Utils.getLastFetch(
@@ -161,7 +171,8 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
                     sensor: Sensor.getSensor(sensor: reader.sensor),
                     lastFetchValue: latestFetch
                 )
-                return false
+                Analytics.logEvent(FirebaseAnalyticsEvent.fetchSensorSampleFailedPersistenceController.rawValue, parameters: eventLogParams)
+                return true
             }
             let operation = ImportIntoCoreDataOperation(context: context, data: sensorDataProperties)
             operation.start()
