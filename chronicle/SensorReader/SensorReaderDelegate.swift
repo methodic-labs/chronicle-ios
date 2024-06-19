@@ -100,6 +100,9 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
     }
     
     func sensorReader(_ reader: SRSensorReader, fetchDevicesDidFailWithError error: Error) {
+        var eventLogParams = Enrollment.getCurrentEnrollment().toDict()
+        eventLogParams.merge(["device": reader.sensor.rawValue, "description" : reader.description, "error": error.localizedDescription]) { (current, _) in current }
+        Analytics.logEvent(FirebaseAnalyticsEvent.fetchSensorSampleFailedUnknownType.rawValue, parameters: eventLogParams)
         logger.error("unable to fetch devices for sensor: \(reader.sensor.rawValue)")
     }
     
