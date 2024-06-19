@@ -64,22 +64,24 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
             //Should only request data that is older than 24 hours.
             //Since last fetch gets set to request.to, it will always be at leat 24 hours in the past next
             //time this code runs. So you will always have a window, even if it is small, of data to pull.
-            request.to = SRAbsoluteTime.init(SRAbsoluteTime.current().rawValue - twentyFourHoursInSeconds.rawValue)
-            
-            
-            //let lastFetch = Utils.getLastFetch(
-            //    device: SensorReaderDevice(device: device),
-            //    sensor: Sensor.getSensor(sensor: reader.sensor)
-            //)
-            //
+            let sevenDaysAgo = request.to.rawValue - 7*twentyFourHoursInSeconds.rawValue
+                       
+            let lastFetch = Utils.getLastFetch(
+                device: SensorReaderDevice(device: device),
+                sensor: Sensor.getSensor(sensor: reader.sensor)
+            ) ?? SRAbsoluteTime.init(max(sevenDaysAgo, enrollmentAbsoluteTime.rawValue))
+                       
             //guard let lastFetch = lastFetch else {
             //    return
             //}
-
-            let sevenDaysAgo = request.to.rawValue - 7*twentyFourHoursInSeconds.rawValue
             
             //Get up to 1 week ago as long as it is 24 hours after enrollment
-            request.from = SRAbsoluteTime.init(max(sevenDaysAgo, enrollmentAbsoluteTime.rawValue));
+            //            request.from = SRAbsoluteTime.init(max(sevenDaysAgo, enrollmentAbsoluteTime.rawValue));
+            request.from = lastFetch
+            //Should only request data that is older than 24 hours.
+            //Since last fetch gets set to request.to, it will always be at leat 24 hours in the past next
+            //time this code runs. So you will always have a window, even if it is small, of data to pull.
+            request.to = SRAbsoluteTime.init(SRAbsoluteTime.current().rawValue - twentyFourHoursInSeconds.rawValue)
             let startDate = Date(timeIntervalSinceReferenceDate: request.from.toCFAbsoluteTime())
             let endDate  = Date(timeIntervalSinceReferenceDate: request.to.toCFAbsoluteTime())
             

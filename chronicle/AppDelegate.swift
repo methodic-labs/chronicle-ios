@@ -137,10 +137,10 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
             let reader = SRSensorReader(sensor: sensor)
             reader.delegate = SensorReaderDelegate.shared
 
-            if reader.authorizationStatus == SRAuthorizationStatus.authorized {
+//            if reader.authorizationStatus == SRAuthorizationStatus.authorized {
 //                reader.startRecording()
-                reader.fetchDevices()
-            }
+            reader.fetchDevices()
+//            }
         }
     }
 
