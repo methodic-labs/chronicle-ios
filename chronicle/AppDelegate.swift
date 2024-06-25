@@ -151,7 +151,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         let invalidSensors = Set(invalid.map { Sensor.getSRSensor(sensor: $0)}.compactMap { $0 })
         let allSensors = permittedSensors.union(invalidSensors)
 
-        SRSensorReader.requestAuthorization(sensors: permittedSensors ) { (error: Error?) -> Void in
+        SRSensorReader.requestAuthorization(sensors: permittedSensors) { (error: Error?) -> Void in
             if let error = error {
                 self.authorizationError = true
                 self.logger.info("Authorization failed: \(error.localizedDescription)")
@@ -167,7 +167,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
                     self.sensorsAuthorized = true
                     reader.delegate = SensorReaderDelegate.shared
                     if (invalidSensors.contains(sensor)) {
-                        reader.stopRecording()
+//                        reader.stopRecording()
                     } else {
                         reader.startRecording()
                         Utils.saveInitialLastFetch(sensor: Sensor.getSensor(sensor: sensor))
