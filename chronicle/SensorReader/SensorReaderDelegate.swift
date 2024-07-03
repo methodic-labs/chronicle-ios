@@ -28,7 +28,6 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         let sensors = savedValues.map { Sensor.init(rawValue: $0) }.compactMap { $0 }
         
         return Set(sensors.map { Sensor.getSRSensor(sensor: $0)}.compactMap { $0 })
-        
     }
     
     func sensorReaderWillStartRecording(_ reader: SRSensorReader) {
@@ -61,30 +60,29 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         devices.forEach { device in
             let request = SRFetchRequest()
             request.device = device
-            //Should only request data that is older than 24 hours.
-            //Since last fetch gets set to request.to, it will always be at leat 24 hours in the past next
-            //time this code runs. So you will always have a window, even if it is small, of data to pull.
-            request.to = SRAbsoluteTime.init(SRAbsoluteTime.current().rawValue - twentyFourHoursInSeconds.rawValue)
             
-            
-            //let lastFetch = Utils.getLastFetch(
-            //    device: SensorReaderDevice(device: device),
-            //    sensor: Sensor.getSensor(sensor: reader.sensor)
-            //)
-            //
-            //guard let lastFetch = lastFetch else {
-            //    return
-            //}
-
             let sevenDaysAgo = request.to.rawValue - 7*twentyFourHoursInSeconds.rawValue
+            // If last fetch is not present then we return the max of seven days ago or the enrollmentAbsoluteTime.rawValue
+            let lastFetch = Utils.getLastFetch(
+                device: SensorReaderDevice(device: device),
+                sensor: Sensor.getSensor(sensor: reader.sensor)
+            ) ?? SRAbsoluteTime.init(max(sevenDaysAgo, enrollmentAbsoluteTime.rawValue))
             
-            //Get up to 1 week ago as long as it is 24 hours after enrollment
-            request.from = SRAbsoluteTime.init(max(sevenDaysAgo, enrollmentAbsoluteTime.rawValue));
+            request.from = lastFetch
+            //Only request data that is older than 24 hours.
+            request.to = SRAbsoluteTime.init(SRAbsoluteTime.current().rawValue - twentyFourHoursInSeconds.rawValue)
+            // Let's get ISO dates for readable logs.
             let startDate = Date(timeIntervalSinceReferenceDate: request.from.toCFAbsoluteTime())
             let endDate  = Date(timeIntervalSinceReferenceDate: request.to.toCFAbsoluteTime())
             
             logger.info("fetching data for \(reader.sensor.rawValue) -  start: \(startDate.description), end: \(endDate.description)")
+            
             reader.fetch(request)
+            
+            var eventLogParams = Enrollment.getCurrentEnrollment().toDict()
+            eventLogParams.merge(["device": device.description, "startDate": startDate.toISOFormat(), "endDate": endDate.toISOFormat(), "hoursElapsedSinceEnrollment" : String(hoursElapsedSinceEnrollment)]) { (current, _) in current }
+            
+            Analytics.logEvent(FirebaseAnalyticsEvent.didFetchSensorDevices.rawValue, parameters: eventLogParams)
             
             let timestampIso = Date(timeIntervalSinceReferenceDate: SRAbsoluteTime.current().toCFAbsoluteTime()).toISOFormat()
             UserDefaults.standard.set(timestampIso, forKey:UserSettingsKeys.lastFetchSubmitted)
@@ -92,6 +90,9 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
     }
     
     func sensorReader(_ reader: SRSensorReader, fetchDevicesDidFailWithError error: Error) {
+        var eventLogParams = Enrollment.getCurrentEnrollment().toDict()
+               eventLogParams.merge(["device": reader.sensor.rawValue, "description" : reader.description, "error": error.localizedDescription]) { (current, _) in current }
+               Analytics.logEvent(FirebaseAnalyticsEvent.fetchSensorSampleFailedUnknownType.rawValue, parameters: eventLogParams)
         logger.error("unable to fetch devices for sensor: \(reader.sensor.rawValue)")
     }
     
@@ -104,13 +105,16 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         let sensor = reader.sensor
         let timestamp = result.timestamp
         let sample = result.sample
+        let lastReport = SRAbsoluteTime.current();
+        let lastReportIso = Date(timeIntervalSinceReferenceDate: lastReport.toCFAbsoluteTime()).toISOFormat()
         let timestampIso = Date(timeIntervalSinceReferenceDate: timestamp.toCFAbsoluteTime()).toISOFormat()
         
-        UserDefaults.standard.set(timestampIso, forKey:UserSettingsKeys.lastReport)
+        UserDefaults.standard.set(lastReportIso, forKey:UserSettingsKeys.lastReport)
         
         var eventLogParams = [
             "sensor": sensor.rawValue,
-            "timestamp": timestampIso
+            "timestamp": timestampIso,
+            "reportTime": lastReportIso
         ]
         
         let enrollment = Enrollment.getCurrentEnrollment()
@@ -146,7 +150,8 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
             )
         default:
             logger.error("sensor \(sensor.rawValue) is not supported")
-            return false
+            Analytics.logEvent(FirebaseAnalyticsEvent.fetchSensorSampleFailedUnknownType.rawValue, parameters: eventLogParams)
+            return true
         }
 
         let lastFetch = Utils.getLastFetch(
@@ -156,24 +161,33 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         let latestFetch = max(lastFetch?.rawValue ?? 0.0, timestamp.rawValue )
         if (sensorDataProperties.isValidSample) {
             guard let context = PersistenceController.shared.newBackgroundContext() else {
-                Utils.saveLastFetch(
-                    device: SensorReaderDevice(device: fetchRequest.device),
-                    sensor: Sensor.getSensor(sensor: reader.sensor),
-                    lastFetchValue: latestFetch
-                )
-                return false
+                
+                //Don't save last fetch if data was not imported into core data.
+//                Utils.saveLastFetch(
+//                    device: SensorReaderDevice(device: fetchRequest.device),
+//                    sensor: Sensor.getSensor(sensor: reader.sensor),
+//                    lastFetchValue: latestFetch
+//                )
+                Analytics.logEvent(FirebaseAnalyticsEvent.fetchSensorSampleFailedPersistenceController.rawValue, parameters: eventLogParams)
+                return true
             }
             let operation = ImportIntoCoreDataOperation(context: context, data: sensorDataProperties)
             operation.start()
+            operation.waitUntilFinished()
+            // Save the last fetch after data is fully imported successfully.
+            Utils.saveLastFetch(
+                device: SensorReaderDevice(device: fetchRequest.device),
+                sensor: Sensor.getSensor(sensor: reader.sensor),
+                lastFetchValue: latestFetch
+            )
         }
         
-        // save last fetch
-        Utils.saveLastFetch(
-            device: SensorReaderDevice(device: fetchRequest.device),
-            sensor: Sensor.getSensor(sensor: reader.sensor),
-            lastFetchValue: latestFetch
+  
+        UserDefaults.standard.set(
+            Date(timeIntervalSinceReferenceDate: SRAbsoluteTime(latestFetch).toCFAbsoluteTime()).toISOFormat(),
+            forKey:UserSettingsKeys.lastRecordedDate
         )
-        UserDefaults.standard.set(Date(timeIntervalSinceReferenceDate: SRAbsoluteTime(latestFetch).toCFAbsoluteTime()).toISOFormat(), forKey:UserSettingsKeys.lastRecordedDate)
+        
         return true
     }
 }

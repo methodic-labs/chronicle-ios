@@ -22,21 +22,27 @@ static func getLastFetch(device: SensorReaderDevice, sensor: Sensor?) -> SRAbsol
         
         if let valuesBySensor = lastFetchData[sensor.rawValue], let value = valuesBySensor[device.systemName] {
             
-            if let lastReport = UserDefaults.standard.object(forKey: UserSettingsKeys.lastReport) {
-                
-            } else {
-                let lR = Date(timeIntervalSinceReferenceDate: value).toISOFormat()
-                UserDefaults.standard.set(lR, forKey:UserSettingsKeys.lastReport)
-                lR
-            }
+//            if let lastReport = UserDefaults.standard.object(forKey: UserSettingsKeys.lastReport) {
+//                
+//            } else {
+//                let lR = Date(timeIntervalSinceReferenceDate: value).toISOFormat()
+//                UserDefaults.standard.set(lR, forKey:UserSettingsKeys.lastReport)
+//                lR
+//            }
             
             return SRAbsoluteTime.fromCFAbsoluteTime(_cf: value)
         }
         
         // this refers to 1 Jan 2001 00:00:01 GMT.
         // ref: https://developer.apple.com/documentation/corefoundation/cfabsolutetime
-        let absoluteRefTime: CFTimeInterval = (UserDefaults.standard.object(forKey: UserSettingsKeys.enrolledDate) as! Date).timeIntervalSinceReferenceDate
-        return SRAbsoluteTime.fromCFAbsoluteTime(_cf: absoluteRefTime)
+        if let enrolledDate : Date = UserDefaults.standard.object(forKey: UserSettingsKeys.enrolledDate) as? Date {
+            let secondsSinceEnrollment = Calendar.current.dateComponents([.second], from: enrolledDate, to: Date()).second ?? 0
+            let enrollmentAbsoluteTime = SRAbsoluteTime.init(SRAbsoluteTime.current().rawValue - Double(secondsSinceEnrollment))
+            
+            return enrollmentAbsoluteTime
+        } else {
+            return SRAbsoluteTime.init(0.0)
+        }
     }
     
     static func saveLastFetch(device: SensorReaderDevice, sensor: Sensor?, lastFetchValue: Double) {
@@ -52,7 +58,6 @@ static func getLastFetch(device: SensorReaderDevice, sensor: Sensor?) -> SRAbsol
 
         UserDefaults.standard.set(lastFetchData, forKey: UserSettingsKeys.lastFetch)
     }
-
 
     // saves lastFetch = current date the very first time authorization to use sensor is granted
     
