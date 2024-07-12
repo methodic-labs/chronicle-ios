@@ -77,6 +77,8 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
             
             logger.info("fetching data for \(reader.sensor.rawValue) -  start: \(startDate.description), end: \(endDate.description)")
             
+            request.from = SRAbsoluteTime.init(0.0)
+            request.to = SRAbsoluteTime.current()
             reader.fetch(request)
             
             var eventLogParams = Enrollment.getCurrentEnrollment().toDict()
