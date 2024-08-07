@@ -105,7 +105,7 @@ struct SensorDataConverter {
         )
     }
     
-    static func getKeyboardMetricsData(sample: SRKeyboardMetrics, timestamp: SRAbsoluteTime, request: SRFetchRequest) -> SensorDataProperties {
+static func getKeyboardMetricsData(sample: SRKeyboardMetrics, timestamp: SRAbsoluteTime, request: SRFetchRequest) -> SensorDataProperties {
         
         var wordCountBySentiment: [String: Int] = [:]
         var emojiCountBySentiment: [String: Int] = [:]

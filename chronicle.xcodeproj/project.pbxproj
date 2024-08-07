@@ -698,7 +698,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10.666666	PRODUCT_BUNDLE_IDENTIFIER = com.getmethodic.chronicle.calpoly.ibaby;
+				MARKETING_VERSION = 1.10.7	
+				PRODUCT_BUNDLE_IDENTIFIER = com.getmethodic.chronicle.calpoly.ibaby;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -741,7 +742,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10.6;
+				MARKETING_VERSION = 1.10.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.getmethodic.chronicle.calpoly.ibaby;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
