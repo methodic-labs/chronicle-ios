@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.getmethodic.chronicle.internal</string>
+	<string>com.methodic.chronicle</string>
 	<key>PROJECT_ID</key>
 	<string>chronicle-82ee2</string>
 	<key>STORAGE_BUCKET</key>
