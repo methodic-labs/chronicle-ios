@@ -54,8 +54,9 @@ struct ChronicleApp: App {
                                                              , to: Date())!
                     UserDefaults.standard.set(fourWeeksAgo,forKey: UserSettingsKeys.enrolledDate)
                 }
-                appDelegate.uploadSensorData()
+
                 appDelegate.fetchSensorSamples()
+                appDelegate.uploadSensorData()
             }
         }
     }
