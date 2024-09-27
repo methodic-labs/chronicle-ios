@@ -18,7 +18,6 @@ import FirebaseAnalytics
  The app delegate submits task requests and registers launch handlers for database background tasks
  */
 class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
-
     @Published var authorizationError: Bool = false
     @Published var sensorsAuthorized: Bool = false
     @Published var healthKitAuthorized: Bool = false
@@ -40,7 +39,22 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         FirebaseApp.configure()
         
         application.setMinimumBackgroundFetchInterval(15 * 60) // background refresh every 15 minutes
-
+        
+        // Configure background health processing task
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.getmethodic.chronicle.fetchSensorSamples", using: nil ) { task in
+            self.handleFetchSensorSamples(task: task as! BGProcessingTask)
+        }
+        
+        logger.info("Registered handlers for fetchSensorSamples task.")
+        
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.getmethodic.chronicle.fetchSensorSamplesHeavy", using: nil ) { task in
+            self.handleFetchSensorSamples(task: task as! BGProcessingTask)
+        }
+        
+        logger.info("Registered handlers for fetchSensorSamplesHeavy task.")
+        
+        scheduleFetchSensorSamplesTask()
+        
         // Configure HealthKit
         if !HKHealthStore.isHealthDataAvailable() {
             return true
@@ -89,6 +103,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         let enrollment = Enrollment.getCurrentEnrollment()
         Analytics.logEvent(FirebaseAnalyticsEvent.didAppWakeUpForBackgroundFetch.rawValue, parameters: enrollment.toDict())
         
+        self.scheduleFetchSensorSamplesTask()
         self.fetchSensorSamples()
         self.uploadSensorData()
         
@@ -130,7 +145,79 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         }
 
     }
+    
+    func scheduleFetchSensorSamplesTask() {
+        
+        let fetchSensorSamplesTask = if #available(iOS 17.0, *) { BGHealthResearchTaskRequest(identifier: "com.getmethodic.chronicle.fetchSensorSamples")
+        } else {
+            BGAppRefreshTaskRequest(identifier: "com.getmethodic.chronicle.fetchSensorSamples" )
+        }
+        
+        fetchSensorSamplesTask.earliestBeginDate = Date(timeIntervalSinceNow: 15*60) // Schedule it to run sometime after the next 15 minutes.
+        
+        do {
+            try BGTaskScheduler.shared.submit(fetchSensorSamplesTask)
+        } catch {
+            logger.error("Failed to submit health research task: \(error)")
+            let eventLogParams = Enrollment.getCurrentEnrollment().toDict()
+            Analytics.logEvent(FirebaseAnalyticsEvent.backgroundHealthTaskRegistrationFailed.rawValue, parameters: eventLogParams)
+        }
+    }
+    
+    func scheduleFetchSensorSamplesHeavyTask() {
+        let fetchSensorSamplesTask = BGProcessingTaskRequest(identifier: "com.getmethodic.chronicle.fetchSensorSamplesHeavy" )
 
+        fetchSensorSamplesTask.earliestBeginDate = Date(timeIntervalSinceNow: 12*60*60) // Schedule it to run sometime after the next 12 hours.
+        
+        do {
+            try BGTaskScheduler.shared.submit(fetchSensorSamplesTask)
+        } catch {
+            logger.error("Failed to submit processing task: \(error)")
+            let eventLogParams = Enrollment.getCurrentEnrollment().toDict()
+            Analytics.logEvent(FirebaseAnalyticsEvent.backgroundHealthTaskRegistrationFailed.rawValue, parameters: eventLogParams)
+        }
+    }
+    
+    func handleFetchSensorSamples( task: BGProcessingTask ) {
+        handleFetchSensorSamples(task: task as BGTask)
+    }
+    
+    func handleFetchSesnsorSamples( task: BGAppRefreshTask ) {
+        handleFetchSensorSamples(task: task as BGTask)
+    }
+    
+    func handleFetchSensorSamples(task: BGTask) {
+        let sensors = SensorReaderDelegate.availableSensors
+        var successfulFetch = false
+        sensors.forEach { sensor in
+            let reader = SRSensorReader(sensor: sensor)
+            reader.delegate = SensorReaderDelegate.shared
+            if reader.authorizationStatus == SRAuthorizationStatus.authorized {
+                reader.startRecording()
+            }
+            reader.fetchDevices()
+            successfulFetch = true
+        }
+        
+        task.expirationHandler = {
+            self.scheduleFetchSensorSamplesTask()
+            if !successfulFetch {
+                let logger = Logger(subsystem: "com.openlattice.chronicle", category: "SensorReader")
+                logger.error("Unable to submit fetch request.")
+                let eventLogParams = Enrollment.getCurrentEnrollment().toDict()
+                Analytics.logEvent(FirebaseAnalyticsEvent.backgroundHealthTaskFetchFailed.rawValue, parameters: eventLogParams)
+            }
+        }
+        
+        task.setTaskCompleted(success: true)
+        
+        scheduleFetchSensorSamplesTask()
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        scheduleFetchSensorSamplesTask()
+    }
+    
     func fetchSensorSamples() {
         let sensors = SensorReaderDelegate.availableSensors
         sensors.forEach { sensor in

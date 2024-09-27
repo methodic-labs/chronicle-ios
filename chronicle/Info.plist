@@ -4,6 +4,8 @@
 <dict>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
+		<string>com.getmethodic.chronicle.fetchSensorSamples</string>
+		<string>com.getmethodic.chronicle.fetchSensorSamplesHeavy</string>
 		<string>com.openlattice.chronicle.fetchSensorSamples</string>
 		<string>com.openlattice.chronicle.uploadData</string>
 	</array>

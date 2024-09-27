@@ -12,6 +12,8 @@ import Foundation
 enum FirebaseAnalyticsEvent: String {
     case backgroundStartFetch // backround refresh handler for fetching sensor data
     case backgroundStartUpload // backround refresh handler for uploading data
+    case backgroundHealthTaskRegistrationFailed // background health task registration for fetching sensor data failed
+    case backgroundHealthTaskFetchFailed // Background fetch handler for requesting sensor data.
     case didFetchSensorDevices // SensorReaderDelegate didFetch callback
     case didFetchSensorSample // SensorReaderDelegate didFetchResult callback
     case fetchSensorSampleFailedError // failed while fetching sensor samples with sensorkit reported error
