@@ -72,10 +72,10 @@ static func getLastFetch(device: SensorReaderDevice, sensor: Sensor?) -> SRAbsol
         var savedValues = lastFetchData[sensor.rawValue] ?? [:]
         
         if (savedValues.isEmpty) {
-            savedValues[SensorReaderDevice.iOSModel] = lastFetch.timeIntervalSinceNow
+            savedValues[SensorReaderDevice.iOSModel] = lastFetch.timeIntervalSinceReferenceDate
             
             if (sensor == Sensor.deviceUsage ) {
-                savedValues[SensorReaderDevice.watchOSModel] = lastFetch.timeIntervalSinceNow
+                savedValues[SensorReaderDevice.watchOSModel] = lastFetch.timeIntervalSinceReferenceDate
             }
             lastFetchData[sensor.rawValue] = savedValues
             

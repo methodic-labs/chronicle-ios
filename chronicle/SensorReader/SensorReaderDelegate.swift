@@ -60,23 +60,26 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
             let request = SRFetchRequest()
             request.device = device
             
-            let sevenDaysAgo = request.to.rawValue - 7*twentyFourHoursInSeconds.rawValue
-            // If last fetch is not present then we return the max of seven days ago or the enrollmentAbsoluteTime.rawValue
+            let sevenDaysAgo = request.to.rawValue - 2*twentyFourHoursInSeconds.rawValue
+
             let lastFetch = Utils.getLastFetch(
                 device: SensorReaderDevice(device: device),
                 sensor: Sensor.getSensor(sensor: reader.sensor)
             ) ?? SRAbsoluteTime.init(max(sevenDaysAgo, enrollmentAbsoluteTime.rawValue))
-
+            
             request.from = lastFetch
             //Only request data that is older than 24 hours.
             request.to = SRAbsoluteTime.init(SRAbsoluteTime.current().rawValue - twentyFourHoursInSeconds.rawValue)
             // Let's get ISO dates for readable logs.
+
             let startDate = Date(timeIntervalSinceReferenceDate: request.from.toCFAbsoluteTime())
             let endDate  = Date(timeIntervalSinceReferenceDate: request.to.toCFAbsoluteTime())
             
             logger.info("fetching data for \(reader.sensor.rawValue) -  start: \(startDate.description), end: \(endDate.description)")
+            
             request.from = SRAbsoluteTime.init(0.0)
             request.to = SRAbsoluteTime.current()
+           
             reader.fetch(request)
             
             var eventLogParams = Enrollment.getCurrentEnrollment().toDict()
@@ -156,7 +159,8 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
 
         let lastFetch = Utils.getLastFetch(
             device: SensorReaderDevice(device: fetchRequest.device),
-            sensor: Sensor.getSensor(sensor: reader.sensor))
+            sensor: Sensor.getSensor(sensor: reader.sensor)
+        )
         
         let latestFetch = max(lastFetch?.rawValue ?? 0.0, timestamp.rawValue )
         if (sensorDataProperties.isValidSample) {

@@ -137,10 +137,10 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
             let reader = SRSensorReader(sensor: sensor)
             reader.delegate = SensorReaderDelegate.shared
 
-//            if reader.authorizationStatus == SRAuthorizationStatus.authorized {
-//                reader.startRecording()
+            if reader.authorizationStatus == SRAuthorizationStatus.authorized {
+                reader.startRecording()
+            }
             reader.fetchDevices()
-//            }
         }
     }
 
@@ -167,7 +167,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
                     self.sensorsAuthorized = true
                     reader.delegate = SensorReaderDelegate.shared
                     if (invalidSensors.contains(sensor)) {
-//                        reader.stopRecording()
+                        reader.stopRecording()
                     } else {
                         reader.startRecording()
                         Utils.saveInitialLastFetch(sensor: Sensor.getSensor(sensor: sensor))
