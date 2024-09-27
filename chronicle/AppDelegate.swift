@@ -45,9 +45,13 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
             self.handleFetchSensorSamples(task: task as! BGProcessingTask)
         }
         
+        logger.info("Registered handlers for fetchSensorSamples task.")
+        
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.getmethodic.chronicle.fetchSensorSamplesHeavy", using: nil ) { task in
             self.handleFetchSensorSamples(task: task as! BGProcessingTask)
         }
+        
+        logger.info("Registered handlers for fetchSensorSamplesHeavy task.")
         
         scheduleFetchSensorSamplesTask()
         
