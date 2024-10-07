@@ -194,6 +194,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     }
     
     func handleFetchSensorSamples(task: BGTask) {
+        logger.info("Executing fetch sensor samples task.")
         let sensors = SensorReaderDelegate.availableSensors
         var successfulFetch = false
         sensors.forEach { sensor in
@@ -209,8 +210,9 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         
         task.expirationHandler = {
             self.scheduleFetchSensorSamplesTask()
+            let logger = Logger(subsystem: "com.openlattice.chronicle", category: "SensorReader")
+            logger.info("SensorKit fetch task expiring.")
             if !successfulFetch {
-                let logger = Logger(subsystem: "com.openlattice.chronicle", category: "SensorReader")
                 logger.error("Unable to submit fetch requests.")
                 let eventLogParams = Enrollment.getCurrentEnrollment().toDict()
                 Analytics.logEvent(FirebaseAnalyticsEvent.backgroundHealthTaskFetchFailed.rawValue, parameters: eventLogParams)
