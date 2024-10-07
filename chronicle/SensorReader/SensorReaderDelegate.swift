@@ -18,6 +18,7 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
     private let logger = Logger(subsystem: "com.openlattice.chronicle", category: "SensorReader")
     private let twentyFourHoursInSeconds: SRAbsoluteTime = SRAbsoluteTime.init(24.0*60*60)
     static var shared = SensorReaderDelegate()
+    static var fetching = DispatchSemaphore(value: 1)
     
     static var availableSensors: Set<SRSensor> {
         let savedValues = UserDefaults.standard.object(forKey: UserSettingsKeys.sensors) as? [String] ?? []
@@ -59,15 +60,16 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         
         devices.forEach { device in
             let request = SRFetchRequest()
+            
             request.device = device
             
-            let sevenDaysAgo = request.to.rawValue - 2*twentyFourHoursInSeconds.rawValue
+            let sevenDaysAgo = request.to.rawValue - 7*twentyFourHoursInSeconds.rawValue
 
             let lastFetch = Utils.getLastFetch(
                 device: SensorReaderDevice(device: device),
                 sensor: Sensor.getSensor(sensor: reader.sensor)
             ) ?? SRAbsoluteTime.init(max(sevenDaysAgo, enrollmentAbsoluteTime.rawValue))
-            
+        
             
             request.from = lastFetch
             //Only request data that is older than 24 hours.

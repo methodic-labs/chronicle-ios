@@ -145,10 +145,16 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         }
 
     }
-    
+
     func scheduleFetchSensorSamplesTask() {
         
-        let fetchSensorSamplesTask = if #available(iOS 17.0, *) { BGHealthResearchTaskRequest(identifier: "com.getmethodic.chronicle.fetchSensorSamples")
+        let fetchSensorSamplesTask = if #available(iOS 17.0, *) {
+            {
+                let tr = BGHealthResearchTaskRequest(identifier: "com.getmethodic.chronicle.fetchSensorSamples")
+                tr.requiresExternalPower = false
+                tr.requiresNetworkConnectivity = false
+                return tr
+            }()
         } else {
             BGAppRefreshTaskRequest(identifier: "com.getmethodic.chronicle.fetchSensorSamples" )
         }
@@ -166,7 +172,8 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     
     func scheduleFetchSensorSamplesHeavyTask() {
         let fetchSensorSamplesTask = BGProcessingTaskRequest(identifier: "com.getmethodic.chronicle.fetchSensorSamplesHeavy" )
-
+        fetchSensorSamplesTask.requiresExternalPower = false
+        fetchSensorSamplesTask.requiresNetworkConnectivity = false
         fetchSensorSamplesTask.earliestBeginDate = Date(timeIntervalSinceNow: 12*60*60) // Schedule it to run sometime after the next 12 hours.
         
         do {
@@ -196,19 +203,25 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
                 reader.startRecording()
             }
             reader.fetchDevices()
-            successfulFetch = true
         }
+        
+        successfulFetch = true
         
         task.expirationHandler = {
             self.scheduleFetchSensorSamplesTask()
             if !successfulFetch {
                 let logger = Logger(subsystem: "com.openlattice.chronicle", category: "SensorReader")
-                logger.error("Unable to submit fetch request.")
+                logger.error("Unable to submit fetch requests.")
                 let eventLogParams = Enrollment.getCurrentEnrollment().toDict()
                 Analytics.logEvent(FirebaseAnalyticsEvent.backgroundHealthTaskFetchFailed.rawValue, parameters: eventLogParams)
             }
+            // Task will always expire
+            SensorReaderDelegate.fetching.signal()
         }
         
+        // We wait twice on single semaphore as we wait as long as iOS will let us to fetch data.
+        SensorReaderDelegate.fetching.wait()
+        SensorReaderDelegate.fetching.wait()
         task.setTaskCompleted(success: true)
         
         scheduleFetchSensorSamplesTask()
