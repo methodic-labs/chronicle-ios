@@ -67,9 +67,14 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         healthStore.getRequestStatusForAuthorization(toShare: [stepCountType], read: [stepCountType]) { (status, errorOrNil) in
             if status == HKAuthorizationRequestStatus.unnecessary {
                 self.healthKitAuthorized = true
+                self.registerBackgroundHealthKitQuery(healthStore: healthStore, stepCountType: stepCountType)
             }
         }
 
+        return true
+    }
+    
+    func registerBackgroundHealthKitQuery(healthStore: HKHealthStore, stepCountType: HKQuantityType) {
         // Configure Healthkit to wake up the app when step count data samples are available.
         let frequency = HKUpdateFrequency.hourly //available options: hourly, daily, weekly
         healthStore.enableBackgroundDelivery(for: stepCountType, frequency: frequency) { (success, errorOrNil) in
@@ -95,8 +100,6 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         }
 
         healthStore.execute(query)
-
-        return true
     }
     
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
@@ -299,6 +302,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
                 if (success) {
                     DispatchQueue.main.async {
                         self.healthKitAuthorized = true
+                        self.registerBackgroundHealthKitQuery(healthStore: healthStore, stepCountType: types.first!)
                     }
                 }
             }
