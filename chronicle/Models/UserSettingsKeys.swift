@@ -15,6 +15,7 @@ struct UserSettingsKeys {
     static let enrolledDate = "enrolledDate"
     static let lastUploadDate = "lastUploadDate"
     static let lastRecordedDate = "lastRecordedDate"
+    static let lastRecordedDateObj = "lastRecordedDateObj"
     static let lastRecordedDateUploaded = "lastRecordedDateUploaded"
     static let itemsRemaining = "itemsRemaining"
     static let deviceId = "deviceId"

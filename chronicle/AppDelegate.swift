@@ -70,7 +70,9 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
                 self.registerBackgroundHealthKitQuery(healthStore: healthStore, stepCountType: stepCountType)
             }
         }
-
+        
+        self.fetchSensorSamples()
+        
         return true
     }
     
@@ -200,12 +202,18 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         logger.info("Executing fetch sensor samples task.")
         let sensors = SensorReaderDelegate.availableSensors
         var successfulFetch = false
+        var eventLogParams = Enrollment.getCurrentEnrollment().toDict()
         sensors.forEach { sensor in
             let reader = SRSensorReader(sensor: sensor)
             reader.delegate = SensorReaderDelegate.shared
             if reader.authorizationStatus == SRAuthorizationStatus.authorized {
                 reader.startRecording()
             }
+            let request = SRFetchRequest()
+            request.from = SRAbsoluteTime.init(0.0)
+            request.to = SRAbsoluteTime.current()
+            eventLogParams.merge(["startDate": Date(timeIntervalSinceReferenceDate: request.from.toCFAbsoluteTime()).toISOFormat(), "endDate": Date(timeIntervalSinceReferenceDate: request.to.toCFAbsoluteTime()).toISOFormat()]) { (current, _) in current }
+            reader.fetch(request)
             reader.fetchDevices()
         }
         
@@ -226,7 +234,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         
         // We wait twice on single semaphore as we wait as long as iOS will let us to fetch data.
         SensorReaderDelegate.fetching.wait()
-        SensorReaderDelegate.fetching.wait()
+        
         task.setTaskCompleted(success: true)
         
         scheduleFetchSensorSamplesTask()
@@ -238,13 +246,20 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     
     func fetchSensorSamples() {
         let sensors = SensorReaderDelegate.availableSensors
+        var eventLogParams = Enrollment.getCurrentEnrollment().toDict()
         sensors.forEach { sensor in
             let reader = SRSensorReader(sensor: sensor)
             reader.delegate = SensorReaderDelegate.shared
-
+            
             if reader.authorizationStatus == SRAuthorizationStatus.authorized {
                 reader.startRecording()
             }
+            let request = SRFetchRequest()
+            request.from = SRAbsoluteTime.init(0.0)
+            request.to = SRAbsoluteTime.current()
+            
+            eventLogParams.merge(["startDate": Date(timeIntervalSinceReferenceDate: request.from.toCFAbsoluteTime()).toISOFormat(), "endDate": Date(timeIntervalSinceReferenceDate: request.to.toCFAbsoluteTime()).toISOFormat()]) { (current, _) in current }
+            reader.fetch(request)
             reader.fetchDevices()
         }
     }
@@ -308,4 +323,57 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
             }
         }
     }
+    
+//    func submitFetchRequestForSensor(reader: SRSensorReader) {
+//        let enrolledDate = UserDefaults.standard.object(forKey: UserSettingsKeys.enrolledDate) as? Date ?? Date()
+//        
+//        let hoursElapsedSinceEnrollment = Calendar.current.dateComponents([.hour], from: enrolledDate, to: Date()).hour ?? 0
+//        let secondsSinceEnrollment = Calendar.current.dateComponents([.second], from: enrolledDate, to: Date()).second ?? 0
+//        let enrollmentAbsoluteTime = SRAbsoluteTime.init(SRAbsoluteTime.current().rawValue - Double(secondsSinceEnrollment))
+//        
+//        //Don't submit any fetch requests until at least 24 hours have passed since enrollment
+//        //as SensorKit holds values for 24 hours to allow user to delete them.
+//        if( hoursElapsedSinceEnrollment < 24) {
+//            return
+//        }
+//        
+//        var eventLogParams = Enrollment.getCurrentEnrollment().toDict()
+//        eventLogParams.merge(["devices": devices.description, "hoursElapsedSinceEnrollment" : String(hoursElapsedSinceEnrollment)]) { (current, _) in current }
+//        
+//        Analytics.logEvent(FirebaseAnalyticsEvent.didFetchSensorDevices.rawValue, parameters: eventLogParams)
+//        
+//        
+//        
+//            let request = SRFetchRequest()
+//            
+//            request.device = device
+//            
+//            let sevenDaysAgo = request.to.rawValue - 7*twentyFourHoursInSeconds.rawValue
+//            
+//            let lastFetch = Utils.getLastFetch(
+//                device: SensorReaderDevice(device: device),
+//                sensor: Sensor.getSensor(sensor: reader.sensor)
+//            ) ?? SRAbsoluteTime.init(max(sevenDaysAgo, enrollmentAbsoluteTime.rawValue))
+//            
+//            //Let's ask for all the data.
+//            request.from = SRAbsoluteTime.init(0.0)// lastFetch
+//            // Only request data that is older than 24 hours.
+//            request.to = SRAbsoluteTime.current()//SRAbsoluteTime.init(SRAbsoluteTime.current().rawValue - twentyFourHoursInSeconds.rawValue)
+//            // Let's get ISO dates for readable logs.
+//            
+//            let startDate = Date(timeIntervalSinceReferenceDate: request.from.toCFAbsoluteTime())
+//            let endDate  = Date(timeIntervalSinceReferenceDate: request.to.toCFAbsoluteTime())
+//            
+//            logger.info("fetching data for \(reader.sensor.rawValue) -  start: \(startDate.description), end: \(endDate.description)")
+//            reader.fetch(request)
+//            
+//            var eventLogParams = Enrollment.getCurrentEnrollment().toDict()
+//            eventLogParams.merge(["device": device.description, "startDate": startDate.toISOFormat(), "endDate": endDate.toISOFormat(), "hoursElapsedSinceEnrollment" : String(hoursElapsedSinceEnrollment)]) { (current, _) in current }
+//            
+//            Analytics.logEvent(FirebaseAnalyticsEvent.didFetchSensorDevices.rawValue, parameters: eventLogParams)
+//            
+//            let timestampIso = Date(timeIntervalSinceReferenceDate: SRAbsoluteTime.current().toCFAbsoluteTime()).toISOFormat()
+//            UserDefaults.standard.set(timestampIso, forKey:UserSettingsKeys.lastFetchSubmitted)
+//        }
+//    }
 }
