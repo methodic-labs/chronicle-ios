@@ -698,8 +698,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.11.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.methodic.chronicle;
+				MARKETING_VERSION = 1.11.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.getmethodic.chronicle.parkview.embrace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -742,7 +742,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.11.1;
+				MARKETING_VERSION = 1.11.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.getmethodic.chronicle.parkview.embrace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

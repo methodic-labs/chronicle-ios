@@ -50,8 +50,7 @@ struct ChronicleApp: App {
                 //added sensors at the risk of missing data that falls off the query window.
                 if enrolledDate == nil {
                     logger.info("Missing data from upgrade detected. Setting enrollment date to now.")
-                    let fourWeeksAgo = Calendar.current.date(byAdding: .day, value: 28
-                                                             , to: Date())!
+                    let fourWeeksAgo = Calendar.current.date(byAdding: .day, value:28, to: Date())!
                     UserDefaults.standard.set(fourWeeksAgo,forKey: UserSettingsKeys.enrolledDate)
                 }
 

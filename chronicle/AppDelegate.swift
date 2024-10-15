@@ -67,9 +67,16 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         healthStore.getRequestStatusForAuthorization(toShare: [stepCountType], read: [stepCountType]) { (status, errorOrNil) in
             if status == HKAuthorizationRequestStatus.unnecessary {
                 self.healthKitAuthorized = true
+                self.registerBackgroundHealthKitQuery(healthStore: healthStore, stepCountType: stepCountType)
             }
         }
-
+        
+        self.fetchSensorSamples()
+        
+        return true
+    }
+    
+    func registerBackgroundHealthKitQuery(healthStore: HKHealthStore, stepCountType: HKQuantityType) {
         // Configure Healthkit to wake up the app when step count data samples are available.
         let frequency = HKUpdateFrequency.hourly //available options: hourly, daily, weekly
         healthStore.enableBackgroundDelivery(for: stepCountType, frequency: frequency) { (success, errorOrNil) in
@@ -95,8 +102,6 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         }
 
         healthStore.execute(query)
-
-        return true
     }
     
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
@@ -145,10 +150,16 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         }
 
     }
-    
+
     func scheduleFetchSensorSamplesTask() {
         
-        let fetchSensorSamplesTask = if #available(iOS 17.0, *) { BGHealthResearchTaskRequest(identifier: "com.getmethodic.chronicle.fetchSensorSamples")
+        let fetchSensorSamplesTask = if #available(iOS 17.0, *) {
+            {
+                let tr = BGHealthResearchTaskRequest(identifier: "com.getmethodic.chronicle.fetchSensorSamples")
+                tr.requiresExternalPower = false
+                tr.requiresNetworkConnectivity = false
+                return tr
+            }()
         } else {
             BGAppRefreshTaskRequest(identifier: "com.getmethodic.chronicle.fetchSensorSamples" )
         }
@@ -166,7 +177,8 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     
     func scheduleFetchSensorSamplesHeavyTask() {
         let fetchSensorSamplesTask = BGProcessingTaskRequest(identifier: "com.getmethodic.chronicle.fetchSensorSamplesHeavy" )
-
+        fetchSensorSamplesTask.requiresExternalPower = false
+        fetchSensorSamplesTask.requiresNetworkConnectivity = false
         fetchSensorSamplesTask.earliestBeginDate = Date(timeIntervalSinceNow: 12*60*60) // Schedule it to run sometime after the next 12 hours.
         
         do {
@@ -187,27 +199,41 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     }
     
     func handleFetchSensorSamples(task: BGTask) {
+        logger.info("Executing fetch sensor samples task.")
         let sensors = SensorReaderDelegate.availableSensors
         var successfulFetch = false
+        var eventLogParams = Enrollment.getCurrentEnrollment().toDict()
         sensors.forEach { sensor in
             let reader = SRSensorReader(sensor: sensor)
             reader.delegate = SensorReaderDelegate.shared
             if reader.authorizationStatus == SRAuthorizationStatus.authorized {
                 reader.startRecording()
             }
+            let request = SRFetchRequest()
+            request.from = SRAbsoluteTime.init(0.0)
+            request.to = SRAbsoluteTime.current()
+            eventLogParams.merge(["startDate": Date(timeIntervalSinceReferenceDate: request.from.toCFAbsoluteTime()).toISOFormat(), "endDate": Date(timeIntervalSinceReferenceDate: request.to.toCFAbsoluteTime()).toISOFormat()]) { (current, _) in current }
+            reader.fetch(request)
             reader.fetchDevices()
-            successfulFetch = true
         }
+        
+        successfulFetch = true
         
         task.expirationHandler = {
             self.scheduleFetchSensorSamplesTask()
+            let logger = Logger(subsystem: "com.openlattice.chronicle", category: "SensorReader")
+            logger.info("SensorKit fetch task expiring.")
             if !successfulFetch {
-                let logger = Logger(subsystem: "com.openlattice.chronicle", category: "SensorReader")
-                logger.error("Unable to submit fetch request.")
+                logger.error("Unable to submit fetch requests.")
                 let eventLogParams = Enrollment.getCurrentEnrollment().toDict()
                 Analytics.logEvent(FirebaseAnalyticsEvent.backgroundHealthTaskFetchFailed.rawValue, parameters: eventLogParams)
             }
+            // Task will always expire
+            SensorReaderDelegate.fetching.signal()
         }
+        
+        // We wait twice on single semaphore as we wait as long as iOS will let us to fetch data.
+        SensorReaderDelegate.fetching.wait()
         
         task.setTaskCompleted(success: true)
         
@@ -220,13 +246,20 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     
     func fetchSensorSamples() {
         let sensors = SensorReaderDelegate.availableSensors
+        var eventLogParams = Enrollment.getCurrentEnrollment().toDict()
         sensors.forEach { sensor in
             let reader = SRSensorReader(sensor: sensor)
             reader.delegate = SensorReaderDelegate.shared
-
+            
             if reader.authorizationStatus == SRAuthorizationStatus.authorized {
                 reader.startRecording()
             }
+            let request = SRFetchRequest()
+            request.from = SRAbsoluteTime.init(0.0)
+            request.to = SRAbsoluteTime.current()
+            
+            eventLogParams.merge(["startDate": Date(timeIntervalSinceReferenceDate: request.from.toCFAbsoluteTime()).toISOFormat(), "endDate": Date(timeIntervalSinceReferenceDate: request.to.toCFAbsoluteTime()).toISOFormat()]) { (current, _) in current }
+            reader.fetch(request)
             reader.fetchDevices()
         }
     }
@@ -284,9 +317,63 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
                 if (success) {
                     DispatchQueue.main.async {
                         self.healthKitAuthorized = true
+                        self.registerBackgroundHealthKitQuery(healthStore: healthStore, stepCountType: types.first!)
                     }
                 }
             }
         }
     }
+    
+//    func submitFetchRequestForSensor(reader: SRSensorReader) {
+//        let enrolledDate = UserDefaults.standard.object(forKey: UserSettingsKeys.enrolledDate) as? Date ?? Date()
+//        
+//        let hoursElapsedSinceEnrollment = Calendar.current.dateComponents([.hour], from: enrolledDate, to: Date()).hour ?? 0
+//        let secondsSinceEnrollment = Calendar.current.dateComponents([.second], from: enrolledDate, to: Date()).second ?? 0
+//        let enrollmentAbsoluteTime = SRAbsoluteTime.init(SRAbsoluteTime.current().rawValue - Double(secondsSinceEnrollment))
+//        
+//        //Don't submit any fetch requests until at least 24 hours have passed since enrollment
+//        //as SensorKit holds values for 24 hours to allow user to delete them.
+//        if( hoursElapsedSinceEnrollment < 24) {
+//            return
+//        }
+//        
+//        var eventLogParams = Enrollment.getCurrentEnrollment().toDict()
+//        eventLogParams.merge(["devices": devices.description, "hoursElapsedSinceEnrollment" : String(hoursElapsedSinceEnrollment)]) { (current, _) in current }
+//        
+//        Analytics.logEvent(FirebaseAnalyticsEvent.didFetchSensorDevices.rawValue, parameters: eventLogParams)
+//        
+//        
+//        
+//            let request = SRFetchRequest()
+//            
+//            request.device = device
+//            
+//            let sevenDaysAgo = request.to.rawValue - 7*twentyFourHoursInSeconds.rawValue
+//            
+//            let lastFetch = Utils.getLastFetch(
+//                device: SensorReaderDevice(device: device),
+//                sensor: Sensor.getSensor(sensor: reader.sensor)
+//            ) ?? SRAbsoluteTime.init(max(sevenDaysAgo, enrollmentAbsoluteTime.rawValue))
+//            
+//            //Let's ask for all the data.
+//            request.from = SRAbsoluteTime.init(0.0)// lastFetch
+//            // Only request data that is older than 24 hours.
+//            request.to = SRAbsoluteTime.current()//SRAbsoluteTime.init(SRAbsoluteTime.current().rawValue - twentyFourHoursInSeconds.rawValue)
+//            // Let's get ISO dates for readable logs.
+//            
+//            let startDate = Date(timeIntervalSinceReferenceDate: request.from.toCFAbsoluteTime())
+//            let endDate  = Date(timeIntervalSinceReferenceDate: request.to.toCFAbsoluteTime())
+//            
+//            logger.info("fetching data for \(reader.sensor.rawValue) -  start: \(startDate.description), end: \(endDate.description)")
+//            reader.fetch(request)
+//            
+//            var eventLogParams = Enrollment.getCurrentEnrollment().toDict()
+//            eventLogParams.merge(["device": device.description, "startDate": startDate.toISOFormat(), "endDate": endDate.toISOFormat(), "hoursElapsedSinceEnrollment" : String(hoursElapsedSinceEnrollment)]) { (current, _) in current }
+//            
+//            Analytics.logEvent(FirebaseAnalyticsEvent.didFetchSensorDevices.rawValue, parameters: eventLogParams)
+//            
+//            let timestampIso = Date(timeIntervalSinceReferenceDate: SRAbsoluteTime.current().toCFAbsoluteTime()).toISOFormat()
+//            UserDefaults.standard.set(timestampIso, forKey:UserSettingsKeys.lastFetchSubmitted)
+//        }
+//    }
 }
