@@ -682,7 +682,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = chronicle/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Chronicle for Research";
+				INFOPLIST_KEY_CFBundleDisplayName = "Chronicle (CAFE)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Chronicle would like read your step data in order to read sensors in the background";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Chronicle would like to write step data in order to work with sensors in the background";
@@ -699,7 +699,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.11.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.methodic.chronicle;
+				PRODUCT_BUNDLE_IDENTIFIER = com.getmethodic.chronicle.cafe.gdw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -726,7 +726,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = chronicle/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Chronicle for Research";
+				INFOPLIST_KEY_CFBundleDisplayName = "Chronicle (CAFE)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Chronicle would like read your step data in order to read sensors in the background";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Chronicle would like to write step data in order to work with sensors in the background";
@@ -743,7 +743,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.11.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.methodic.chronicle;
+				PRODUCT_BUNDLE_IDENTIFIER = com.getmethodic.chronicle.cafe.gdw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
