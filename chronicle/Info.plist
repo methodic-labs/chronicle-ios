@@ -9,8 +9,6 @@
 		<string>com.openlattice.chronicle.fetchSensorSamples</string>
 		<string>com.openlattice.chronicle.uploadData</string>
 	</array>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 	<key>NSSensorKitUsageDetail</key>
 	<dict>
 		<key>SRSensorUsageDeviceUsage</key>
