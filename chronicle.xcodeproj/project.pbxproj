@@ -699,7 +699,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.11.2;
-				PRODUCT_BUNDLE_IDENTIFIER = "-com.getmethodic.chronicle.usc.tots2-com.getmethodic.chronicle.usc.tots2";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.getmethodic.chronicle.usc.tots2-com.getmethodic.chronicle.usc.tots2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -743,7 +743,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.11.2;
-				PRODUCT_BUNDLE_IDENTIFIER = "-com.getmethodic.chronicle.usc.tots2-com.getmethodic.chronicle.usc.tots2";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.getmethodic.chronicle.usc.tots2-com.getmethodic.chronicle.usc.tots2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
