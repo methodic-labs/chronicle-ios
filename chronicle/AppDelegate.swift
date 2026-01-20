@@ -214,6 +214,10 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
             request.to = SRAbsoluteTime.current()
             eventLogParams.merge(["startDate": Date(timeIntervalSinceReferenceDate: request.from.toCFAbsoluteTime()).toISOFormat(), "endDate": Date(timeIntervalSinceReferenceDate: request.to.toCFAbsoluteTime()).toISOFormat()]) { (current, _) in current }
             reader.fetch(request)
+            
+            // Record when we submit fetch jobs to SensorKit (separate from max sample timestamp observed).
+            let timestampIso = Date(timeIntervalSinceReferenceDate: SRAbsoluteTime.current().toCFAbsoluteTime()).toISOFormat()
+            UserDefaults.standard.set(timestampIso, forKey: UserSettingsKeys.lastFetchSubmitted)
             reader.fetchDevices()
         }
         
@@ -260,6 +264,10 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
             
             eventLogParams.merge(["startDate": Date(timeIntervalSinceReferenceDate: request.from.toCFAbsoluteTime()).toISOFormat(), "endDate": Date(timeIntervalSinceReferenceDate: request.to.toCFAbsoluteTime()).toISOFormat()]) { (current, _) in current }
             reader.fetch(request)
+            
+            // Record when we submit fetch jobs to SensorKit (separate from max sample timestamp observed).
+            let timestampIso = Date(timeIntervalSinceReferenceDate: SRAbsoluteTime.current().toCFAbsoluteTime()).toISOFormat()
+            UserDefaults.standard.set(timestampIso, forKey: UserSettingsKeys.lastFetchSubmitted)
             reader.fetchDevices()
         }
     }
