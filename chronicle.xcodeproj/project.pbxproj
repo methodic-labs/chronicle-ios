@@ -403,6 +403,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		086880562AC0D19E003DC2BC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -675,7 +676,7 @@
 				"CODE_SIGN_ENTITLEMENTS[sdk=iphoneos*]" = CustomCodeSigningEntitlements.plist;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"chronicle/Preview Content\"";
 				DEVELOPMENT_TEAM = T646XVW64T;
@@ -720,7 +721,7 @@
 				"CODE_SIGN_ENTITLEMENTS[sdk=iphoneos*]" = CustomCodeSigningEntitlements.plist;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"chronicle/Preview Content\"";
 				DEVELOPMENT_TEAM = T646XVW64T;
 				ENABLE_PREVIEWS = YES;
