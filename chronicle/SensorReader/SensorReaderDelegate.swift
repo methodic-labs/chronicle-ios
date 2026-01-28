@@ -194,7 +194,7 @@ class SensorReaderDelegate: NSObject, SRSensorReaderDelegate {
         }
         
  
-        UserDefaults.standard.set(lastRecordedDateObj,forKey:UserSettingsKeys.lastRecordedDateObj)
+        UserDefaults.standard.set(lastRecordedDate,forKey:UserSettingsKeys.lastRecordedDateObj)
         UserDefaults.standard.set(
             lastRecordedDate.toISOFormat(),
             forKey:UserSettingsKeys.lastRecordedDate
